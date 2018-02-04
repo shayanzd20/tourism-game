@@ -201,7 +201,30 @@ console.log('interval cleared');
         {/* view for frame and picture start*/}
         <View style={styles.frameAndPicture}>
           <View style={styles.frameAndPictureContainer}>
-            {/* <CardView /> */}
+            <Animatable.View
+            animation="zoomInUp"
+            duration={1000}
+            useNativeDriver={true}
+            >
+            <CardView
+              cardElevation={7}
+              cardMaxElevation={7}
+              cornerRadius={5}
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+              <Image
+                // resizeMode="contain"
+                resizeMode="cover"
+                // resizeMode="stretch"
+                // originalWidth={100000}
+                style={styles.picture}
+                source={{ uri: 'http://velgardi-game.ir/api/get_image?path=' + imageQuestion }}
+                onLoadStart={() => { console.log('picture loading so loading must true')}}
+              />
+            </CardView>
+          </Animatable.View>
           </View>
         </View>
         {/* view for frame and picture end*/}
@@ -346,9 +369,9 @@ picture: {
     // minHeight :30,
     // width: widthPic,
     // height: widthPic,
-    width: 330,
-    height: 330,
-    borderRadius: 20,
+    width: widthPic * 0.9,
+    height: widthPic * 0.9,
+    // borderRadius: 10,
     // marginLeft:10,
     // marginRight:10,
     // paddingLeft :10,
