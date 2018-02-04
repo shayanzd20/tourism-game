@@ -18,6 +18,7 @@ import {
 import * as Progress from 'react-native-progress';
 import { Button,Card} from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
+import CardView from 'react-native-cardview';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import {
@@ -42,14 +43,13 @@ class Game2 extends Component {
   };
 
 
-  constructor() {
+constructor() {
       super();
       if (Platform.OS === 'android') {
         UIManager.setLayoutAnimationEnabledExperimental &&
         UIManager.setLayoutAnimationEnabledExperimental(true);
       }
   }
-
 
 componentWillMount() {
     this.animate();
@@ -201,23 +201,7 @@ console.log('interval cleared');
         {/* view for frame and picture start*/}
         <View style={styles.frameAndPicture}>
           <View style={styles.frameAndPictureContainer}>
-            <ImageBackground
-              style={styles.frame}
-              resizeMode="contain"
-              // resizeMode="cover"
-              // resizeMode="stretch"
-              source={require('./../images/game2/frame.png')}
-            >
-              <Image
-                // resizeMode="contain"
-                resizeMode="cover"
-                // resizeMode="stretch"
-                // originalWidth={100000}
-                style={styles.picture}
-                source={{ uri: 'http://velgardi-game.ir/api/get_image?path=' + imageQuestion }}
-                onLoadStart={() => { console.log('picture loading so loading must true')}}
-              />
-            </ImageBackground>
+            {/* <CardView /> */}
           </View>
         </View>
         {/* view for frame and picture end*/}
