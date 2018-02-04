@@ -9,8 +9,10 @@ import {
   // TouchableHighlight,
 } from 'react-native';
 import Modal from 'react-native-root-modal';
-import { connect } from 'react-redux';
-import { questionOneModalUpdate } from '../../src/actions';
+// import { connect } from 'react-redux';
+// import { questionOneModalUpdate,
+//          questionTwoModalUpdate
+//  } from '../../src/actions';
 
 
 const widthPic = Dimensions.get('window').width;
@@ -67,7 +69,8 @@ class ModalPrize extends Component {
 // }
 onPressModal() {
   console.log('presseddddddd');
-  this.props.questionOneModalUpdate(false);
+  // this.props.questionOneModalUpdate(false);
+  // this.props.questionTwoModalUpdate(false);
   Actions.main();
 }
 
@@ -88,7 +91,7 @@ render() {
 
     <Modal
     style={styles.modal}
-    visible={this.props.modal_visible}
+    visible={this.props.visible}
     >
       <View style={styles.modalContainer}>
         {modalStatusEmoji}
@@ -100,7 +103,7 @@ render() {
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-          <Text style={styles.text}>{this.props.text_modal}</Text>
+          <Text style={styles.text}>{this.props.text}</Text>
         </View>
         <View
           style={{
@@ -161,22 +164,23 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ q_one }) => {
-  console.log('this is question one state:', q_one);
+// const mapStateToProps = ({ q_one }) => {
+//   console.log('this is question one state:', q_one);
+//
+//   const {
+//     result,
+//     modal_visible,
+//     text_modal,
+//     status
+//    } = q_one;
+//
+//   return {
+//     result,
+//     modal_visible,
+//     text_modal,
+//     status
+//    };
+//   };
 
-  const {
-    result,
-    modal_visible,
-    text_modal,
-    status
-   } = q_one;
-
-  return {
-    result,
-    modal_visible,
-    text_modal,
-    status
-   };
-  };
-
-export default connect(mapStateToProps, { questionOneModalUpdate })(ModalPrize);
+// export default connect(mapStateToProps, { questionOneModalUpdate, questionTwoModalUpdate })(ModalPrize);
+export default ModalPrize;

@@ -25,7 +25,9 @@ import {
   questionTwoAltsUpdate,
   questionThreeAnswerUpdate,
   questionThreeQuestionUpdate,
-  questionThreeAltsUpdate
+  questionThreeAltsUpdate,
+  questionOneModalUpdate,
+  questionTwoModalUpdate
 } from '../src/actions';
 import Animate from './components/Animate';
 
@@ -44,6 +46,8 @@ class GameChoose extends Component {
   };
 
 componentWillMount() {
+  this.props.questionOneModalUpdate(false);
+  this.props.questionTwoModalUpdate(false);
   AsyncStorage.getItem('token', (err, result) => {
     console.log('get token in game choose: ', result);
     if (result) {
@@ -490,5 +494,7 @@ export default connect(mapStateToProps, {
   questionTwoAltsUpdate,
   questionThreeAnswerUpdate,
   questionThreeQuestionUpdate,
-  questionThreeAltsUpdate
+  questionThreeAltsUpdate,
+  questionOneModalUpdate,
+  questionTwoModalUpdate
 })(GameChoose);

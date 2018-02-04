@@ -28,11 +28,8 @@ const INITIAL_STATE = {
      case QUESTION_TWO_RESULT_UPDATE:
        return { ...state, result: action.payload.input, text_modal: action.payload.text, status: action.payload.status };
      case QUESTION_TWO_ANSWER_UPDATE:
-     console.log('QUESTION_TWO_ANSWER_UPDATE:', { ...state, answer: action.payload });
        return { ...state, answer: action.payload };
      case QUESTION_TWO_QUESTION_UPDATE:
-     console.log('QUESTION_TWO_QUESTION_UPDATE:', { ...state, img: action.payload });
-
        return { ...state, img: action.payload };
      case QUESTION_TWO_ALTS_UPDATE:
        return { ...state, alts: action.payload };

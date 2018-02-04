@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
-  Text,
   View,
-  Picker,
-  Alert,
   TouchableHighlight,
   TouchableWithoutFeedback ,
   Image,
@@ -20,7 +16,6 @@ import { Button,Card} from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import CardView from 'react-native-cardview';
 import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
 import {
   questionTwoProgressUpdate,
   questionTwoResultUpdate,
@@ -29,7 +24,7 @@ import {
   questionTwoAltsUpdate,
   questionTwoModalUpdate,
 } from '../src/actions';
-// import FitImage from 'react-native-fit-image';
+import ModalPrize from './components/ModalPrize';
 
 // consts
 const widthPic= Dimensions.get('window').width;
@@ -240,7 +235,8 @@ console.log('interval cleared');
             }]}
             backgroundColor='#FFA129'
             fontFamily='BYekan'
-            // onPress={() => this.props.navigation.navigate('City', { user: 'Shayan11' })}
+            onPress={() => { this.checkAnswer(1); }}
+            onLongPress={() => { this.checkAnswer(1); }}
             title={this.props.alts.altOne}
             accessibilityLabel="This sounds great!"
             />
@@ -250,7 +246,8 @@ console.log('interval cleared');
               }]}
             backgroundColor='#FFA129'
             fontFamily='BYekan'
-            // onPress={() => this.props.navigation.navigate('City', { user: 'Shayan11' })}
+            onPress={() => { this.checkAnswer(2); }}
+            onLongPress={() => { this.checkAnswer(2); }}
             title={this.props.alts.altTwo}
             accessibilityLabel="This sounds great!"
             />
@@ -265,7 +262,8 @@ console.log('interval cleared');
             }]}
             backgroundColor='#FFA129'
             fontFamily='BYekan'
-            // onPress={() => this.props.navigation.navigate('City', { user: 'Shayan11' })}
+            onPress={() => { this.checkAnswer(3); }}
+            onLongPress={() => { this.checkAnswer(3); }}
             title={this.props.alts.altThree}
             accessibilityLabel="This sounds great!"
             />
@@ -275,7 +273,8 @@ console.log('interval cleared');
             }]}
             backgroundColor='#FFA129'
             fontFamily='BYekan'
-            // onPress={() => this.props.navigation.navigate('City', { user: 'Shayan11' })}
+            onPress={() => { this.checkAnswer(4); }}
+            onLongPress={() => { this.checkAnswer(4); }}
             title={this.props.alts.altFour}
             accessibilityLabel="This sounds great!"
             />
@@ -285,6 +284,15 @@ console.log('interval cleared');
         </View>
         {/* view of buttons end */}
 
+        {/* modal start */}
+        <View>
+          <ModalPrize
+            text={this.props.text_modal}
+            visible={this.props.modal_visible}
+            status={this.props.status}
+          />
+        </View>
+      {/* modal ends */}
       </View>
 
     );
