@@ -183,11 +183,11 @@ class Game3 extends Component {
         <View style={{flex:7, alignItems: 'center',justifyContent: 'center',
         // backgroundColor:'#037BC8'
         }}>
-          <Image
+          <ImageBackground
           style={{width:widthPic , height: widthPic*1.5 , margin:widthPic,resizeMode:'contain'}}
           source={require('./../images/game3/curtain.png')}>
-            {/* <Video
-                source={require('./../videos/video_2017-06-24_01-00-30.mp4')}
+            <Video
+              source={{ uri: 'http://velgardi-game.ir/api/get_video?path=' + this.props.video }}
                 resizeMode="contain"
                 repeat
                 style={{
@@ -198,8 +198,8 @@ class Game3 extends Component {
                   right: 0
                 }}
 
-             /> */}
-         </Image>
+             />
+         </ImageBackground>
         </View>
         {/* view for frame and video end*/}
 
@@ -433,7 +433,7 @@ const mapStateToProps = ({ auth, q_three }) => {
   const { token } = auth;
 
   const {
-    question,
+    video,
     answer,
     alts,
     progress,
@@ -445,7 +445,7 @@ const mapStateToProps = ({ auth, q_three }) => {
 
   return {
     token,
-    question,
+    video,
     answer,
     alts,
     progress,
