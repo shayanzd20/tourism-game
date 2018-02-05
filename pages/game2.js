@@ -12,7 +12,7 @@ import {
   ImageBackground
 } from 'react-native';
 import * as Progress from 'react-native-progress';
-import { Button,Card} from 'react-native-elements';
+import { Button } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import CardView from 'react-native-cardview';
 import { connect } from 'react-redux';
@@ -27,8 +27,8 @@ import {
 import ModalPrize from './components/ModalPrize';
 
 // consts
-const widthPic= Dimensions.get('window').width;
-const heightPic= Dimensions.get('window').height;
+const widthPic = Dimensions.get('window').width;
+const heightPic = Dimensions.get('window').height;
 
 class Game2 extends Component {
 

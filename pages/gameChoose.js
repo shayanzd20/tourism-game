@@ -27,7 +27,8 @@ import {
   questionThreeQuestionUpdate,
   questionThreeAltsUpdate,
   questionOneModalUpdate,
-  questionTwoModalUpdate
+  questionTwoModalUpdate,
+  questionThreeModalUpdate
 } from '../src/actions';
 import Animate from './components/Animate';
 
@@ -48,6 +49,7 @@ class GameChoose extends Component {
 componentWillMount() {
   this.props.questionOneModalUpdate(false);
   this.props.questionTwoModalUpdate(false);
+  this.props.questionThreeModalUpdate(false);
   AsyncStorage.getItem('token', (err, result) => {
     console.log('get token in game choose: ', result);
     if (result) {
@@ -87,7 +89,7 @@ onGameThreeClick() {
   Actions.game3();
   // we must update questions, answers, alts
   this.props.questionThreeAnswerUpdate(this.props.thirdObj.answer);
-  this.props.questionThreeQuestionUpdate(this.props.thirdObj.question);
+  this.props.questionThreeQuestionUpdate(this.props.thirdObj.video);
   this.props.questionThreeAltsUpdate(this.props.thirdObj.alts);
 }
 
@@ -496,5 +498,6 @@ export default connect(mapStateToProps, {
   questionThreeQuestionUpdate,
   questionThreeAltsUpdate,
   questionOneModalUpdate,
-  questionTwoModalUpdate
+  questionTwoModalUpdate,
+  questionThreeModalUpdate
 })(GameChoose);

@@ -1,55 +1,38 @@
 import {
-         USER_STATUS,
-         USER_QUESTION_UPDATE,
-         UPDATE_FIRST_SCORE,
-         UPDATE_SECOND_SCORE,
-         UPDATE_THIRD_SCORE,
+  QUESTION_THREE_PROGRESS_UPDATE,
+  QUESTION_THREE_RESULT_UPDATE,
+  QUESTION_THREE_ANSWER_UPDATE,
+  QUESTION_THREE_QUESTION_UPDATE,
+  QUESTION_THREE_ALTS_UPDATE,
+  QUESTION_THREE_MODAL_VISIBLE,
           } from '../actions/types';
 
 const INITIAL_STATE = {
-  user_status: null,
-  token: '',
-  visible: false,
-  q_first: false,
-  q_second: false,
-  q_third: false,
-  scoreFirst: 0,
-  scoreSecond: 0,
-  scoreThird: 0,
-  firstObj: null,
-  secondObj: null,
-  thirdObj: null
+  progress: 0,
+  result: null,
+  answer: null,
+  video: null,
+  modal_visible: false,
+  text_modal: '',
+  status: null,
+  alts: []
  };
 
-export default (state = INITIAL_STATE, action) => {
-  console.log('this is action in user reducer:');
-  console.log(action);
-  console.log('this is state in user reducer', state);
-  switch (action.type) {
-    case USER_STATUS:
-      return { ...state, user_status: action.payload };
-    case USER_QUESTION_UPDATE:
-      return { ...state,
-        firstObj: action.payload.firstObj,
-        secondObj: action.payload.secondObj,
-        thirdObj: action.payload.thirdObj,
-       };
-    case UPDATE_FIRST_SCORE:
-      return { ...state,
-        scoreFirst: action.payload.scoreFirst,
-        q_first: action.payload.q_first,
-       };
-    case UPDATE_SECOND_SCORE:
-      return { ...state,
-        scoreSecond: action.payload.scoreSecond,
-        q_second: action.payload.q_second,
-       };
-    case UPDATE_THIRD_SCORE:
-      return { ...state,
-        scoreThird: action.payload.scoreThird,
-        q_third: action.payload.q_third,
-       };
-    default:
-      return state;
-  }
-};
+ export default (state = INITIAL_STATE, action) => {
+   switch (action.type) {
+     case QUESTION_THREE_PROGRESS_UPDATE:
+       return { ...state, progress: action.payload };
+     case QUESTION_THREE_RESULT_UPDATE:
+       return { ...state, result: action.payload.input, text_modal: action.payload.text, status: action.payload.status };
+     case QUESTION_THREE_ANSWER_UPDATE:
+       return { ...state, answer: action.payload };
+     case QUESTION_THREE_QUESTION_UPDATE:
+       return { ...state, video: action.payload };
+     case QUESTION_THREE_ALTS_UPDATE:
+       return { ...state, alts: action.payload };
+     case QUESTION_THREE_MODAL_VISIBLE:
+       return { ...state, modal_visible: action.payload };
+     default:
+       return state;
+   }
+ };

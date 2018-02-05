@@ -13,7 +13,7 @@ import City from '../pages/city';
 // // games
 import Game1 from '../pages/game1';
 import Game2 from '../pages/game2';
-// import Game3 from '../pages/game3';
+import Game3 from '../pages/game3';
 
 const RouterComponent = () => {
   return (
@@ -35,6 +35,11 @@ const RouterComponent = () => {
           <Scene key='game2'>
             {/* <Scene key='game1' component={Game1} /> */}
             <Scene key='game2' component={Game2} />
+            {/* <Scene key='game3' component={Game3} /> */}
+          </Scene>
+          <Scene key='game3'>
+            {/* <Scene key='game1' component={Game1} /> */}
+            <Scene key='game3' component={Game3} />
             {/* <Scene key='game3' component={Game3} /> */}
           </Scene>
           <Scene key='city'>
