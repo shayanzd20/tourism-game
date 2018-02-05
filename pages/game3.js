@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
-  Text,
   View,
-  Picker,
-  Alert,
   TouchableHighlight,
   TouchableWithoutFeedback ,
   Image,
@@ -13,7 +9,7 @@ import {
   UIManager,
   Platform,
   LayoutAnimation,
-  ImageBackground
+  ImageBackground,
 } from 'react-native';
 import * as Progress from 'react-native-progress';
 import Video from 'react-native-video';
@@ -160,17 +156,33 @@ class Game3 extends Component {
 
     return (
 
-      <View style={{flex: 1}}>
-        <View style={{flex:1, alignItems: 'center',justifyContent: 'center',backgroundColor:'white'}}>
-          <Progress.Bar progress={this.props.progress}
-          indeterminate={false}
-          width={widthPic} height={30}
-          borderColor='green'
-          color='#3bba25' />
+      <View style={styles.main}>
+
+        {/* progress bar component start */}
+        <View style={styles.progressBar}>
+          <ImageBackground
+          style={styles.frameProgress}
+          resizeMode='cover'
+          source={require('./../images/game2/progressBar.png')}
+          >
+            <Progress.Bar
+            progress={this.props.progress}
+            indeterminate={false}
+            width={widthPic * 0.88}
+            height={15}
+            zIndex={1000}
+            // borderColor='green'
+            borderWidth={0}
+            // backgroundColor='yellow'
+            color='#3bba25' />
+          </ImageBackground>
         </View>
+        {/* view for progress bar end*/}
+
+        {/* view for frame and video start*/}
         <View style={{flex:7, alignItems: 'center',justifyContent: 'center',
         // backgroundColor:'#037BC8'
-      }}>
+        }}>
           <Image
           style={{width:widthPic , height: widthPic*1.5 , margin:widthPic,resizeMode:'contain'}}
           source={require('./../images/game3/curtain.png')}>
@@ -189,97 +201,232 @@ class Game3 extends Component {
              /> */}
          </Image>
         </View>
-        <View style={{width:widthPic, height:widthPic*0.55*1.2, alignItems: 'center',justifyContent: 'center'
-        // ,backgroundColor:'#FFAAE3'
-        ,padding:widthPic*0.01}}>
-        <View style={{
-          // flex:1,
-          flexDirection:'row'
-          // flexDirection:'space-around'
-          // flexDirection:'space-between'
-        // ,justifyContent: 'center'
-        // ,alignItems:'center'
-        // ,marginLeft:30
-        // ,
-        // margin:10
-        // ,backgroundColor:'yellow'
-        }}>
-          <Button
-          buttonStyle={{
-            width:widthPic*0.45,
-            height:widthPic*0.3,
-            borderRadius:10,
-            borderColor:'#303838',
-            borderWidth:1
-          }}
-          backgroundColor='#FFA129'
-          fontFamily='BYekan'
-          // onPress={() => this.props.navigation.navigate('City', { user: 'Shayan11' })}
-          title="گزینه 1"
-          accessibilityLabel="This sounds great!"
+        {/* view for frame and video end*/}
 
-          />
-          <Button
-          buttonStyle={{
-            width:widthPic*0.45,
-            height:widthPic*0.3,
-            borderRadius:10,
-            borderColor:'#303838',
+        {/* view for buttons start*/}
+        <View style={styles.buttonsSection}>
 
-            borderWidth:1  }}
-          backgroundColor='#FFA129'
-          fontFamily='BYekan'
-          // onPress={() => this.props.navigation.navigate('City', { user: 'Shayan11' })}
-          title="گزینه 2"
-          accessibilityLabel="This sounds great!"
-          />
-        </View>
+        {/* first row of buttons start*/}
+          <View style={styles.buttonsFirstRow}>
+            <Button
+              buttonStyle={[styles.button, {
+                left: 10
+              }]}
+              backgroundColor='#FFA129'
+              fontFamily='BYekan'
+              onPress={() => { this.checkAnswer(1); }}
+              onLongPress={() => { this.checkAnswer(1); }}
+              title={this.props.alts.altOne}
+              accessibilityLabel="This sounds great!"
+            />
+            <Button
+              buttonStyle={[styles.button, {
+                right: 10
+              }]}
+              backgroundColor='#FFA129'
+              fontFamily='BYekan'
+              onPress={() => { this.checkAnswer(2); }}
+              onLongPress={() => { this.checkAnswer(2); }}
+              title={this.props.alts.altTwo}
+              accessibilityLabel="This sounds great!"
+            />
+          </View>
+          {/* first row of buttons end*/}
 
-        <View style={{
-          flexDirection:'row',
-          justifyContent: 'center',
-          alignItems:'center',
-          marginTop:10,
-          marginLeft:30,
-          // paddingRight:20,
-          // paddingLeft:30
-
-        }}>
-          <Button
-          buttonStyle={{
-            width:widthPic*0.45,
-            height:widthPic*0.3,
-            borderRadius:10,
-            borderColor:'#303838',
-            // marginLeft:20,
-            borderWidth:1  }}
-          backgroundColor='#FFA129'
-          fontFamily='BYekan'
-          // onPress={() => this.props.navigation.navigate('City', { user: 'Shayan11' })}
-          title="گزینه 3"
-          accessibilityLabel="This sounds great!"
-          />
-          <Button
-          buttonStyle={{
-            width:widthPic*0.45,
-            height:widthPic*0.3,
-            borderRadius:10,
-            borderColor:'#303838',
-            borderWidth:1  }}
-          backgroundColor='#FFA129'
-          fontFamily='BYekan'
-          // onPress={() => this.props.navigation.navigate('City', { user: 'Shayan11' })}
-          title="گزینه 4"
-          accessibilityLabel="This sounds great!"
-          />
-        </View>
+          {/* second row of buttons start*/}
+          <View style={styles.buttonsSecondRow}>
+            <Button
+              buttonStyle={[styles.button, {
+                left: 10
+              }]}
+              backgroundColor='#FFA129'
+              fontFamily='BYekan'
+              onPress={() => { this.checkAnswer(3); }}
+              onLongPress={() => { this.checkAnswer(3); }}
+              title={this.props.alts.altThree}
+              accessibilityLabel="This sounds great!"
+            />
+            <Button
+              buttonStyle={[styles.button, {
+                right: 10
+              }]}
+              backgroundColor='#FFA129'
+              fontFamily='BYekan'
+              onPress={() => { this.checkAnswer(4); }}
+              onLongPress={() => { this.checkAnswer(4); }}
+              title={this.props.alts.altFour}
+              accessibilityLabel="This sounds great!"
+            />
+          </View>
+          {/* second row of buttons end*/}
 
         </View>
+        {/* view for buttons end*/}
+
+        {/* modal start */}
+        <View>
+          <ModalPrize
+            text={this.props.text_modal}
+            visible={this.props.modal_visible}
+            status={this.props.status}
+          />
+        </View>
+      {/* modal ends */}
       </View>
 
     );
   }
 }
+
+const styles = StyleSheet.create({
+
+  main: {
+    flex: 1,
+    backgroundColor: '#f25e2e',
+
+  },
+  progressBar: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    // backgroundColor:'yellow',
+  },
+  frameAndPicture: {
+    flex: 7,
+    alignItems: 'center',
+    justifyContent: 'center',
+    // backgroundColor: '#037BC8',
+    paddingLeft: 10,
+    paddingRight: 10,
+    // padding:80,
+    // margin:10,
+  },
+  frameAndPictureContainer: {
+    padding: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+    // margin: 100,
+    // backgroundColor: 'green',
+    // width: widthPic,
+
+    // backgroundColor:'#037BC8',
+    // resizeMode: 'cover',
+    // resizeMode: 'contain',
+    // resizeMode: 'stretch',
+
+  },
+  frame: {
+    width: widthPic,
+    // height: widthPic,
+    // width: 350,
+    // height: 350,
+    // margin:10,
+    // marginLeft :10 ,
+    // marginRight :10 ,
+    // resizeMode: 'cover',
+    // resizeMode: 'contain',
+    // resizeMode: 'stretch',
+    // padding:40,
+    // paddingLeft:20,
+    // paddingTop:20,
+    // paddingRight:40,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  frameProgress: {
+    width: widthPic,
+    // height: widthPic,
+    // width: 350,
+    height: heightPic * 0.078,
+    // margin:10,
+    // marginLeft :10 ,
+    // marginRight :10 ,
+    // resizeMode: 'cover',
+    // resizeMode: 'contain',
+    // resizeMode: 'stretch',
+    // padding:40,
+    // paddingLeft:20,
+    // paddingTop:20,
+    // paddingRight:40,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+picture: {
+    // alignSelf : 'stretch',
+    // minHeight :30,
+    // width: widthPic,
+    // height: widthPic,
+    width: widthPic * 0.9,
+    height: widthPic * 0.9,
+    // borderRadius: 10,
+    // marginLeft:10,
+    // marginRight:10,
+    // paddingLeft :10,
+    // paddingRight :10,
+    // width:widthPic,
+    // padding:1,
+    // height:widthPic,
+    // margin:widthPic*0.04,
+    resizeMode: 'contain',
+    // resizeMode:'center',
+    // resizeMode:'cover',
+    // flex : 1,
+    overflow: 'hidden',
+  },
+  buttonsSection: {
+    flex: 5,
+    width: widthPic,
+    height: widthPic * 0.55 * 1.2,
+    // width:widthPic,
+    // height:widthPic*0.55*1.2,
+    // alignItems: 'baseline',
+    // alignItems: 'flex-start',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    // backgroundColor:'#FFAAE3',
+    // padding:widthPic*0.01,
+    // paddingLeft :10,
+    // paddingRight :10,
+    padding: widthPic * 0.01
+
+  },
+  buttonsFirstRow: {
+    // flex:1,
+    flexDirection: 'row',
+    // justifyContent: 'center',
+    // justifyContent: 'space-around',
+    // justifyContent: 'space-between',
+    // alignItems:'center',
+    // marginLeft:30,
+    // margin:10,
+    // padding:10,
+    // backgroundColor:'yellow',
+    // overflow: 'hidden',
+  },
+  buttonsSecondRow: {
+    flexDirection: 'row',
+    // justifyContent: 'center',
+    // justifyContent: 'space-between',
+    // justifyContent: 'space-between',
+    // alignItems:'center',
+    // padding: 10,
+    // marginLeft:30,
+    // paddingRight:20,
+    // paddingLeft:30,
+    // backgroundColor:'blue'
+  },
+  button: {
+    // width: 70,
+    // height: 70,
+    width: widthPic * 0.43,
+    height: widthPic * 0.3,
+    borderRadius: 10,
+    borderColor: '#303838',
+    // marginLeft:0,
+    borderWidth: 1,
+    overflow: 'hidden',
+  }
+});
 
 const mapStateToProps = ({ auth, q_three }) => {
   console.log('this is question three state:', q_three);

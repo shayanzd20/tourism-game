@@ -230,26 +230,26 @@ console.log('interval cleared');
         {/* first row of buttons start*/}
           <View style={styles.buttonsFirstRow}>
             <Button
-            buttonStyle={[styles.button, {
-              left: 10
-            }]}
-            backgroundColor='#FFA129'
-            fontFamily='BYekan'
-            onPress={() => { this.checkAnswer(1); }}
-            onLongPress={() => { this.checkAnswer(1); }}
-            title={this.props.alts.altOne}
-            accessibilityLabel="This sounds great!"
+              buttonStyle={[styles.button, {
+                left: 10
+              }]}
+              backgroundColor='#FFA129'
+              fontFamily='BYekan'
+              onPress={() => { this.checkAnswer(1); }}
+              onLongPress={() => { this.checkAnswer(1); }}
+              title={this.props.alts.altOne}
+              accessibilityLabel="This sounds great!"
             />
             <Button
               buttonStyle={[styles.button, {
                 right: 10
               }]}
-            backgroundColor='#FFA129'
-            fontFamily='BYekan'
-            onPress={() => { this.checkAnswer(2); }}
-            onLongPress={() => { this.checkAnswer(2); }}
-            title={this.props.alts.altTwo}
-            accessibilityLabel="This sounds great!"
+              backgroundColor='#FFA129'
+              fontFamily='BYekan'
+              onPress={() => { this.checkAnswer(2); }}
+              onLongPress={() => { this.checkAnswer(2); }}
+              title={this.props.alts.altTwo}
+              accessibilityLabel="This sounds great!"
             />
           </View>
         {/* first row of buttons end*/}
@@ -257,26 +257,26 @@ console.log('interval cleared');
         {/* second row of buttons start*/}
           <View style={styles.buttonsSecondRow}>
             <Button
-            buttonStyle={[styles.button, {
-              left: 10
-            }]}
-            backgroundColor='#FFA129'
-            fontFamily='BYekan'
-            onPress={() => { this.checkAnswer(3); }}
-            onLongPress={() => { this.checkAnswer(3); }}
-            title={this.props.alts.altThree}
-            accessibilityLabel="This sounds great!"
+              buttonStyle={[styles.button, {
+                left: 10
+              }]}
+              backgroundColor='#FFA129'
+              fontFamily='BYekan'
+              onPress={() => { this.checkAnswer(3); }}
+              onLongPress={() => { this.checkAnswer(3); }}
+              title={this.props.alts.altThree}
+              accessibilityLabel="This sounds great!"
             />
             <Button
-            buttonStyle={[styles.button, {
-              right: 10
-            }]}
-            backgroundColor='#FFA129'
-            fontFamily='BYekan'
-            onPress={() => { this.checkAnswer(4); }}
-            onLongPress={() => { this.checkAnswer(4); }}
-            title={this.props.alts.altFour}
-            accessibilityLabel="This sounds great!"
+              buttonStyle={[styles.button, {
+                right: 10
+              }]}
+              backgroundColor='#FFA129'
+              fontFamily='BYekan'
+              onPress={() => { this.checkAnswer(4); }}
+              onLongPress={() => { this.checkAnswer(4); }}
+              title={this.props.alts.altFour}
+              accessibilityLabel="This sounds great!"
             />
           </View>
         {/* second row of buttons end*/}
