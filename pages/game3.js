@@ -48,7 +48,7 @@ class Game3 extends Component {
 
     componentWillMount() {
         this.animate();
-        console.log('this is question Three props:', this.props);
+        // console.log('this is question Three props:', this.props);
         // console.log(this.props);
         if (this.props.img) {
           this.props.questionThreeQuestionUpdate(this.props.video);
@@ -57,7 +57,7 @@ class Game3 extends Component {
           this.props.questionThreeAnswerUpdate(this.props.answer);
         }
         const altsObj = JSON.parse(this.props.alts);
-        console.log('alts Three', altsObj);
+        // console.log('alts Three', altsObj);
         if (altsObj) {
           this.props.questionThreeAltsUpdate({
             altOne: altsObj[0].txt,
@@ -99,8 +99,8 @@ class Game3 extends Component {
       })
         .then((response) => response.json())
         .then((responseJson) => {
-          console.log('get user Status start api');
-          console.log('get user Status:', responseJson);
+          // console.log('get user Status start api');
+          // console.log('get user Status:', responseJson);
 
           // store token
           // if responseJson.status == 'arrive' => go to city page with city params
@@ -114,9 +114,9 @@ class Game3 extends Component {
     }
 
     checkAnswer = (ans) => {
-      console.log('this is option:', ans);
-      console.log('this is this.answer:', this.answer);
-      console.log('this is answer:', this.props.answer);
+      // console.log('this is option:', ans);
+      // console.log('this is this.answer:', this.answer);
+      // console.log('this is answer:', this.props.answer);
 
       const CustomLayoutSpring = {
           duration: 400,
@@ -147,12 +147,44 @@ class Game3 extends Component {
         this.props.questionThreeModalUpdate(true);
       }
 
-      console.log('this is result:', this.props.result);
+      // console.log('this is result:', this.props.result);
       clearInterval(interval);
-    console.log('interval cleared');
+    // console.log('interval cleared');
     };
 
+    onBuffer() {
+      console.log('buffering');
+    }
+    loadStart() {
+      console.log('loadStart');
+    }
+    setDuration() {
+      console.log('setDuration');
+    }
+    setTime() {
+      console.log('setTime');
+    }
+    onEnd() {
+      console.log('onEnd');
+    }
+    videoError() {
+      console.log('videoError');
+    }
+
+      // onLoadStart={this.loadStart}            // Callback when video starts to load
+      // onLoad={this.setDuration}               // Callback when video loads
+      // onProgress={this.setTime}               // Callback every ~250ms with currentTime
+      // onEnd={this.onEnd}                      // Callback when playback finishes
+      // onError={this.videoError}
+
   render() {
+    const videoGame = 'http://velgardi-game.ir/api/get_video?path=' + this.props.video;
+    const len = videoGame.length;
+    const videoGameStr = videoGame.substr(0, len - 4);
+    console.log('videoGame:::', videoGame);
+    console.log('videoGameStr:::', videoGameStr);
+    console.log(videoGame);
+
 
     return (
 
@@ -184,20 +216,38 @@ class Game3 extends Component {
         // backgroundColor:'#037BC8'
         }}>
           <ImageBackground
-          style={{width:widthPic , height: widthPic*1.5 , margin:widthPic,resizeMode:'contain'}}
-          source={require('./../images/game3/curtain.png')}>
+            style={{
+              width: widthPic,
+              height: widthPic * 1.5,
+              margin: widthPic,
+            }}
+            resizeMode='contain'
+            source={require('./../images/game3/curtain.png')}>
             <Video
-              source={{ uri: 'http://velgardi-game.ir/api/get_video?path=' + this.props.video }}
+              // source={{ uri: 'http://velgardi-game.ir/api/get_video?path=' + this.props.video }}
+              source={{ uri: 'http://d23dyxeqlospsv.cloudfront.net/big_buck_bunny.mp4' }}
+              // source={{ uri: 'http://falcon479.startdedicated.com/files/round_boxes.mp4' }}
+              // source={{ uri: videoGameStr }}
+              // source={{ uri: videoGame }}
+                // source={require('./../videos/video_2017-06-24_01-00-30.mp4')}
+                // source={require('./../videos/movie_x264.mp4')}
                 resizeMode="contain"
-                repeat
+                onBuffer={() => this.onBuffer()}
+                onLoadStart={() => this.loadStart()}
+                onLoad={() => this.setDuration()}
+                onProgress={() => this.setTime()}
+                onEnd={() => this.onEnd()}
+                onError={() => this.videoError()}
+                repeat={false}
                 style={{
                   position: 'absolute',
                   top: 0,
                   left: 0,
                   bottom: 0,
-                  right: 0
+                  right: 0,
+                  // backgroundColor: 'blue',
+                  // width: widthPic
                 }}
-
              />
          </ImageBackground>
         </View>
@@ -429,7 +479,7 @@ picture: {
 });
 
 const mapStateToProps = ({ auth, q_three }) => {
-  console.log('this is question three state:', q_three);
+  // console.log('this is question three state:', q_three);
   const { token } = auth;
 
   const {
