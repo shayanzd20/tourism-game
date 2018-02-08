@@ -43,6 +43,7 @@ class Game1 extends Component {
 
 constructor() {
     super();
+    let interval = null;
     if (Platform.OS === 'android') {
       UIManager.setLayoutAnimationEnabledExperimental &&
       UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -156,6 +157,8 @@ checkAnswer = (ans) => {
     this.props.questionOneModalUpdate(true);
   }
   this.props.questionOneProgressUpdate(0);
+  clearInterval(interval);
+
   console.log('this is result:', this.props.result);
 };
 
