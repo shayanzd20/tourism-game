@@ -33,6 +33,7 @@ import { EMAIL_CHANGED,
   QUESTION_THREE_QUESTION_UPDATE,
   QUESTION_THREE_ALTS_UPDATE,
   QUESTION_THREE_MODAL_VISIBLE,
+  QUESTION_THREE_STOP,
 } from './types';
 
 export const numberChanged = (number) => {
@@ -299,6 +300,15 @@ export const questionThreeModalUpdate = (input) => {
   return (dispatch) => {
     dispatch({
       type: QUESTION_THREE_MODAL_VISIBLE,
+      payload: input
+    });
+  };
+};
+
+export const questionThreeStop = (input) => {
+  return (dispatch) => {
+    dispatch({
+      type: QUESTION_THREE_STOP,
       payload: input
     });
   };

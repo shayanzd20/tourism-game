@@ -13,6 +13,9 @@ const INITIAL_STATE = {
   q_first: false,
   q_second: false,
   q_third: false,
+  dis_touch_first: false,
+  dis_touch_second: false,
+  dis_touch_third: false,
   scoreFirst: 0,
   scoreSecond: 0,
   scoreThird: 0,
@@ -38,16 +41,19 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state,
         scoreFirst: action.payload.scoreFirst,
         q_first: action.payload.q_first,
+        dis_touch_first: action.payload.dis_touch_first
        };
     case UPDATE_SECOND_SCORE:
       return { ...state,
         scoreSecond: action.payload.scoreSecond,
         q_second: action.payload.q_second,
+        dis_touch_second: action.payload.dis_touch_second
        };
     case UPDATE_THIRD_SCORE:
       return { ...state,
         scoreThird: action.payload.scoreThird,
         q_third: action.payload.q_third,
+        dis_touch_third: action.payload.dis_touch_third
        };
     default:
       return state;

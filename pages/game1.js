@@ -77,33 +77,21 @@ componentWillMount() {
 
 // old animate
 animate() {
-let progress = 0;
-// this.setState({  progress });
-this.props.questionOneProgressUpdate(progress);
-  interval = setInterval(() => {
-    progress += 0.01;
-    if (progress > 1) {
-      // progress = 1;
-      clearInterval(interval);
-    }
-    console.log('progress current setInterval:', progress);
+  let progress = 0;
+  // this.setState({  progress });
+  this.props.questionOneProgressUpdate(progress);
+    interval = setInterval(() => {
+      progress += 0.01;
+      if (progress > 1) {
+        // progress = 1;
+        clearInterval(interval);
+      }
+      console.log('progress current setInterval:', progress);
 
-    // this.setState({ progress });
-      this.props.questionOneProgressUpdate(progress);
-  }, 100);
+      // this.setState({ progress });
+        this.props.questionOneProgressUpdate(progress);
+    }, 100);
 }
-// animate() {
-//     Animated.timing(
-//       // start or initial Value
-//       this.animated,
-//       // confige object
-//       {
-//         toValue: 1,
-//         duration: 10000,
-//         useNativeDriver: 'true'
-//       }
-//     ).start();
-// }
 
 
 // helper Functions
@@ -155,24 +143,20 @@ checkAnswer = (ans) => {
     };
 
   if (ans === this.props.answer) {
-    // this.setState({result:true})
     // LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     this.sendAnswer(ans, 1);
     LayoutAnimation.configureNext(CustomLayoutSpring);
     this.props.questionOneResultUpdate(true, 'آفرین 100 امتیاز گرفتی', 'correct');
     this.props.questionOneModalUpdate(true);
   } else {
-    // this.setState({result:false})
     // LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     this.sendAnswer(ans, 0);
     LayoutAnimation.configureNext(CustomLayoutSpring);
     this.props.questionOneResultUpdate(false, 'اشتباه کردی 50 امتیاز بیشتر نگرفتی', 'incorrect');
     this.props.questionOneModalUpdate(true);
   }
-
+  this.props.questionOneProgressUpdate(0);
   console.log('this is result:', this.props.result);
-  clearInterval(interval);
-console.log('interval cleared');
 };
 
 

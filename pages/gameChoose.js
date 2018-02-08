@@ -6,7 +6,8 @@ import {
   Image,
   Dimensions,
   ImageBackground,
-  AsyncStorage
+  AsyncStorage,
+  Text
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { connect } from 'react-redux';
@@ -130,19 +131,25 @@ userQuestionStatus() {
      //console.log('responseJson.score_second', responseJson.score_second);
      //console.log('responseJson.score_third', responseJson.score_third);
       if (responseJson.score_first > 0) {
-        // this.setState({ scoreFirst: responseJson.score_first });
-        // this.setState({ q_first: true });
-        this.props.updateFirstScore({ scoreFirst: score_first, q_first: true });
+        if (responseJson.score_first > 50) {
+          this.props.updateFirstScore({ scoreFirst: score_first, q_first: true, dis_touch_first: true });
+        } else {
+          this.props.updateFirstScore({ scoreFirst: score_first, q_first: true, dis_touch_first: false });
+        }
       }
       if (responseJson.score_second > 0) {
-        // this.setState({ scoreSecond: score_second });
-        // this.setState({ q_second: true });
-        this.props.updateSecondScore({ scoreSecond: score_second, q_second: true });
+        if (responseJson.score_second > 50) {
+          this.props.updateSecondScore({ scoreSecond: score_second, q_second: true, dis_touch_second: true });
+        } else {
+          this.props.updateSecondScore({ scoreSecond: score_second, q_second: true, dis_touch_second: false });
+        }
       }
       if (responseJson.score_third > 0) {
-        // this.setState({ scoreThird: responseJson.score_third });
-        // this.setState({ q_third: true });
-        this.props.updateThirdScore({ scoreThird: score_third, q_third: true });
+        if (responseJson.score_third > 50) {
+          this.props.updateThirdScore({ scoreThird: score_third, q_third: true, dis_touch_third: true });
+        } else {
+          this.props.updateThirdScore({ scoreThird: score_third, q_third: true, dis_touch_third: false });
+        }
       }
 
      //console.log('this.state.q_first', this.state.q_first);
@@ -158,29 +165,29 @@ questionOneScore() {
   return (
     <View>
       <Animatable.Text
-        style={{
-        fontFamily: 'BYekan',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 60,
-        color: '#ffd700',
-        borderColor: 'black',
-       //borderWidth: 10,
-       //fontWeight: 10,
-       //margin: 30,
-        textShadowColor: 'black',
-        textShadowOffset: { width: 2, height: 2 },
-        textShadowRadius: 1,
-        top: Dimensions.get('window').height / 8,
-        left: Dimensions.get('window').width / 3,
-        zIndex: 10
-       }}
-      animation="swing"
-      iterationCount="infinite"
-      useNativeDriver={true}
+        style={styles.gameOneScore}
+        animation="swing"
+        iterationCount="infinite"
+        useNativeDriver={true}
 
-     //duration={1000}
+        //duration={1000}
        > {this.props.scoreFirst} امتیاز</Animatable.Text>
+       {this.props.scoreFirst === 50 ?
+         <View
+           style={{
+             backgroundColor: 'rgba(251, 169, 75, 0.8)',
+             top: Dimensions.get('window').height / 9,
+             left: Dimensions.get('window').width / 3,
+             borderRadius: 5,
+            }}>
+           <Text
+             style={styles.gameOneScoreText}
+             >دوباره تلاش کن</Text>
+         </View>
+         : null
+       }
+
+
     </View>
   );
 }
@@ -204,7 +211,7 @@ questionTwoScore() {
         textShadowRadius: 1,
         top: Dimensions.get('window').height / 10,
         left: Dimensions.get('window').width / 10,
-        zIndex: 10
+        // zIndex: 10
        }}
       animation="bounce"
       iterationCount="infinite"
@@ -212,6 +219,22 @@ questionTwoScore() {
 
      //duration={1000}
        > {this.props.scoreSecond} امتیاز</Animatable.Text>
+       {this.props.scoreSecond === 50 ?
+         <View
+           style={{
+             backgroundColor: 'rgba(250, 58, 25, 0.8)',
+             top: Dimensions.get('window').height / 10,
+             left: Dimensions.get('window').width / 10,
+             zIndex: 10,
+             borderRadius: 5,
+            }}>
+            <Text
+              style={styles.gameOneScoreText}
+              >دوباره تلاش کن</Text>
+          </View>
+          : null
+       }
+
     </View>
   );
 }
@@ -229,12 +252,14 @@ questionThreeScore() {
         borderColor: 'black',
        //borderWidth: 10,
        //fontWeight: 10,
-        marginLeft: 130,
+        // marginLeft: 130,
+        // paddingLeft: 130,
         textShadowColor: 'black',
         textShadowOffset: { width: 2, height: 2 },
         textShadowRadius: 1,
         top: Dimensions.get('window').height / 10,
-        left: Dimensions.get('window').width / 10,
+        // left: Dimensions.get('window').width / 20,
+        left: Dimensions.get('window').width / 2.25,
         zIndex: 10
        }}
       animation="rubberBand"
@@ -243,6 +268,25 @@ questionThreeScore() {
 
      //duration={1000}
        > {this.props.scoreThird} امتیاز</Animatable.Text>
+       {this.props.scoreThird === 50 ?
+         <View
+           style={{
+             backgroundColor: 'rgba(60, 84, 15, 0.8)',
+             top: Dimensions.get('window').height / 10,
+             left: Dimensions.get('window').width / 2.25,
+             // width: Dimensions.get('window').width,
+             // zIndex: 10,
+             borderRadius: 5,
+             alignItems: 'center',
+
+            }}>
+            <Text
+              style={styles.gameThreeScoreText}
+              >دوباره تلاش کن</Text>
+          </View>
+          : null
+       }
+
     </View>
   );
 }
@@ -276,7 +320,7 @@ questionThreeScore() {
           onLongPress={this.onGameOneClick.bind(this)}
           // onPress={Actions.games()}
           // onLongPress={Actions.games()}
-          disabled={this.props.q_first}
+          disabled={this.props.dis_touch_first}
           >
             <ImageBackground
               source={require('./../images/gameChoose/gameBack1.png')}
@@ -306,7 +350,7 @@ questionThreeScore() {
           <TouchableHighlight
           onPress={this.onGameTwoClick.bind(this)}
           onLongPress={this.onGameTwoClick.bind(this)}
-          disabled={this.props.q_second} >
+          disabled={this.props.dis_touch_second} >
             <ImageBackground
               source={require('./../images/gameChoose/gameBack2.png')}
               style={styles.gameTwoBack} >
@@ -333,7 +377,7 @@ questionThreeScore() {
           <TouchableHighlight
           onPress={this.onGameThreeClick.bind(this)}
           onLongPress={this.onGameThreeClick.bind(this)}
-          disabled={this.props.q_third} >
+          disabled={this.props.dis_touch_third} >
 
             {/* game 3 background start */}
             <ImageBackground
@@ -397,6 +441,40 @@ const styles = StyleSheet.create({
     color: 'black',
     zIndex: 100,
    },
+  gameOneScore: {
+    fontFamily: 'BYekan',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 60,
+    color: '#ffd700',
+    borderColor: 'black',
+   //borderWidth: 10,
+   //fontWeight: 10,
+   //margin: 30,
+    textShadowColor: 'black',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 1,
+    top: Dimensions.get('window').height / 8,
+    left: Dimensions.get('window').width / 3,
+    zIndex: 1
+  },
+  gameOneScoreText: {
+    fontFamily: 'BYekan',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 40,
+    color: '#ffd700',
+    borderColor: 'black',
+   //borderWidth: 10,
+   //fontWeight: 10,
+   //margin: 30,
+    textShadowColor: 'black',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 1,
+    // top: Dimensions.get('window').height / 9,
+    // left: Dimensions.get('window').width / 3,
+    // zIndex: 10
+  },
   gameTwoBack: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height / 3,
@@ -418,6 +496,42 @@ const styles = StyleSheet.create({
    //fontWeight: 'bold',
     fontFamily: 'BYekan',
     color: 'black'
+   },
+   gameTwoScoreText: {
+     fontFamily: 'BYekan',
+     justifyContent: 'center',
+     alignItems: 'center',
+     fontSize: 40,
+     color: '#f4a460',
+     borderColor: 'black',
+    //borderWidth: 10,
+    //fontWeight: 10,
+    //margin: 30,
+     // marginLeft: 130,
+     textShadowColor: 'black',
+     textShadowOffset: { width: 2, height: 2 },
+     textShadowRadius: 1,
+     // top: Dimensions.get('window').height / 9,
+     // left: Dimensions.get('window').width / 3,
+     // zIndex: 10
+   },
+   gameThreeScoreText: {
+     fontFamily: 'BYekan',
+     justifyContent: 'center',
+     alignItems: 'center',
+     fontSize: 30,
+     color: '#ff6347',
+     borderColor: 'black',
+    //borderWidth: 10,
+    //fontWeight: 10,
+    //margin: 30,
+     // marginLeft: 130,
+     textShadowColor: 'black',
+     textShadowOffset: { width: 2, height: 2 },
+     textShadowRadius: 1,
+     // top: Dimensions.get('window').height / 9,
+     // left: Dimensions.get('window').width / 3,
+     // zIndex: 10
    },
   gameThreeBack: {
     width: Dimensions.get('window').width,
@@ -462,6 +576,9 @@ const styles = StyleSheet.create({
      firstObj,
      secondObj,
      thirdObj,
+     dis_touch_first,
+     dis_touch_second,
+     dis_touch_third,
     } = user;
     // const { alts, answer, question, } = q_one;
 
@@ -476,6 +593,9 @@ const styles = StyleSheet.create({
      secondObj,
      thirdObj,
      token,
+     dis_touch_first,
+     dis_touch_second,
+     dis_touch_third,
      // alts,
      // answer,
      // question,

@@ -32,3 +32,4 @@ export const QUESTION_THREE_ANSWER_UPDATE = 'question_three_answer_update';
 export const QUESTION_THREE_QUESTION_UPDATE = 'question_three_question_update';
 export const QUESTION_THREE_ALTS_UPDATE = 'question_three_alts_update';
 export const QUESTION_THREE_MODAL_VISIBLE = 'question_three_modal_visible';
+export const QUESTION_THREE_STOP = 'question_three_stop';

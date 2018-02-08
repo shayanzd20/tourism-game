@@ -14,6 +14,7 @@ import {
 import * as Progress from 'react-native-progress';
 import Video from 'react-native-video';
 import { Button } from 'react-native-elements';
+// import { Video } from 'expo';
 import { connect } from 'react-redux';
 import {
   questionThreeProgressUpdate,
@@ -22,10 +23,12 @@ import {
   questionThreeQuestionUpdate,
   questionThreeAltsUpdate,
   questionThreeModalUpdate,
+  questionThreeStop
 } from '../src/actions';
 import ModalPrize from './components/ModalPrize';
 
 const widthPic = Dimensions.get('window').width;
+const width = Dimensions.get('window');
 const heightPic = Dimensions.get('window').height;
 
 
@@ -47,7 +50,7 @@ class Game3 extends Component {
 
 
     componentWillMount() {
-        this.animate();
+        // this.animate();
         // console.log('this is question Three props:', this.props);
         // console.log(this.props);
         if (this.props.img) {
@@ -69,19 +72,20 @@ class Game3 extends Component {
     }
 
     animate() {
-    let progress = 0;
+      let progress = 0;
+      let interval = null;
 
-    this.props.questionThreeProgressUpdate(progress);
-      interval = setInterval(() => {
-        progress += 0.01;
-        if (progress > 1) {
-          // progress = 1;
-          clearInterval(interval);
-        }
-        console.log('progress current setInterval:', progress);
+      this.props.questionThreeProgressUpdate(progress);
+        interval = setInterval(() => {
+          progress += 0.01;
+          if (progress > 1) {
+            // progress = 1;
+            clearInterval(interval);
+          }
+          console.log('progress current setInterval:', progress);
 
-        this.props.questionThreeProgressUpdate(progress);
-      }, 100);
+          this.props.questionThreeProgressUpdate(progress);
+        }, 100);
     }
 
     sendAnswer = (alt, status) => {
@@ -134,6 +138,7 @@ class Game3 extends Component {
       if (ans === this.props.answer) {
         // this.setState({result:true})
         // LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+        this.stopVideo(true);
         this.sendAnswer(ans, 1);
         LayoutAnimation.configureNext(CustomLayoutSpring);
         this.props.questionThreeResultUpdate(true, 'آفرین 100 امتیاز گرفتی', 'correct');
@@ -141,6 +146,7 @@ class Game3 extends Component {
       } else {
         // this.setState({result:false})
         // LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+        this.stopVideo(true);
         this.sendAnswer(ans, 0);
         LayoutAnimation.configureNext(CustomLayoutSpring);
         this.props.questionThreeResultUpdate(false, 'اشتباه کردی 50 امتیاز بیشتر نگرفتی', 'incorrect');
@@ -148,9 +154,14 @@ class Game3 extends Component {
       }
 
       // console.log('this is result:', this.props.result);
-      clearInterval(interval);
-    // console.log('interval cleared');
+      // clearInterval(interval);
+      // console.log('interval cleared');
     };
+
+    stopVideo = (input) => {
+      console.log('video stopped');
+      this.props.questionThreeStop(input);
+    }
 
     onBuffer() {
       console.log('buffering');
@@ -178,7 +189,7 @@ class Game3 extends Component {
       // onError={this.videoError}
 
   render() {
-    const videoGame = 'http://velgardi-game.ir/api/get_video?path=' + this.props.video;
+    const videoGame = 'https://velgardi-game.ir/api/get_video?path=' + this.props.video;
     const len = videoGame.length;
     const videoGameStr = videoGame.substr(0, len - 4);
     console.log('videoGame:::', videoGame);
@@ -220,17 +231,27 @@ class Game3 extends Component {
               width: widthPic,
               height: widthPic * 1.5,
               margin: widthPic,
+              alignItems: 'center',
             }}
             resizeMode='contain'
             source={require('./../images/game3/curtain.png')}>
+
             <Video
-              // source={{ uri: 'http://velgardi-game.ir/api/get_video?path=' + this.props.video }}
-              source={{ uri: 'http://d23dyxeqlospsv.cloudfront.net/big_buck_bunny.mp4' }}
+
+              source={{ uri: 'https://media.w3.org/2010/05/sintel/trailer.mp4' }}
+              // source={{ uri: 'http://d23dyxeqlospsv.cloudfront.net/big_buck_bunny.mp4' }}
+              // source={{ uri: "https://player.vimeo.com/external/207277102.hd.mp4?s=6939b93ae3554679b57f5e7fa831eef712a74b3c&profile_id=119&oauth2_token_id=57447761", }}
+              // source={{ uri: 'https://player.vimeo.com/external/206340985.hd.mp4?s=0b055000e30067f11d3e2537bceb7157b47475bc&profile_id=119&oauth2_token_id=57447761' }}
               // source={{ uri: 'http://falcon479.startdedicated.com/files/round_boxes.mp4' }}
+
+
+              // source={{ uri: 'https://velgardi-game.ir/api/get_video?path=' + this.props.video }}
+              // source={{ uri: 'https://balootmobile.org/velgardi/get_video.php?path=' + this.props.video }}
               // source={{ uri: videoGameStr }}
-              // source={{ uri: videoGame }}
+              // source={{ uri: videoGame, type: 'mp4' }}
                 // source={require('./../videos/video_2017-06-24_01-00-30.mp4')}
                 // source={require('./../videos/movie_x264.mp4')}
+                paused={this.props.pause}
                 resizeMode="contain"
                 onBuffer={() => this.onBuffer()}
                 onLoadStart={() => this.loadStart()}
@@ -239,14 +260,15 @@ class Game3 extends Component {
                 onEnd={() => this.onEnd()}
                 onError={() => this.videoError()}
                 repeat={false}
+                playInBackground={false}
                 style={{
                   position: 'absolute',
                   top: 0,
-                  left: 0,
+                  // left: 50,
                   bottom: 0,
-                  right: 0,
+                  // right: 0,
                   // backgroundColor: 'blue',
-                  // width: widthPic
+                  width: widthPic * 0.9
                 }}
              />
          </ImageBackground>
@@ -490,7 +512,8 @@ const mapStateToProps = ({ auth, q_three }) => {
     result,
     modal_visible,
     text_modal,
-    status
+    status,
+    pause
    } = q_three;
 
   return {
@@ -502,7 +525,8 @@ const mapStateToProps = ({ auth, q_three }) => {
     result,
     modal_visible,
     text_modal,
-    status
+    status,
+    pause
    };
   };
 
@@ -513,5 +537,6 @@ export default connect(mapStateToProps, {
   questionThreeAnswerUpdate,
   questionThreeQuestionUpdate,
   questionThreeAltsUpdate,
-  questionThreeModalUpdate
+  questionThreeModalUpdate,
+  questionThreeStop
 })(Game3);

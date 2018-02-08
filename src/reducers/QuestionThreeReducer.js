@@ -5,6 +5,7 @@ import {
   QUESTION_THREE_QUESTION_UPDATE,
   QUESTION_THREE_ALTS_UPDATE,
   QUESTION_THREE_MODAL_VISIBLE,
+  QUESTION_THREE_STOP
           } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -15,7 +16,8 @@ const INITIAL_STATE = {
   modal_visible: false,
   text_modal: '',
   status: null,
-  alts: []
+  alts: [],
+  pause: false
  };
 
  export default (state = INITIAL_STATE, action) => {
@@ -32,6 +34,8 @@ const INITIAL_STATE = {
        return { ...state, alts: action.payload };
      case QUESTION_THREE_MODAL_VISIBLE:
        return { ...state, modal_visible: action.payload };
+     case QUESTION_THREE_STOP:
+       return { ...state, pause: action.payload };
      default:
        return state;
    }
