@@ -125,7 +125,7 @@ onGameThreeClick() {
 }
 
 userQuestionStatus() {
-  console.log('userQuestionStatus function: ');
+  console.log('userQuestionStatus function in game choose: ');
   fetch('http://velgardi-game.ir/api/question', {
     method: 'POST',
     headers: {
@@ -138,53 +138,46 @@ userQuestionStatus() {
     .then((responseJson) => {
       console.log('/----------------get user Question Status start api in game choose-----------/');
      //console.log('get user Question Status: ', responseJson);
+     console.log('responseJson.city_status:::', responseJson.city_status);
+     if (!responseJson.city_status) {
+       console.log('question first: ', responseJson.question_first);
+       console.log('question second: ', responseJson.question_second);
+       console.log('question third: ', responseJson.question_third);
 
-      console.log('question first: ', responseJson.question_first);
-      console.log('question second: ', responseJson.question_second);
-      console.log('question third: ', responseJson.question_third);
+       const {
+         question_first,
+         question_second,
+         question_third,
+         score_first, score_second, score_third } = responseJson;
+       this.props.userQuestionUpdate({
+         firstObj: question_first,
+         secondObj: question_second,
+         thirdObj: question_third
+       });
 
-            // this.setState({ firstObj: responseJson.question_first });
-            // this.setState({ secondObj: responseJson.question_second });
-            // this.setState({ thirdObj: responseJson.question_third });
-      const {
-        question_first,
-        question_second,
-        question_third,
-        score_first, score_second, score_third } = responseJson;
-      this.props.userQuestionUpdate({
-        firstObj: question_first,
-        secondObj: question_second,
-        thirdObj: question_third
-      });
+       if (score_first > 0) {
+         if (score_first > 50) {
+           this.props.updateFirstScore({ scoreFirst: score_first, q_first: true, dis_touch_first: true });
+         } else {
+           this.props.updateFirstScore({ scoreFirst: score_first, q_first: true, dis_touch_first: false });
+         }
+       }
+       if (score_second > 0) {
+         if (score_second > 50) {
+           this.props.updateSecondScore({ scoreSecond: score_second, q_second: true, dis_touch_second: true });
+         } else {
+           this.props.updateSecondScore({ scoreSecond: score_second, q_second: true, dis_touch_second: false });
+         }
+       }
+       if (score_third > 0) {
+         if (score_third > 50) {
+           this.props.updateThirdScore({ scoreThird: score_third, q_third: true, dis_touch_third: true });
+         } else {
+           this.props.updateThirdScore({ scoreThird: score_third, q_third: true, dis_touch_third: false });
+         }
+       }
+     }
 
-     //console.log('responseJson.score_first', responseJson.score_first);
-     //console.log('responseJson.score_second', responseJson.score_second);
-     //console.log('responseJson.score_third', responseJson.score_third);
-      if (score_first > 0) {
-        if (score_first > 50) {
-          this.props.updateFirstScore({ scoreFirst: score_first, q_first: true, dis_touch_first: true });
-        } else {
-          this.props.updateFirstScore({ scoreFirst: score_first, q_first: true, dis_touch_first: false });
-        }
-      }
-      if (score_second > 0) {
-        if (score_second > 50) {
-          this.props.updateSecondScore({ scoreSecond: score_second, q_second: true, dis_touch_second: true });
-        } else {
-          this.props.updateSecondScore({ scoreSecond: score_second, q_second: true, dis_touch_second: false });
-        }
-      }
-      if (score_third > 0) {
-        if (score_third > 50) {
-          this.props.updateThirdScore({ scoreThird: score_third, q_third: true, dis_touch_third: true });
-        } else {
-          this.props.updateThirdScore({ scoreThird: score_third, q_third: true, dis_touch_third: false });
-        }
-      }
-
-     //console.log('this.state.q_first', this.state.q_first);
-     //console.log('this.state.q_second', this.state.q_second);
-     //console.log('this.state.q_third', this.state.q_third);
     })
     .catch((error) => {
       console.error('error: ', error);
@@ -321,6 +314,27 @@ questionThreeScore() {
   );
 }
 
+completeCityUpdate() {
+  fetch('http://velgardi-game.ir/api/statusComplete', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + this.props.token
+    }
+  })
+  .then((response) => response.json())
+  .then((responseJson) => {
+    console.log('/----------------update user city status start api in game choose-----------/');
+    //console.log('get user Question Status: ', responseJson);
+
+    const { city_status } = responseJson;
+    })
+    .catch((error) => {
+      console.error('error: ', error);
+    });
+}
+
   render() {
    //console.log('this.state.q_first in render', this.state.q_first);
    //console.log('this.state.q_second in render', this.state.q_second);
@@ -345,6 +359,7 @@ questionThreeScore() {
       // cityDone = true;
       console.log('modal ::: on');
       cityDone = true;
+      this.completeCityUpdate();
     } else {
       console.log('modal ::: off');
       cityDone = false;

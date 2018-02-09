@@ -13,6 +13,10 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import {
   cityDoneStatus,
+  userQuestionUpdate,
+  updateFirstScore,
+  updateSecondScore,
+  updateThirdScore
 } from '../src/actions';
 
 
@@ -30,15 +34,76 @@ class City extends Component {
   };
 
 componentWillMount() {
+  this.userQuestionStatus();
   if (this.props.city_done === true) {
     this.props.cityDoneStatus(false);
-
   }
 }
+
 
 onGameChooseClick() {
   Actions.gameChoose();
 }
+
+userQuestionStatus() {
+  console.log('userQuestionStatus function in city: ');
+  fetch('http://velgardi-game.ir/api/question', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + this.props.token
+    }
+  })
+  .then((response) => response.json())
+  .then((responseJson) => {
+    console.log('/----------------get user Question Status start api in game choose-----------/');
+    console.log('get user Question Status in city: ', responseJson);
+
+    console.log('question first: ', responseJson.question_first);
+    console.log('question second: ', responseJson.question_second);
+    console.log('question third: ', responseJson.question_third);
+
+    const {
+      question_first,
+      question_second,
+      question_third,
+      score_first,
+      score_second,
+      score_third } = responseJson;
+      this.props.userQuestionUpdate({
+        firstObj: question_first,
+        secondObj: question_second,
+        thirdObj: question_third
+      });
+
+      if (score_first > 0) {
+        if (score_first > 50) {
+          this.props.updateFirstScore({ scoreFirst: score_first, q_first: true, dis_touch_first: true });
+        } else {
+          this.props.updateFirstScore({ scoreFirst: score_first, q_first: true, dis_touch_first: false });
+        }
+      }
+      if (score_second > 0) {
+        if (score_second > 50) {
+          this.props.updateSecondScore({ scoreSecond: score_second, q_second: true, dis_touch_second: true });
+        } else {
+          this.props.updateSecondScore({ scoreSecond: score_second, q_second: true, dis_touch_second: false });
+        }
+      }
+      if (score_third > 0) {
+        if (score_third > 50) {
+          this.props.updateThirdScore({ scoreThird: score_third, q_third: true, dis_touch_third: true });
+        } else {
+          this.props.updateThirdScore({ scoreThird: score_third, q_third: true, dis_touch_third: false });
+        }
+      }
+    })
+    .catch((error) => {
+      console.error('error: ', error);
+    });
+  }
+
 populationView() {
   return (
     <Animatable.Text
@@ -122,13 +187,108 @@ travelButtonLock() {
               <Animatable.View
                 animation="flipInY"
                 duration={1000}
-                delay={2500}
-              >
+                delay={2500}>
                 <Image
                   style={styles.buttonLockImage}
                   source={require('./../images/specificCity/Lock.png')} />
-            </Animatable.View>
+              </Animatable.View>
       </Animatable.View>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+playGameButton() {
+  return (
+    <View
+      style={{ flex: 3,
+        alignItems: 'center',
+        // alignItems: 'flex-end',
+        // justifyContent: 'center',
+        justifyContent: 'flex-end',
+        // backgroundColor: '#f87fff'
+      }}>
+      <TouchableOpacity
+        style={{
+          // backgroundColor: '#ff68b6',
+         }}
+        // onPress={() => navigate('ChooseGameStack')}>
+        // onPress={Actions.main.gameChoose()}>
+        onPress={this.onGameChooseClick.bind(this)}
+          >
+        <Animatable.View
+          style={{
+          // flex: 1,
+          // position: 'absolute',
+          // backgroundColor: 'red',
+          // width: 100,
+          // resizeMode: 'contain'
+          alignItems: 'center',
+          justifyContent: 'center',
+          alignSelf: 'stretch',
+
+        }}
+          animation="flipInY"
+          duration={1000}
+          delay={2500}
+        >
+          <Image
+            style={styles.buttonImageGame}
+            // style={styles.buttonImage}
+            source={require('./../images/specificCity/playGame.png')}
+          />
+       </Animatable.View>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+playGameButtonLock() {
+  return (
+    <View
+      style={{ flex: 3,
+        alignItems: 'center',
+        // alignItems: 'flex-end',
+        // justifyContent: 'center',
+        justifyContent: 'flex-end',
+        // backgroundColor: '#f87fff'
+      }}>
+      <TouchableOpacity
+        style={{
+          // backgroundColor: '#ff68b6',
+         }}>
+        <Animatable.View
+          style={{
+          // flex: 1,
+          // position: 'absolute',
+          // backgroundColor: 'red',
+          // width: 100,
+          // resizeMode: 'contain'
+          // alignItems: 'center',
+          alignItems: 'flex-end',
+          justifyContent: 'center',
+          // justifyContent: 'flex-end',
+          alignSelf: 'stretch',
+
+        }}
+          animation="flipInY"
+          duration={1000}
+          delay={2500}
+        >
+          <Image
+            style={styles.buttonImageGameLuck}
+            // style={styles.buttonImage}
+            source={require('./../images/specificCity/playGame.png')}
+          />
+          <Animatable.View
+            animation="flipInY"
+            duration={1000}
+            delay={2500}>
+            <Image
+              style={styles.playButtonLock}
+              source={require('./../images/specificCity/Lock.png')} />
+          </Animatable.View>
+       </Animatable.View>
       </TouchableOpacity>
     </View>
   );
@@ -139,16 +299,14 @@ travelButtonLock() {
     let cityArea = '';
     let cityDescription = '';
     let nextCityButton;
-    // const { navigate } = this.props.navigation;
-    // let navigateVar = this.props.navigation;
+    let playGameButton = false;
+
+
 
     console.log('city prop user3: ', this.props.user_status.city);
     console.log('city prop user city status: ', this.props.user_status.status);
     const userCityStatus = this.props.user_status.status;
     const cityName = this.props.user_status.city.name;
-    // console.log('type of name: ',typeof this.props.user_status.city.name);
-    // console.log('type of population: ',typeof this.props.user_status.city.population);
-    // console.log('population number: ',this.props.user_status.city.population);
     if (this.props.user_status.city.population !== 0) {
       console.log('population');
       cityPopulation = 'جمعیت: ' + this.props.user_status.city.population + ' نفر';
@@ -165,6 +323,7 @@ travelButtonLock() {
       cityDescription = this.props.user_status.city.description;
       console.log(cityDescription);
     }
+    console.log('userCityStatus:::',userCityStatus);
     if (userCityStatus === 'arrive') {
       // we have to lock travel button
       console.log('user arrived');
@@ -174,6 +333,18 @@ travelButtonLock() {
       console.log('user leave');
       nextCityButton = this.travelButton();
     }
+
+    if (this.props.scoreFirst + this.props.scoreSecond + this.props.scoreThird === 300) {
+      // cityDone = true;
+      console.log('playGameButton ::: on');
+      playGameButton = this.playGameButtonLock();
+    } else {
+      console.log('playGameButton ::: off');
+      playGameButton = this.playGameButton();
+      nextCityButton = this.travelButton();
+
+    }
+
 
     return (
       <View
@@ -265,46 +436,7 @@ travelButtonLock() {
                            flexDirection: 'column',
                            // backgroundColor: 'orange'
                   }}>
-                  <View
-                    style={{ flex: 3,
-                      alignItems: 'center',
-                      // alignItems: 'flex-end',
-                      // justifyContent: 'center',
-                      justifyContent: 'flex-end',
-                      // backgroundColor: '#f87fff'
-                  }}>
-                    <TouchableOpacity
-                      style={{
-                        // backgroundColor: '#ff68b6',
-                       }}
-                      // onPress={() => navigate('ChooseGameStack')}>
-                      // onPress={Actions.main.gameChoose()}>
-                      onPress={this.onGameChooseClick.bind(this)}
-                        >
-                      <Animatable.View
-                        style={{
-                        // flex: 1,
-                        // position: 'absolute',
-                        // backgroundColor: 'red',
-                        // width: 100,
-                        // resizeMode: 'contain'
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        alignSelf: 'stretch',
-
-                      }}
-                        animation="flipInY"
-                        duration={1000}
-                        delay={2500}
-                      >
-                        <Image
-                          style={styles.buttonImageGame}
-                          // style={styles.buttonImage}
-                          source={require('./../images/specificCity/playGame.png')}
-                        />
-                     </Animatable.View>
-                    </TouchableOpacity>
-                  </View>
+                  {playGameButton}
 
                   <View
                     style={{ flex: 1,
@@ -391,6 +523,15 @@ const styles = StyleSheet.create({
     // backgroundColor: 'green',
     // bottom: 0,
   },
+  buttonImageGameLuck: {
+    width: 100,
+    height: 100,
+    resizeMode: 'contain',
+    // backgroundColor: 'green',
+    // bottom: -345,
+    bottom: -(deviceHeight / 1.86),
+    // top: 1000
+  },
   buttonLockImage: {
     // backgroundColor: 'blue',
     width: 50,
@@ -400,11 +541,44 @@ const styles = StyleSheet.create({
     // left: 50,
     left: (deviceWidth / 4),
     resizeMode: 'contain'
+  },
+  playButtonLock: {
+    // backgroundColor: 'blue',
+    width: 50,
+    bottom: -50,
+    // bottom: (deviceHeight / 16),
+
+    left: 0,
+    // left: (deviceWidth / 4),
+    resizeMode: 'contain'
   }
 });
-const mapStateToProps = ({ user }) => {
-  console.log('this is auth text:', user);
-  const { user_status, city_done } = user;
-  return { user_status, city_done };
+const mapStateToProps = ({ auth, user }) => {
+  console.log('this is user :', user);
+  console.log('this is auth :', auth);
+  const { token } = auth;
+
+  const {
+    user_status,
+    city_done,
+    scoreFirst,
+    scoreSecond,
+    scoreThird
+   } = user;
+
+  return {
+    user_status,
+    city_done,
+    scoreFirst,
+    scoreSecond,
+    scoreThird,
+    token
+   };
+
   };
-export default connect(mapStateToProps, { cityDoneStatus })(City);
+export default connect(mapStateToProps, {
+  cityDoneStatus,
+  userQuestionUpdate,
+  updateFirstScore,
+  updateSecondScore,
+  updateThirdScore })(City);

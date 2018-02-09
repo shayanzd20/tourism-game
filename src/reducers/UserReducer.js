@@ -9,7 +9,6 @@ import {
 
 const INITIAL_STATE = {
   user_status: null,
-  token: '',
   visible: false,
   q_first: false,
   q_second: false,
