@@ -33,3 +33,4 @@ export const QUESTION_THREE_QUESTION_UPDATE = 'question_three_question_update';
 export const QUESTION_THREE_ALTS_UPDATE = 'question_three_alts_update';
 export const QUESTION_THREE_MODAL_VISIBLE = 'question_three_modal_visible';
 export const QUESTION_THREE_STOP = 'question_three_stop';
+export const CITY_DONE_STATUS = 'city_done_status';

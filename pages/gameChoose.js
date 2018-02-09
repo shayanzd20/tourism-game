@@ -7,7 +7,8 @@ import {
   Dimensions,
   ImageBackground,
   AsyncStorage,
-  Text
+  Text,
+
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { connect } from 'react-redux';
@@ -29,9 +30,12 @@ import {
   questionThreeAltsUpdate,
   questionOneModalUpdate,
   questionTwoModalUpdate,
-  questionThreeModalUpdate
+  questionThreeModalUpdate,
+  cityDoneStatus,
 } from '../src/actions';
 import Animate from './components/Animate';
+import ModalCityDone from './components/ModalCityDone';
+
 
 class GameChoose extends Component {
 
@@ -47,10 +51,15 @@ class GameChoose extends Component {
 
   };
 
+
 componentWillMount() {
+  console.log('componentWillMount:::');
   this.props.questionOneModalUpdate(false);
   this.props.questionTwoModalUpdate(false);
   this.props.questionThreeModalUpdate(false);
+
+
+
   AsyncStorage.getItem('token', (err, result) => {
     console.log('get token in game choose: ', result);
     if (result) {
@@ -62,6 +71,28 @@ componentWillMount() {
       Actions.auth();
     }
    });
+
+   // check done cityDone
+   console.log('this.props in componentWillMount:::', this.props);
+   if (this.props.scoreFirst + this.props.scoreSecond + this.props.scoreThird === 300) {
+     // cityDone = true;
+     console.log('modal ::: on');
+     this.props.cityDoneStatus(true);
+   } else {
+     console.log('modal ::: off');
+   }
+}
+
+componentDidMount() {
+  console.log('componentDidMount:::');
+  console.log('this.props in componentDidMount:::', this.props);
+  if (this.props.scoreFirst + this.props.scoreSecond + this.props.scoreThird === 300) {
+    // cityDone = true;
+    console.log('modal ::: on');
+    this.props.cityDoneStatus(true);
+  } else {
+    console.log('modal ::: off');
+  }
 }
 
 // Functions
@@ -75,7 +106,6 @@ onGameOneClick() {
 }
 
 onGameTwoClick() {
-
   console.log('this is obj two:', this.props.secondObj);
   // Actions.games();
   Actions.game2();
@@ -130,22 +160,22 @@ userQuestionStatus() {
      //console.log('responseJson.score_first', responseJson.score_first);
      //console.log('responseJson.score_second', responseJson.score_second);
      //console.log('responseJson.score_third', responseJson.score_third);
-      if (responseJson.score_first > 0) {
-        if (responseJson.score_first > 50) {
+      if (score_first > 0) {
+        if (score_first > 50) {
           this.props.updateFirstScore({ scoreFirst: score_first, q_first: true, dis_touch_first: true });
         } else {
           this.props.updateFirstScore({ scoreFirst: score_first, q_first: true, dis_touch_first: false });
         }
       }
-      if (responseJson.score_second > 0) {
-        if (responseJson.score_second > 50) {
+      if (score_second > 0) {
+        if (score_second > 50) {
           this.props.updateSecondScore({ scoreSecond: score_second, q_second: true, dis_touch_second: true });
         } else {
           this.props.updateSecondScore({ scoreSecond: score_second, q_second: true, dis_touch_second: false });
         }
       }
-      if (responseJson.score_third > 0) {
-        if (responseJson.score_third > 50) {
+      if (score_third > 0) {
+        if (score_third > 50) {
           this.props.updateThirdScore({ scoreThird: score_third, q_third: true, dis_touch_third: true });
         } else {
           this.props.updateThirdScore({ scoreThird: score_third, q_third: true, dis_touch_third: false });
@@ -299,6 +329,8 @@ questionThreeScore() {
     let scoreFirstShow;
     let scoreSecondShow;
     let scoreThirdShow;
+    let cityDone = false;
+
     if (this.props.q_first === true) {
       scoreFirstShow = this.questionOneScore();
     }
@@ -309,19 +341,37 @@ questionThreeScore() {
       scoreThirdShow = this.questionThreeScore();
     }
 
+    if (this.props.scoreFirst + this.props.scoreSecond + this.props.scoreThird === 300) {
+      // cityDone = true;
+      console.log('modal ::: on');
+      cityDone = true;
+    } else {
+      console.log('modal ::: off');
+      cityDone = false;
+    }
+
+
     return (
 
       <View style={styles.main} >
+        {/* modal start */}
+        <View>
+          <ModalCityDone
+            // text={this.props.text_modal}
+            visible={cityDone}
+            // status={this.props.status}
+          />
+        </View>
+      {/* modal ends */}
         <View style={styles.questionSection} >
           <TouchableHighlight
-          // onPress={() => navigate('GameOne', this.props.firstObj)}
-          // onLongPress={() => navigate('GameOne', this.props.firstObj)}
-          onPress={this.onGameOneClick.bind(this)}
-          onLongPress={this.onGameOneClick.bind(this)}
-          // onPress={Actions.games()}
-          // onLongPress={Actions.games()}
-          disabled={this.props.dis_touch_first}
-          >
+            // onPress={() => navigate('GameOne', this.props.firstObj)}
+            // onLongPress={() => navigate('GameOne', this.props.firstObj)}
+            onPress={this.onGameOneClick.bind(this)}
+            onLongPress={this.onGameOneClick.bind(this)}
+            // onPress={Actions.games()}
+            // onLongPress={Actions.games()}
+            disabled={this.props.dis_touch_first}>
             <ImageBackground
               source={require('./../images/gameChoose/gameBack1.png')}
               style={styles.gameOneBack} >
@@ -348,9 +398,9 @@ questionThreeScore() {
         </View>
         <View style={styles.questionSection} >
           <TouchableHighlight
-          onPress={this.onGameTwoClick.bind(this)}
-          onLongPress={this.onGameTwoClick.bind(this)}
-          disabled={this.props.dis_touch_second} >
+            onPress={this.onGameTwoClick.bind(this)}
+            onLongPress={this.onGameTwoClick.bind(this)}
+            disabled={this.props.dis_touch_second} >
             <ImageBackground
               source={require('./../images/gameChoose/gameBack2.png')}
               style={styles.gameTwoBack} >
@@ -375,9 +425,9 @@ questionThreeScore() {
         </View>
         <View style={styles.questionSection} >
           <TouchableHighlight
-          onPress={this.onGameThreeClick.bind(this)}
-          onLongPress={this.onGameThreeClick.bind(this)}
-          disabled={this.props.dis_touch_third} >
+            onPress={this.onGameThreeClick.bind(this)}
+            onLongPress={this.onGameThreeClick.bind(this)}
+            disabled={this.props.dis_touch_third} >
 
             {/* game 3 background start */}
             <ImageBackground
@@ -399,7 +449,6 @@ questionThreeScore() {
               <Animate style={styles.gameThreeText} animation="transRightToLeft" text={'ویدیو ببین جواب بده'}/>
             </ImageBackground>
             {/* game 3 background end */}
-
           </TouchableHighlight>
         </View>
       </View>
@@ -562,7 +611,7 @@ const styles = StyleSheet.create({
 
  });
 
- const mapStateToProps = ({ auth, user, q_one }) => {
+ const mapStateToProps = ({ auth, user }) => {
    console.log('this is auth text:', user);
    const { token } = auth;
 
@@ -579,7 +628,10 @@ const styles = StyleSheet.create({
      dis_touch_first,
      dis_touch_second,
      dis_touch_third,
+     city_done,
     } = user;
+    console.log('this is scoreFirst in gameChoose:', scoreFirst);
+    console.log('this is city_done in gameChoose:', city_done);
     // const { alts, answer, question, } = q_one;
 
    return { user_status,
@@ -596,6 +648,7 @@ const styles = StyleSheet.create({
      dis_touch_first,
      dis_touch_second,
      dis_touch_third,
+     city_done,
      // alts,
      // answer,
      // question,
@@ -619,5 +672,6 @@ export default connect(mapStateToProps, {
   questionThreeAltsUpdate,
   questionOneModalUpdate,
   questionTwoModalUpdate,
-  questionThreeModalUpdate
+  questionThreeModalUpdate,
+  cityDoneStatus
 })(GameChoose);

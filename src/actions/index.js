@@ -34,6 +34,7 @@ import { EMAIL_CHANGED,
   QUESTION_THREE_ALTS_UPDATE,
   QUESTION_THREE_MODAL_VISIBLE,
   QUESTION_THREE_STOP,
+  CITY_DONE_STATUS,
 } from './types';
 
 export const numberChanged = (number) => {
@@ -314,6 +315,15 @@ export const questionThreeStop = (input) => {
   };
 };
 ///////////////////////////////
+
+export const cityDoneStatus = (input) => {
+  return (dispatch) => {
+    dispatch({
+      type: CITY_DONE_STATUS,
+      payload: input
+    });
+  };
+};
 
 export const emailChanged = (text) => {
   return {

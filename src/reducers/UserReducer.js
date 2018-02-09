@@ -4,6 +4,7 @@ import {
          UPDATE_FIRST_SCORE,
          UPDATE_SECOND_SCORE,
          UPDATE_THIRD_SCORE,
+         CITY_DONE_STATUS,
           } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -21,11 +22,12 @@ const INITIAL_STATE = {
   scoreThird: 0,
   firstObj: null,
   secondObj: null,
-  thirdObj: null
+  thirdObj: null,
+  city_done: false,
  };
 
 export default (state = INITIAL_STATE, action) => {
-  console.log('this is action in user reducer:');
+  console.log('this is action in user reducer:', action);
   console.log(action);
   console.log('this is state in user reducer', state);
   switch (action.type) {
@@ -54,7 +56,9 @@ export default (state = INITIAL_STATE, action) => {
         scoreThird: action.payload.scoreThird,
         q_third: action.payload.q_third,
         dis_touch_third: action.payload.dis_touch_third
-       };
+      };
+    case CITY_DONE_STATUS:
+      return { ...state, city_done: action.payload.scoreThird };
     default:
       return state;
   }

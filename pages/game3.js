@@ -23,7 +23,8 @@ import {
   questionThreeQuestionUpdate,
   questionThreeAltsUpdate,
   questionThreeModalUpdate,
-  questionThreeStop
+  questionThreeStop,
+  updateThirdScore
 } from '../src/actions';
 import ModalPrize from './components/ModalPrize';
 
@@ -86,7 +87,7 @@ class Game3 extends Component {
 
           this.props.questionThreeProgressUpdate(progress);
         }, 100);
-    }
+  }
 
     sendAnswer = (alt, status) => {
       fetch('http://velgardi-game.ir/api/sendAnswerQThree', {
@@ -140,6 +141,7 @@ class Game3 extends Component {
         // LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
         this.stopVideo(true);
         this.sendAnswer(ans, 1);
+        this.props.updateThirdScore({ scoreThird: 100, q_third: true, dis_touch_third: true });
         LayoutAnimation.configureNext(CustomLayoutSpring);
         this.props.questionThreeResultUpdate(true, 'آفرین 100 امتیاز گرفتی', 'correct');
         this.props.questionThreeModalUpdate(true);
@@ -148,6 +150,7 @@ class Game3 extends Component {
         // LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
         this.stopVideo(true);
         this.sendAnswer(ans, 0);
+        this.props.updateThirdScore({ scoreThird: 50, q_third: true, dis_touch_third: false });
         LayoutAnimation.configureNext(CustomLayoutSpring);
         this.props.questionThreeResultUpdate(false, 'اشتباه کردی 50 امتیاز بیشتر نگرفتی', 'incorrect');
         this.props.questionThreeModalUpdate(true);
@@ -538,5 +541,6 @@ export default connect(mapStateToProps, {
   questionThreeQuestionUpdate,
   questionThreeAltsUpdate,
   questionThreeModalUpdate,
-  questionThreeStop
+  questionThreeStop,
+  updateThirdScore
 })(Game3);

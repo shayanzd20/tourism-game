@@ -23,6 +23,7 @@ import {
   questionTwoQuestionUpdate,
   questionTwoAltsUpdate,
   questionTwoModalUpdate,
+  updateSecondScore
 } from '../src/actions';
 import ModalPrize from './components/ModalPrize';
 
@@ -69,19 +70,19 @@ componentWillMount() {
 }
 
 animate() {
-let progress = 0;
+  let progress = 0;
 
-this.props.questionTwoProgressUpdate(progress);
-  interval = setInterval(() => {
-    progress += 0.01;
-    if (progress > 1) {
-      // progress = 1;
-      clearInterval(interval);
-    }
-    console.log('progress current setInterval:', progress);
+  this.props.questionTwoProgressUpdate(progress);
+    interval = setInterval(() => {
+      progress += 0.01;
+      if (progress > 1) {
+        // progress = 1;
+        clearInterval(interval);
+      }
+      console.log('progress current setInterval:', progress);
 
-    this.props.questionTwoProgressUpdate(progress);
-  }, 100);
+      this.props.questionTwoProgressUpdate(progress);
+    }, 100);
 }
 
 sendAnswer = (alt, status) => {
@@ -135,6 +136,7 @@ checkAnswer = (ans) => {
     // this.setState({result:true})
     // LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     this.sendAnswer(ans, 1);
+    this.props.updateSecondScore({ scoreSecond: 100, q_second: true, dis_touch_second: true });
     LayoutAnimation.configureNext(CustomLayoutSpring);
     this.props.questionTwoResultUpdate(true, 'آفرین 100 امتیاز گرفتی', 'correct');
     this.props.questionTwoModalUpdate(true);
@@ -142,6 +144,7 @@ checkAnswer = (ans) => {
     // this.setState({result:false})
     // LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     this.sendAnswer(ans, 0);
+    this.props.updateSecondScore({ scoreSecond: 50, q_second: true, dis_touch_second: false });
     LayoutAnimation.configureNext(CustomLayoutSpring);
     this.props.questionTwoResultUpdate(false, 'اشتباه کردی 50 امتیاز بیشتر نگرفتی', 'incorrect');
     this.props.questionTwoModalUpdate(true);
@@ -483,5 +486,6 @@ export default connect(mapStateToProps, {
   questionTwoAnswerUpdate,
   questionTwoQuestionUpdate,
   questionTwoAltsUpdate,
-  questionTwoModalUpdate
+  questionTwoModalUpdate,
+  updateSecondScore
 })(Game2);

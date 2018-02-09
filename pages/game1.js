@@ -23,6 +23,7 @@ import {
   questionOneQuestionUpdate,
   questionOneAltsUpdate,
   questionOneModalUpdate,
+  updateFirstScore
 } from '../src/actions';
 import ModalPrize from './components/ModalPrize';
 // import ProgressBar from './components/ProgressBar';
@@ -146,12 +147,14 @@ checkAnswer = (ans) => {
   if (ans === this.props.answer) {
     // LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     this.sendAnswer(ans, 1);
+    this.props.updateFirstScore({ scoreFirst: 100, q_first: true, dis_touch_first: true });
     LayoutAnimation.configureNext(CustomLayoutSpring);
     this.props.questionOneResultUpdate(true, 'آفرین 100 امتیاز گرفتی', 'correct');
     this.props.questionOneModalUpdate(true);
   } else {
     // LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     this.sendAnswer(ans, 0);
+    this.props.updateFirstScore({ scoreFirst: 50, q_first: true, dis_touch_first: true });
     LayoutAnimation.configureNext(CustomLayoutSpring);
     this.props.questionOneResultUpdate(false, 'اشتباه کردی 50 امتیاز بیشتر نگرفتی', 'incorrect');
     this.props.questionOneModalUpdate(true);
@@ -419,5 +422,6 @@ export default connect(mapStateToProps, {
   questionOneAnswerUpdate,
   questionOneQuestionUpdate,
   questionOneAltsUpdate,
-  questionOneModalUpdate
+  questionOneModalUpdate,
+  updateFirstScore
 })(Game1);

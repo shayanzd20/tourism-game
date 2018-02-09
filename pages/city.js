@@ -11,6 +11,10 @@ import {
 import * as Animatable from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
+import {
+  cityDoneStatus,
+} from '../src/actions';
+
 
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
@@ -25,6 +29,12 @@ class City extends Component {
     header: null
   };
 
+componentWillMount() {
+  if (this.props.city_done === true) {
+    this.props.cityDoneStatus(false);
+
+  }
+}
 
 onGameChooseClick() {
   Actions.gameChoose();
@@ -394,7 +404,7 @@ const styles = StyleSheet.create({
 });
 const mapStateToProps = ({ user }) => {
   console.log('this is auth text:', user);
-  const { user_status } = user;
-  return { user_status };
+  const { user_status, city_done } = user;
+  return { user_status, city_done };
   };
-export default connect(mapStateToProps)(City);
+export default connect(mapStateToProps, { cityDoneStatus })(City);
