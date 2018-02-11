@@ -16,41 +16,27 @@ import {
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
-/**Image.getSize('./../images/chooseCity/background.png', (width, height) => {
-  console.log("the size is:",width);
 
-  this.setState({width, height})
-});**/
+const deviceWidth = Dimensions.get('window').width;
+const deviceHeight = Dimensions.get('window').height;
 
-var deviceWidth = Dimensions.get("window").width;
-var deviceHeight = Dimensions.get("window").height;
-
-console.log("width:",deviceWidth);
-console.log("height:",deviceHeight);
-
-
+console.log('width:', deviceWidth);
+console.log('height:', deviceHeight);
 
 // consts
-const onButtonPress = () => {
-  Alert.alert('Button has been pressed!');
-};
-
 const slideInCustom = {
   0: {
-    translateX:0,
+    translateX: 0,
   },
   0.5: {
-    translateX:100,
+    translateX: 100,
   },
   1: {
-    translateX:0,
+    translateX: 0,
   },
 };
 
-function newFunction(){
-  console.log("on press");
-}
-export default class CityChoose extends React.Component {
+class CityChoose extends React.Component {
 
   static navigationOptions = {
     title: 'choose destination city',
@@ -61,35 +47,34 @@ export default class CityChoose extends React.Component {
   render() {
     return (
 
-      <View>
-        <Image
-        style = {{
-          // flex: 1,
-            width: deviceWidth,
-            height: deviceHeight,
-            // flexBasis:'auto',
-            // flexShrink:10,
-            // marginTop:0,
-            // marginBottom:100,
-            // marginLeft:0,
-            // aspectRatio:2000,
-            // top:0,
-            // bottom:0,
-            // display:'none',
-            // maxHeight:deviceHeight,
-            // paddingBottom:deviceHeight,
-            // marginBottom:deviceHeight,
-              resizeMode:'cover',
-              // transform: 10,
-            // backgroundColor:'transparent',
+<View>
+  <Image
+    style={{
+      // flex: 1,
+      width: deviceWidth,
+      height: deviceHeight,
+      // flexBasis:'auto',
+      // flexShrink:10,
+      // marginTop:0,
+      // marginBottom:100,
+      // marginLeft:0,
+      // aspectRatio:2000,
+      // top:0,
+      // bottom:0,
+      // display:'none',
+      // maxHeight:deviceHeight,
+      // paddingBottom:deviceHeight,
+      // marginBottom:deviceHeight,
+        resizeMode: 'cover',
+        // transform: 10,
+      // backgroundColor:'transparent',
 
-            position: 'absolute',
-            // justifyContent:'center',
-            // flexWrap:'wrap'
+      position: 'absolute',
+      // justifyContent:'center',
+      // flexWrap:'wrap'
 
-          }}
-        source = {require('./../images/chooseCity/background.png')}
-        >
+      }}
+  source={require('./../images/chooseCity/background.png')}>
 
 <View
 style={{flex: 1, flexDirection: 'column'}}
@@ -236,7 +221,7 @@ style={{flex:1}}>
        }}
         source={require('./../images/chooseCity/cloud.png')}
         />
-      </View>
+</View>
 
     );
   }
