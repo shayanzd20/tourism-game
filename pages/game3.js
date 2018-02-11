@@ -192,12 +192,13 @@ class Game3 extends Component {
       // onError={this.videoError}
 
   render() {
-    const videoGame = 'https://velgardi-game.ir/api/get_video?path=' + this.props.video;
+    const videoGame = 'http://velgardi-game.ir/' + this.props.video;
     const len = videoGame.length;
     const videoGameStr = videoGame.substr(0, len - 4);
     console.log('videoGame:::', videoGame);
     console.log('videoGameStr:::', videoGameStr);
     console.log(videoGame);
+    console.log(typeof videoGame);
 
 
     return (
@@ -241,17 +242,19 @@ class Game3 extends Component {
 
             <Video
 
-              source={{ uri: 'https://media.w3.org/2010/05/sintel/trailer.mp4' }}
+              // source={{ uri: 'https://media.w3.org/2010/05/sintel/trailer.mp4' }}
               // source={{ uri: 'http://d23dyxeqlospsv.cloudfront.net/big_buck_bunny.mp4' }}
+              // source={{ uri: 'http://techslides.com/demos/sample-videos/small.mp4' }}
               // source={{ uri: "https://player.vimeo.com/external/207277102.hd.mp4?s=6939b93ae3554679b57f5e7fa831eef712a74b3c&profile_id=119&oauth2_token_id=57447761", }}
               // source={{ uri: 'https://player.vimeo.com/external/206340985.hd.mp4?s=0b055000e30067f11d3e2537bceb7157b47475bc&profile_id=119&oauth2_token_id=57447761' }}
               // source={{ uri: 'http://falcon479.startdedicated.com/files/round_boxes.mp4' }}
+              source={{ uri: 'http://balootmobile.org/video/movie_x264.mp4' }}
 
 
-              // source={{ uri: 'https://velgardi-game.ir/api/get_video?path=' + this.props.video }}
+              // source={{ uri: 'http://velgardi-game.ir/api/get_video?path=' + this.props.video }}
               // source={{ uri: 'https://balootmobile.org/velgardi/get_video.php?path=' + this.props.video }}
               // source={{ uri: videoGameStr }}
-              // source={{ uri: videoGame, type: 'mp4' }}
+              source={{ uri: videoGame }}
                 // source={require('./../videos/video_2017-06-24_01-00-30.mp4')}
                 // source={require('./../videos/movie_x264.mp4')}
                 paused={this.props.pause}
