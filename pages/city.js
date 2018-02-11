@@ -6,6 +6,8 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  TouchableNativeFeedback,
   Dimensions
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
@@ -121,10 +123,13 @@ populationView() {
 
 travelButton() {
   return (
-    <View style={{ flex: 3 }}>
-      <TouchableOpacity
+    <View
+      style={{ flex: 3,
+      // backgroundColor: 'blue',
+      }}>
+      <TouchableNativeFeedback
         style={{
-        // backgroundColor: 'yellow',
+        backgroundColor: 'yellow',
         alignItems: 'center',
         justifyContent: 'center',
       }}>
@@ -148,7 +153,7 @@ travelButton() {
             source={require('./../images/specificCity/nextCity.png')}
           />
         </Animatable.View>
-      </TouchableOpacity>
+      </TouchableNativeFeedback>
     </View>
   );
 }
@@ -174,11 +179,10 @@ travelButtonLock() {
           // width: 100,
           // resizeMode: 'contain'
           alignSelf: 'stretch',
-
-        }}
-          animation="flipInY"
-          duration={1000}
-          delay={2500}
+          }}
+            animation="flipInY"
+            duration={1000}
+            delay={2500}
         >
           <Image
             style={styles.buttonImage}
@@ -323,7 +327,7 @@ playGameButtonLock() {
       cityDescription = this.props.user_status.city.description;
       console.log(cityDescription);
     }
-    console.log('userCityStatus:::',userCityStatus);
+    console.log('userCityStatus:::', userCityStatus);
     if (userCityStatus === 'arrive') {
       // we have to lock travel button
       console.log('user arrived');
@@ -335,13 +339,12 @@ playGameButtonLock() {
     }
 
     if (this.props.scoreFirst + this.props.scoreSecond + this.props.scoreThird === 300) {
-      // cityDone = true;
       console.log('playGameButton ::: on');
       playGameButton = this.playGameButtonLock();
     } else {
       console.log('playGameButton ::: off');
+      // nextCityButton = this.travelButton();
       playGameButton = this.playGameButton();
-      nextCityButton = this.travelButton();
 
     }
 

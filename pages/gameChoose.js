@@ -627,7 +627,7 @@ const styles = StyleSheet.create({
  });
 
  const mapStateToProps = ({ auth, user }) => {
-   console.log('this is auth text:', user);
+   console.log('this is auth text in game choose:', user);
    const { token } = auth;
 
    const { user_status,

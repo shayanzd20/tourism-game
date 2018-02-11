@@ -54,6 +54,8 @@ class Game3 extends Component {
         // this.animate();
         // console.log('this is question Three props:', this.props);
         // console.log(this.props);
+        this.stopVideo(false);
+
         if (this.props.img) {
           this.props.questionThreeQuestionUpdate(this.props.video);
         }
@@ -193,13 +195,6 @@ class Game3 extends Component {
 
   render() {
     const videoGame = 'http://velgardi-game.ir/' + this.props.video;
-    const len = videoGame.length;
-    const videoGameStr = videoGame.substr(0, len - 4);
-    console.log('videoGame:::', videoGame);
-    console.log('videoGameStr:::', videoGameStr);
-    console.log(videoGame);
-    console.log(typeof videoGame);
-
 
     return (
 
@@ -248,7 +243,7 @@ class Game3 extends Component {
               // source={{ uri: "https://player.vimeo.com/external/207277102.hd.mp4?s=6939b93ae3554679b57f5e7fa831eef712a74b3c&profile_id=119&oauth2_token_id=57447761", }}
               // source={{ uri: 'https://player.vimeo.com/external/206340985.hd.mp4?s=0b055000e30067f11d3e2537bceb7157b47475bc&profile_id=119&oauth2_token_id=57447761' }}
               // source={{ uri: 'http://falcon479.startdedicated.com/files/round_boxes.mp4' }}
-              source={{ uri: 'http://balootmobile.org/video/movie_x264.mp4' }}
+              // source={{ uri: 'http://balootmobile.org/video/movie_x264.mp4' }}
 
 
               // source={{ uri: 'http://velgardi-game.ir/api/get_video?path=' + this.props.video }}
@@ -507,7 +502,7 @@ picture: {
 });
 
 const mapStateToProps = ({ auth, q_three }) => {
-  // console.log('this is question three state:', q_three);
+  console.log('this is question three state:', q_three);
   const { token } = auth;
 
   const {
