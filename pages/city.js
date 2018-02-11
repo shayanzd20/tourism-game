@@ -126,34 +126,40 @@ travelButton() {
     <View
       style={{ flex: 3,
       // backgroundColor: 'blue',
+      alignItems: 'center',
+      // justifyContent: 'center',
+      justifyContent: 'flex-end',
+      // resizeMode: 'contain'
       }}>
-      <TouchableNativeFeedback
+      <TouchableOpacity
         style={{
-        backgroundColor: 'yellow',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
+          // backgroundColor: 'yellow',
+          // alignItems: 'center',
+          // justifyContent: 'center',
+          // resizeMode: 'contain'
+          overflow: 'hidden'
+
+        }}>
         <Animatable.View
           style={{
             alignItems: 'center',
             justifyContent: 'center',
             alignSelf: 'stretch',
-        }}
+            }}
           animation="flipInY"
           duration={1000}
-          delay={2500}
-        >
+          delay={2500}>
           <Image
             // befor style
             // style={{
             //   width: 100,
             //   resizeMode: 'contain'
             // }}
-            style={styles.buttonImage}
+            style={styles.buttonImageNextCity}
             source={require('./../images/specificCity/nextCity.png')}
-          />
+            />
         </Animatable.View>
-      </TouchableNativeFeedback>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -166,11 +172,10 @@ travelButtonLock() {
      }}>
       <TouchableOpacity
         style={{
-        // backgroundColor: 'yellow',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
-
+          // backgroundColor: 'yellow',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
         <Animatable.View
           style={{
           // flex: 1,
@@ -182,12 +187,11 @@ travelButtonLock() {
           }}
             animation="flipInY"
             duration={1000}
-            delay={2500}
-        >
-          <Image
-            style={styles.buttonImage}
-            source={require('./../images/specificCity/nextCity.png')}
-          />
+            delay={2500}>
+            <Image
+              style={styles.buttonImage}
+              source={require('./../images/specificCity/nextCity.png')}
+            />
               <Animatable.View
                 animation="flipInY"
                 duration={1000}
@@ -196,7 +200,7 @@ travelButtonLock() {
                   style={styles.buttonLockImage}
                   source={require('./../images/specificCity/Lock.png')} />
               </Animatable.View>
-      </Animatable.View>
+          </Animatable.View>
       </TouchableOpacity>
     </View>
   );
@@ -335,6 +339,7 @@ playGameButtonLock() {
     } else {
       // travel button is open
       console.log('user leave');
+      // nextCityButton = this.travelButtonLock();
       nextCityButton = this.travelButton();
     }
 
@@ -455,7 +460,8 @@ playGameButtonLock() {
 
                 {/* start next city button and text*/}
                 <View
-                  style={{ flex: 1,
+                  style={{
+                    flex: 1,
                     flexDirection: 'column',
                 // backgroundColor: '#42b0f4'
                     }}
@@ -519,6 +525,20 @@ const styles = StyleSheet.create({
     // resizeMode: 'contain'
     // resizeMode: 'cover',
   },
+  buttonImageNextCity: {
+    // position: 'absolute',
+    // backgroundColor: 'blue',
+    // backgroundColor: 'transparent',
+    width: 100,
+    height: 100,
+    // alignSelf: 'stretch',
+    // alignSelf: 'auto',
+    // top: 150,
+    // top: (deviceHeight / 3) - (deviceHeight / 9),
+    alignSelf: 'center',
+    // resizeMode: 'contain'
+    // resizeMode: 'cover',
+  },
   buttonImageGame: {
     width: 100,
     height: 100,
@@ -557,8 +577,8 @@ const styles = StyleSheet.create({
   }
 });
 const mapStateToProps = ({ auth, user }) => {
-  console.log('this is user :', user);
-  console.log('this is auth :', auth);
+  console.log('this is user in city:', user);
+  console.log('this is auth in city:', auth);
   const { token } = auth;
 
   const {
