@@ -144,7 +144,7 @@ userStatus() {
       .then((response) => response.json())
       .then((responseJson) => {
         console.log('/ ----------- get user Status start api in login page --------/');
-        console.log('get user Status in login page:', responseJson);
+        // console.log('get user Status in login page:', responseJson);
         console.log('responseJson.status in login page:', responseJson.status);
         if (responseJson.status === '') {
           console.log('/----go to sourceScreen----/');

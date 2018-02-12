@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import { Select, Option } from 'react-native-chooser';
+import Picker from 'react-native-picker';
 import { Button } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import { connect } from 'react-redux';
@@ -99,6 +100,25 @@ render() {
     require('./../images/Iran-Way-Map3.jpg'),
     require('./../images/Iran-Way-Map4.jpg')
     ];
+
+    let data = [];
+    for (let i = 0; i < 100; i++) {
+        data.push(i);
+    }
+
+    Picker.init({
+    pickerData: data,
+    selectedValue: [59],
+    onPickerConfirm: data => {
+        console.log(data);
+    },
+    onPickerCancel: data => {
+        console.log(data);
+    },
+    onPickerSelect: data => {
+        console.log(data);
+    }
+});
     return (
 
       <View style={{ flex: 1 }}>
@@ -120,7 +140,7 @@ render() {
                 alignItems: 'center',
                 margin: Dimensions.get('window').width * 0.25 }}>
               <Select
-                  onSelect={this.onSelect.bind(this)}
+                  // onSelect={this.onSelect.bind(this)}
                   defaultText="شهر خود را انتخاب کنید"
                   style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: 'white', borderWidth: 1, borderColor: "green" , borderRadius: 10 }}
                   textStyle={{ justifyContent: 'center', alignItems: 'center', fontFamily: 'BYekan' }}
