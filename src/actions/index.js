@@ -35,12 +35,22 @@ import { EMAIL_CHANGED,
   QUESTION_THREE_MODAL_VISIBLE,
   QUESTION_THREE_STOP,
   CITY_DONE_STATUS,
+  SOURCE_CITY_UPDATE,
 } from './types';
 
 export const numberChanged = (number) => {
   return {
     type: NUMBER_CHANGED,
     payload: number
+  };
+};
+
+export const sourceCity = (input) => {
+  return (dispatch) => {
+    dispatch({
+      type: SOURCE_CITY_UPDATE,
+      payload: input
+    });
   };
 };
 

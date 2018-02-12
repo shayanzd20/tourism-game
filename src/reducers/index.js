@@ -4,6 +4,7 @@ import UserReducer from './UserReducer';
 import QuestionOneReducer from './QuestionOneReducer';
 import QuestionTwoReducer from './QuestionTwoReducer';
 import QuestionThreeReducer from './QuestionThreeReducer';
+import SourceReducer from './SourceReducer';
 
 export default combineReducers({
   auth: AuthReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
   q_one: QuestionOneReducer,
   q_two: QuestionTwoReducer,
   q_three: QuestionThreeReducer,
+  source: SourceReducer,
 });

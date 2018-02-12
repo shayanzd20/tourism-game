@@ -5,15 +5,22 @@ import {
   Animated,
   TouchableOpacity,
   Dimensions,
+  Picker,
+  Text,
   Easing,
   AsyncStorage
 } from 'react-native';
 
 import { Select, Option } from 'react-native-chooser';
-import Picker from 'react-native-picker';
+// import Picker from 'react-native-picker';
 import { Button } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import { connect } from 'react-redux';
+import {
+  sourceCity
+} from '../src/actions';
+import { Actions } from 'react-native-router-flux';
+
 
 // import SplashScreen  from 'remobile/react-native-splashscreen';
 
@@ -30,7 +37,6 @@ class SourceScreen extends Component {
     super(props);
     this.state = {
         slide: new Animated.ValueXY({ x: 0, y: 0 }),
-        token: '',
         visible: false
     }
 
@@ -48,15 +54,22 @@ class SourceScreen extends Component {
 
   ///////////////
 componentWillMount() {
-  AsyncStorage.getItem('token', (err, result) => {
-    console.log('get token in source screen:', result);
-    if (result) {
-      this.state.token = result;
-      this.userStatus();
-    } else {
-      this.props.navigation.navigate('Login', responseJson)
-    }
-  });
+  ///// older get token
+  // AsyncStorage.getItem('token', (err, result) => {
+  //   console.log('get token in source screen:', result);
+  //   if (result) {
+  //     this.state.token = result;
+  //     this.userStatus();
+  //   } else {
+  //     this.props.navigation.navigate('Login', responseJson)
+  //   }
+  // });
+  if (this.props.token) {
+    this.userStatus();
+  } else {
+    // this.props.navigation.navigate('Login', responseJson)
+    Actions.auth();
+  }
 }
 
 componentDidMount() {
@@ -71,7 +84,7 @@ userStatus() {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + this.state.token
+      Authorization: 'Bearer ' + this.props.token
     }
   })
   .then((response) => response.json())
@@ -94,6 +107,10 @@ userStatus() {
   });
 }
 
+updateCity = (city) => {
+   this.props.sourceCity(city)
+}
+
 render() {
     const randomImages = [
     require('./../images/Iran-Way-Map2.jpg'),
@@ -101,24 +118,6 @@ render() {
     require('./../images/Iran-Way-Map4.jpg')
     ];
 
-    let data = [];
-    for (let i = 0; i < 100; i++) {
-        data.push(i);
-    }
-
-    Picker.init({
-    pickerData: data,
-    selectedValue: [59],
-    onPickerConfirm: data => {
-        console.log(data);
-    },
-    onPickerCancel: data => {
-        console.log(data);
-    },
-    onPickerSelect: data => {
-        console.log(data);
-    }
-});
     return (
 
       <View style={{ flex: 1 }}>
@@ -136,28 +135,28 @@ render() {
                   }}
         source={randomImages[Math.floor(Math.random() * randomImages.length)]} />
             <View
-              style={{ position: 'absolute',
+              style={{
+                position: 'absolute',
                 alignItems: 'center',
-                margin: Dimensions.get('window').width * 0.25 }}>
-              <Select
-                  // onSelect={this.onSelect.bind(this)}
-                  defaultText="شهر خود را انتخاب کنید"
-                  style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: 'white', borderWidth: 1, borderColor: "green" , borderRadius: 10 }}
-                  textStyle={{ justifyContent: 'center', alignItems: 'center', fontFamily: 'BYekan' }}
-                  backdropStyle={{ backgroundColor: '#f4b942', opacity: 0.9 }}
-                  optionListStyle={{ backgroundColor: '#F5FCFF', borderRadius: 10, opacity: 0.9 }}
-                  animationType={'fade'}         >
-                <Option value={{ name: 'تهران' }}>	تهران</Option>
-                <Option value={{ name: 'مشهد' }}>	مشهد</Option>
-                <Option value={{ name: 'اصفهان' }}>اصفهان</Option>
-                <Option value={{ name: 'کرج' }}>کرج</Option>
-                <Option value={{ name: '	تبریز' }}>	تبریز</Option>
-                <Option value={{ name: 'شیراز' }}>شیراز</Option>
-                <Option value={{ name: 'اهواز' }}>اهواز</Option>
-                <Option value={{ name: '	قم' }}>	قم</Option>
-                <Option value={{ name: 'کرمانشاه' }}>کرمانشاه</Option>
-              </Select>
-
+                margin: Dimensions.get('window').width * 0.25,
+                backgroundColor: 'red'
+              }}>
+              <Picker
+                selectedValue={this.props.city}
+                onValueChange={this.props.updateCity}
+                style={{
+                  backgroundColor: 'green'
+                }}>
+                <Picker.Item label = "Steve" value = "steve" />
+                <Picker.Item label = "Ellen" value = "ellen" />
+                <Picker.Item label = "Maria" value = "maria" />
+              </Picker>
+              <Text
+                style={{
+                        fontSize: 30,
+                        alignSelf: 'center',
+                        color: 'blue'
+                         }}>{this.state.user}</Text>
               <Button
                 backgroundColor='#FFA129'
                 buttonStyle={styles.button} fontFamily='BYekan'
@@ -208,11 +207,11 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ auth, q_three }) => {
+const mapStateToProps = ({ auth, source }) => {
+  const { token } = auth;
+  const { city } = source;
 
-  const { } = q_three;
-
-  return { };
+  return { city, token };
   };
 
-export default connect(mapStateToProps, {})(SourceScreen);
+export default connect(mapStateToProps, { sourceCity })(SourceScreen);
