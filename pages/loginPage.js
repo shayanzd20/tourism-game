@@ -143,16 +143,17 @@ userStatus() {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log('get user Status start api');
-        console.log('get user Status:', responseJson);
-
-        this.props.userStatusChanged(responseJson);
-        // store token
-        // if responseJson.status == 'arrive' => go to city page with city params
-        // this.props.navigation.navigate('City', { user: 'Shayan11' })
-        // this.props.navigation.navigate('City', responseJson);
-        Actions.city();
-
+        console.log('/ ----------- get user Status start api in login page --------/');
+        console.log('get user Status in login page:', responseJson);
+        console.log('responseJson.status in login page:', responseJson.status);
+        if (responseJson.status === '') {
+          console.log('/----go to sourceScreen----/');
+          Actions.sourceScreen();
+        } else {
+          this.props.userStatusChanged(responseJson.status);
+          console.log('/----go to city----/');
+          Actions.city();
+        }
       })
       .catch((error) => {
         console.error('error:', error);

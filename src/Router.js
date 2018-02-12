@@ -4,7 +4,7 @@ import { Scene, Router } from 'react-native-router-flux';
 // pages
 // import CityChoose from '../pages/cityChoose';
 import GameChoose from '../pages/gameChoose';
-// import SourceScreen from '../pages/sourceScreen';
+import SourceScreen from '../pages/sourceScreen';
 import LoginPage from '../pages/loginPage';
 
 // city
@@ -26,6 +26,9 @@ const RouterComponent = () => {
             {/* <Scene key='sourceScreen' component={SourceScreen} /> */}
             {/* <Scene key='cityChoose' component={CityChoose}  hideNavBar={true} initial /> */}
             <Scene key='gameChoose' component={GameChoose} />
+          </Scene>
+          <Scene key='sourceScreen'>
+            <Scene key='sourceScreen' component={SourceScreen} />
           </Scene>
           <Scene key='game1'>
             <Scene key='game1' component={Game1} />
