@@ -55,7 +55,10 @@ userQuestionStatus() {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + this.props.token
-    }
+    },
+    body: JSON.stringify({
+      type: 'arrive'
+    })
   })
   .then((response) => response.json())
   .then((responseJson) => {

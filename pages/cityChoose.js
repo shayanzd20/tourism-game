@@ -8,6 +8,10 @@ import {
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
+import {
+  userStatusChanged,
+} from '../src/actions';
 
 
 const deviceWidth = Dimensions.get('window').width;
@@ -35,6 +39,63 @@ class CityChoose extends Component {
     title: 'choose destination city',
     header: null
   };
+
+sendTicket = (ticket) => {
+  fetch('http://velgardi-game.ir/api/chooseCity', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + this.props.token
+    },
+    body: JSON.stringify({
+      ticket: ticket
+    })
+  })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      console.log('responseJson in city choose for choosing ticket:', responseJson);
+      // update tickets
+      // this.props.updateTickets(responseJson);
+      // Actions.cityChoose();
+      this.userStatus();
+      // Actions.city();
+    })
+    .catch((error) => {
+      console.error('error in city choose for choosing ticket:', error);
+    });
+}
+
+userStatus = () => {
+  fetch('http://velgardi-game.ir/api/status', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + this.props.token
+    }
+  })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      console.log('/ ----------- get user Status start api in city choose --------/');
+      // console.log('get user Status in login page:', responseJson);
+
+
+      console.log('responseJson.status in city choose:', responseJson.status);
+      if (responseJson.status === '') {
+        console.log('/----go to sourceScreen in city choose----/');
+        this.getCities();
+
+      } else {
+        this.props.userStatusChanged(responseJson.status);
+        console.log('/----go to city in city choose----/');
+        Actions.city();
+      }
+    })
+    .catch((error) => {
+      console.error('error:', error);
+    });
+}
 
 
   render() {
@@ -94,8 +155,8 @@ class CityChoose extends Component {
               }}>
               {/* ticket one touchable start */}
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Isfahan', { user: 'Shayan11' })}
-                onLongPress={() => console.log('hello11!')}
+                onPress={() => this.sendTicket(this.props.tickets[0])}
+                onLongPress={() => this.sendTicket(this.props.tickets[0])}
                 >
                 <Animatable.View
                   animation="bounceIn"
@@ -148,8 +209,8 @@ class CityChoose extends Component {
 
               {/* ticket two touchable start */}
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Isfahan', { user: 'Shayan11' })}
-                onLongPress={() => console.log('hello123!')}>
+                onPress={() => this.sendTicket(this.props.tickets[1])}
+                onLongPress={() => this.sendTicket(this.props.tickets[1])}>
                 <Animatable.View
                   animation="bounceIn"
                   // iterationCount="infinite"
@@ -281,4 +342,4 @@ const mapStateToProps = ({ auth, source }) => {
   return { tickets, token };
   };
 
-export default connect(mapStateToProps, { })(CityChoose);
+export default connect(mapStateToProps, { userStatusChanged })(CityChoose);

@@ -144,12 +144,11 @@ userStatus() {
 
         console.log('responseJson.status in login page:', responseJson.status);
         if (responseJson.status === '') {
-          console.log('/----go to sourceScreen----/');
+          console.log('/----go to sourceScreen in login page----/');
           this.getCities();
-
         } else {
           this.props.userStatusChanged(responseJson.status);
-          console.log('/----go to city----/');
+          console.log('/----go to city in login page----/');
           Actions.city();
         }
       })
