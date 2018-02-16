@@ -21,7 +21,6 @@ export default (state = INITIAL_STATE, action) => {
     case UPDATE_CITIES:
       return { ...state, cities: action.payload };
     case UPDATE_TICKETS:
-      Actions.cityChoose();
       return { ...state, tickets: action.payload };
     default:
       return state;
