@@ -1,19 +1,10 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
-  StyleSheet,
-  Text,
   View,
-  Button,
-  Picker,
-  Alert,
-  TouchableHighlight,
-  TouchableWithoutFeedback ,
-  TouchableNativeFeedback,
-  Image,
   ImageBackground,
   Dimensions,
   TouchableOpacity,
+  Text
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { connect } from 'react-redux';
@@ -68,7 +59,7 @@ class CityChoose extends Component {
             // maxHeight:deviceHeight,
             // paddingBottom:deviceHeight,
             // marginBottom:deviceHeight,
-            resizeMode: 'cover',
+            // resizeMode: 'cover',
             // transform: 10,
             // backgroundColor:'transparent',
 
@@ -78,11 +69,16 @@ class CityChoose extends Component {
 
           }}
           source={require('./../images/chooseCity/background.png')}>
+
+          {/* whole screen start */}
           <View
             style={{
               flex: 1,
-              flexDirection: 'column'
+              flexDirection: 'column',
+              // backgroundColor: 'red'
             }}>
+
+            {/* ticket one component start */}
             <View
               style={{
                 flex: 1,
@@ -94,27 +90,49 @@ class CityChoose extends Component {
                 justifyContent: 'center',
 
                 zIndex: 10,
-                // backgroundColor:'red'
+                // backgroundColor: 'green'
               }}>
               {/* ticket one touchable start */}
               <TouchableOpacity
                 onPress={() => this.props.navigation.navigate('Isfahan', { user: 'Shayan11' })}
                 onLongPress={() => console.log('hello11!')}
                 >
-                  <Animatable.Image
-                    animation="bounceIn"
-                    // iterationCount="infinite"
-                    direction="normal"
-                    duration={2000}
+                <Animatable.View
+                  animation="bounceIn"
+                  // iterationCount="infinite"
+                  direction="normal"
+                  duration={2000}>
+                  <ImageBackground
                     style={{
                       width: deviceWidth / 1.3,
+                      height: 200,
                       margin: deviceWidth / 8,
                       marginTop: 110,
-                      resizeMode: 'contain',
+                      justifyContent: 'center',
+                      alignItems: 'center'
                     }}
-                    source={require('./../images/chooseCity/ticket.png')}/>
+                    resizeMode='contain'
+                    source={require('./../images/chooseCity/ticket.png')}>
+                    <Text
+                      style={{
+                        color: 'red',
+                        fontSize: 20,
+                        fontWeight: 'bold',
+                        fontFamily: 'BYekan',
+                        // marginTop: 0,
+                        marginBottom: 30,
+                        marginRight: 20
+                      }}>
+                      {this.props.tickets[0]}
+                    </Text>
+                  </ImageBackground>
+                </Animatable.View>
               </TouchableOpacity>
+              {/* ticket one touchable end */}
             </View>
+            {/* ticket one component end */}
+
+            {/* ticket two component start */}
             <View
               style={{
                   flex: 1,
@@ -127,28 +145,54 @@ class CityChoose extends Component {
                   zIndex: 10,
                   // backgroundColor:'green',
                   }}>
+
+              {/* ticket two touchable start */}
               <TouchableOpacity
                 onPress={() => this.props.navigation.navigate('Isfahan', { user: 'Shayan11' })}
                 onLongPress={() => console.log('hello123!')}>
-                <Animatable.Image
+                <Animatable.View
                   animation="bounceIn"
                   // iterationCount="infinite"
                   direction="normal"
                   duration={2000}
-                  delay={100}
-
-                  style={{
-                    width: deviceWidth / 1.3,
-                    margin: deviceWidth / 8,
-                    marginTop: -110,
-                    resizeMode: 'contain',
-                  }}
-                  source={require('./../images/chooseCity/ticket.png')}
-                />
+                  delay={100}>
+                  <ImageBackground
+                    style={{
+                      height: 400,
+                      width: deviceWidth / 1.3,
+                      margin: deviceWidth / 8,
+                      marginTop: -110,
+                      justifyContent: 'center',
+                      alignItems: 'center'
+                    }}
+                    resizeMode='contain'
+                    source={require('./../images/chooseCity/ticket.png')}>
+                    <Text
+                      style={{
+                        color: 'red',
+                        fontSize: 20,
+                        fontWeight: 'bold',
+                        fontFamily: 'BYekan',
+                        // marginTop: 0,
+                        marginBottom: 30,
+                        marginRight: 20
+                      }}>
+                      {this.props.tickets[1]}
+                    </Text>
+                  </ImageBackground>
+                </Animatable.View>
               </TouchableOpacity>
+              {/* ticket two touchable end */}
             </View>
-            <View style={{ flex: 1 }}/>
+            {/* ticket two component end */}
+
+            {/* extra space start */}
+            <View style={{ flex: 1 }} />
+            {/* extra space end */}
+
           </View>
+          {/* whole screen end */}
+
         </ImageBackground>
         {/* background component end */}
 
@@ -159,8 +203,8 @@ class CityChoose extends Component {
           duration={40000}
           iterationCount="infinite"
           style={{
-            marginTop:50,
-            marginLeft:50,
+            marginTop: 50,
+            marginLeft: 50,
             height: 50,
             resizeMode: 'contain'
             }}
@@ -174,8 +218,8 @@ class CityChoose extends Component {
           iterationCount="infinite"
 
           style={{
-            marginTop:0,
-            marginLeft:0,
+            marginTop: 0,
+            marginLeft: 0,
             height: 40,
             resizeMode: 'contain'
           }}
@@ -188,8 +232,8 @@ class CityChoose extends Component {
           duration={20000}
 
           style={{
-            marginTop:80,
-            marginLeft:-60,
+            marginTop: 80,
+            marginLeft: -60,
             height: 50,
             resizeMode: 'contain'
             }}
@@ -202,8 +246,8 @@ class CityChoose extends Component {
           duration={40000}
 
           style={{
-            marginTop:200,
-            marginLeft:100,
+            marginTop: 200,
+            marginLeft: 100,
             height: 30,
             resizeMode: 'contain'
             }}
@@ -216,8 +260,8 @@ class CityChoose extends Component {
           duration={40000}
 
           style={{
-            marginTop:10,
-            marginLeft:40,
+            marginTop: 10,
+            marginLeft: 40,
             height: 30,
             resizeMode: 'contain'
             }}
@@ -232,9 +276,9 @@ const mapStateToProps = ({ auth, source }) => {
   console.log('this is source object in source city:', source);
 
   const { token } = auth;
-  const { city, cities } = source;
+  const { tickets } = source;
 
-  return { city, cities, token };
+  return { tickets, token };
   };
 
 export default connect(mapStateToProps, { })(CityChoose);

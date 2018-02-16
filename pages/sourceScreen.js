@@ -109,7 +109,7 @@ userStatus() {
 
 updateCity = (city) => {
    this.props.sourceCity(city.label)
-   this.sendSource(city.label);
+   // this.sendSource(city.label);
 }
 
 sendSource = (city) => {
@@ -221,7 +221,7 @@ render() {
               <Button
                 backgroundColor='#FFA129'
                 buttonStyle={styles.button} fontFamily='BYekan'
-                onPress={() => this.props.navigation.navigate('City', { user: 'Shayan11' })}
+                onPress={() => this.sendSource(this.props.city)}
                 title="شروع سفر"
                 accessibilityLabel="This sounds great!"
               />
