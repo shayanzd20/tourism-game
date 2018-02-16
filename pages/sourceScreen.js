@@ -8,22 +8,28 @@ import {
   Picker,
   Text,
   Easing,
+  TextInput,
+  ScrollView,
   AsyncStorage
 } from 'react-native';
 
-import { Select, Option } from 'react-native-chooser';
+// import { Select, Option } from 'react-native-chooser';
 // import Picker from 'react-native-picker';
 import { Button } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import { connect } from 'react-redux';
-import {
-  sourceCity
-} from '../src/actions';
+import ModalPicker from 'react-native-modal-picker';
 import { Actions } from 'react-native-router-flux';
+import {
+  sourceCity,
+  updateCities,
+  updateTickets
+} from '../src/actions';
 
 
-// import SplashScreen  from 'remobile/react-native-splashscreen';
-
+const widthPic = Dimensions.get('window').width;
+const width = Dimensions.get('window');
+const heightPic = Dimensions.get('window').height;
 
 class SourceScreen extends Component {
 
@@ -39,7 +45,6 @@ class SourceScreen extends Component {
         slide: new Animated.ValueXY({ x: 0, y: 0 }),
         visible: false
     }
-
     this.slideIn =  Animated.timing(
       this.state.slide,
       {
@@ -77,38 +82,58 @@ componentDidMount() {
 }
 
 userStatus() {
-  console.log('userStatus api in source screen');
-  this.setState({ visible: true });
-  fetch('http://velgardi-game.ir/api/status', {
+  console.log('/ ------- userStatus function in sourceScreen------- /');
+    fetch('http://velgardi-game.ir/api/status', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.props.token
+      }
+    }).then((response) => response.json())
+      .then((responseJson) => {
+        console.log('/ ----------- get user Status start api in source screen --------/');
+        console.log('responseJson.status in in source screen:', responseJson.status);
+        if (responseJson.status === '') {
+          console.log('/----go to sourceScreen----/');
+        } else {
+          this.props.userStatusChanged(responseJson.status);
+          console.log('/----go to city----/');
+          Actions.city();
+        }
+      })
+      .catch((error) => {
+        console.error('error:', error);
+      });
+}
+
+updateCity = (city) => {
+   this.props.sourceCity(city.label)
+   this.sendSource(city.label);
+}
+
+sendSource = (city) => {
+  fetch('http://velgardi-game.ir/api/ticket', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + this.props.token
-    }
+    },
+    body: JSON.stringify({
+      city: city
+    })
   })
-  .then((response) => response.json())
-  .then((responseJson) => {
-    console.log('get user Status start api in source screen');
-    console.log('get user Status:', responseJson);
-
-    ////////// store token
-
-    // if responseJson.status == 'arrive' => go to city page with city params
-    // this.props.navigation.navigate('City', { user: 'Shayan11' })
-    if (responseJson.status === 'arrive') {
-      this.props.navigation.navigate('City', responseJson)
-    } else {
-      // continue source screen
-    }
-  })
-  .catch((error) => {
-    console.error('error:', error);
-  });
-}
-
-updateCity = (city) => {
-   this.props.sourceCity(city)
+    .then((response) => response.json())
+    .then((responseJson) => {
+      console.log('responseJson in sourceScreen:', responseJson);
+      // update tickets
+      this.props.updateTickets(responseJson);
+      Actions.cityChoose();
+    })
+    .catch((error) => {
+      console.error('error:', error);
+    });
 }
 
 render() {
@@ -117,7 +142,6 @@ render() {
     require('./../images/Iran-Way-Map3.jpg'),
     require('./../images/Iran-Way-Map4.jpg')
     ];
-
     return (
 
       <View style={{ flex: 1 }}>
@@ -138,25 +162,62 @@ render() {
               style={{
                 position: 'absolute',
                 alignItems: 'center',
-                margin: Dimensions.get('window').width * 0.25,
-                backgroundColor: 'red'
+                margin: Dimensions.get('window').width * 0.1,
+                marginTop: Dimensions.get('window').width * 0.25,
+                left: 0,
+                right: 0,
+                // backgroundColor: 'red'
               }}>
-              <Picker
-                selectedValue={this.props.city}
-                onValueChange={this.props.updateCity}
+              <View
                 style={{
-                  backgroundColor: 'green'
+                  flex: 1,
+                  // justifyContent: 'space-around',
+                  // justifyContent: 'space-around',
+                  // resizeMode: 'contain',
+                  padding: 10,
+                  // fontFamily: 'BYekan'
                 }}>
-                <Picker.Item label = "Steve" value = "steve" />
-                <Picker.Item label = "Ellen" value = "ellen" />
-                <Picker.Item label = "Maria" value = "maria" />
-              </Picker>
-              <Text
-                style={{
-                        fontSize: 30,
-                        alignSelf: 'center',
-                        color: 'blue'
-                         }}>{this.state.user}</Text>
+                   <ModalPicker
+                       data={this.props.cities}
+                       // data={data}
+                       style={{
+                         // fontFamily: 'BYekan'
+                         // borderColor: 'black'
+                         backgroundColor: 'white',
+                         // borderWidth: widthPic * 0.5
+                         width: widthPic * 0.5,
+                         // height: 50
+                        }}
+                        // selectStyle={{
+                        //   height: 50
+                        // }}
+
+                        // selectTextStyle={{
+                        //   height: 50
+                        // }}
+                        //
+                        // overlayStyle={{
+                        //   height: 50
+                        // }}
+                        //
+                        // sectionStyle={{
+                        //   height: 50
+                        // }}
+                        //
+                        // sectionTextStyle={{
+                        //   height: 50
+                        // }}
+                        //
+                        // optionStyle={{
+                        //   height: 50
+                        // }}
+                        // optionTextStyle={{
+                        //   height: 50
+                        // }}
+                       // textStyle={{ fontFamily: 'BYekan' }}
+                       initValue="شهر مبدا را انتخاب کنید"
+                       onChange={(option) => { this.updateCity(option); }} />
+               </View>
               <Button
                 backgroundColor='#FFA129'
                 buttonStyle={styles.button} fontFamily='BYekan'
@@ -165,18 +226,9 @@ render() {
                 accessibilityLabel="This sounds great!"
               />
             </View>
-
       </View>
     );
   }
-
-  // onValueChange = (key: string, value: string) => {
-  //               console.log('key:');
-  // const newState = {};
-  // newState[key] = value;
-  // this.setState(newState);
-  // };
-
 }
 
 const styles = StyleSheet.create({
@@ -208,10 +260,12 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = ({ auth, source }) => {
-  const { token } = auth;
-  const { city } = source;
+  console.log('this is source object in source city:', source);
 
-  return { city, token };
+  const { token } = auth;
+  const { city, cities } = source;
+
+  return { city, cities, token };
   };
 
-export default connect(mapStateToProps, { sourceCity })(SourceScreen);
+export default connect(mapStateToProps, { sourceCity, updateCities, updateTickets })(SourceScreen);

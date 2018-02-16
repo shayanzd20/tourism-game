@@ -35,3 +35,5 @@ export const QUESTION_THREE_MODAL_VISIBLE = 'question_three_modal_visible';
 export const QUESTION_THREE_STOP = 'question_three_stop';
 export const CITY_DONE_STATUS = 'city_done_status';
 export const SOURCE_CITY_UPDATE = 'source_city_update';
+export const UPDATE_CITIES = 'update_cities';
+export const UPDATE_TICKETS = 'update_tickets';

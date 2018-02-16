@@ -24,6 +24,7 @@ import {
   digitTextChanged,
   realNumberChanged,
   userStatusChanged,
+  updateCities
 } from '../src/actions';
 
 const deviceWidth = Dimensions.get('window').width;
@@ -66,17 +67,11 @@ login() {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        try {
           AsyncStorage.setItem('number', this.props.number, () => {
               AsyncStorage.getItem('number', (err, result) => {
                 console.log('get number:', result);
               });
           });
-        } catch (error) {
-          console.log('set Item error:', error);
-          // Error saving data
-        }
-
         if (responseJson.result === true) {
           this.props.visibleChanged(false);
           this.props.digitsChanged(true);
@@ -145,10 +140,13 @@ userStatus() {
       .then((responseJson) => {
         console.log('/ ----------- get user Status start api in login page --------/');
         // console.log('get user Status in login page:', responseJson);
+
+
         console.log('responseJson.status in login page:', responseJson.status);
         if (responseJson.status === '') {
           console.log('/----go to sourceScreen----/');
-          Actions.sourceScreen();
+          this.getCities();
+
         } else {
           this.props.userStatusChanged(responseJson.status);
           console.log('/----go to city----/');
@@ -159,6 +157,29 @@ userStatus() {
         console.error('error:', error);
       });
   });
+}
+
+getCities = () => {
+  fetch('http://velgardi-game.ir/api/cities', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + this.props.token
+    }
+  })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      console.log('this is cities api in login page:', responseJson);
+      this.props.updateCities(responseJson);
+      Actions.sourceScreen();
+
+      // const cities = responseJson;
+      // return responseJson;
+    })
+    .catch((error) => {
+      console.error('error in cities api  in login page::', error);
+    });
 }
 
 digitText() {
@@ -411,4 +432,5 @@ export default connect(mapStateToProps,
     digitsChanged,
     digitTextChanged,
     realNumberChanged,
-    userStatusChanged })(LoginPage);
+    userStatusChanged,
+    updateCities })(LoginPage);

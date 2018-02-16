@@ -36,6 +36,8 @@ import { EMAIL_CHANGED,
   QUESTION_THREE_STOP,
   CITY_DONE_STATUS,
   SOURCE_CITY_UPDATE,
+  UPDATE_CITIES,
+  UPDATE_TICKETS,
 } from './types';
 
 export const numberChanged = (number) => {
@@ -49,6 +51,24 @@ export const sourceCity = (input) => {
   return (dispatch) => {
     dispatch({
       type: SOURCE_CITY_UPDATE,
+      payload: input
+    });
+  };
+};
+
+export const updateCities = (input) => {
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_CITIES,
+      payload: input
+    });
+  };
+};
+
+export const updateTickets = (input) => {
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_TICKETS,
       payload: input
     });
   };
