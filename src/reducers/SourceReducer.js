@@ -1,4 +1,4 @@
-import { Actions } from 'react-native-router-flux';
+// import { Actions } from 'react-native-router-flux';
 import {
          SOURCE_CITY_UPDATE,
          UPDATE_CITIES,
@@ -12,9 +12,9 @@ const INITIAL_STATE = {
  };
 
 export default (state = INITIAL_STATE, action) => {
-  console.log('this is action in source reducer:', action);
-  console.log(action);
-  console.log('this is state in source reducer', state);
+  // console.log('this is action in source reducer:', action);
+  // console.log(action);
+  // console.log('this is state in source reducer', state);
   switch (action.type) {
     case SOURCE_CITY_UPDATE:
       return { ...state, city: action.payload };

@@ -19,9 +19,9 @@ const INITIAL_STATE = {
  };
 
  export default (state = INITIAL_STATE, action) => {
-   console.log('this is action in question TWO reducer:');
-   console.log(action);
-   console.log('this is state in question TWO reducer', state);
+   // console.log('this is action in question TWO reducer:');
+   // console.log(action);
+   // console.log('this is state in question TWO reducer', state);
    switch (action.type) {
      case QUESTION_TWO_PROGRESS_UPDATE:
        return { ...state, progress: action.payload };

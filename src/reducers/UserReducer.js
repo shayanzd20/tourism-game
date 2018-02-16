@@ -26,9 +26,9 @@ const INITIAL_STATE = {
  };
 
 export default (state = INITIAL_STATE, action) => {
-  console.log('this is action in user reducer:', action);
-  console.log(action);
-  console.log('this is state in user reducer', state);
+  // console.log('this is action in user reducer:', action);
+  // console.log(action);
+  // console.log('this is state in user reducer', state);
   switch (action.type) {
     case USER_STATUS:
       return { ...state, user_status: action.payload };

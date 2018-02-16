@@ -13,7 +13,7 @@ const INITIAL_STATE = {
   answer: null,
   question: null,
   modal_visible: false,
-  text_modal: "",
+  text_modal: '',
   status: null,
   // alts: {
   //   altOne: null,
@@ -25,9 +25,9 @@ const INITIAL_STATE = {
  };
 
 export default (state = INITIAL_STATE, action) => {
-  console.log('this is action in question one reducer:');
-  console.log(action);
-  console.log('this is state in question one reducer', state);
+  // console.log('this is action in question one reducer:');
+  // console.log(action);
+  // console.log('this is state in question one reducer', state);
   switch (action.type) {
     case QUESTION_ONE_PROGRESS_UPDATE:
       return { ...state, progress: action.payload };
