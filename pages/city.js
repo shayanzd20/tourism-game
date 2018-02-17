@@ -18,7 +18,8 @@ import {
   userQuestionUpdate,
   updateFirstScore,
   updateSecondScore,
-  updateThirdScore
+  updateThirdScore,
+  updateTickets
 } from '../src/actions';
 
 
@@ -125,6 +126,7 @@ populationView() {
 }
 
 travelButton() {
+
   return (
     <View
       style={{ flex: 3,
@@ -142,7 +144,9 @@ travelButton() {
           // resizeMode: 'contain'
           overflow: 'hidden'
 
-        }}>
+        }}
+        onPress={this.nextCity.bind(this)}
+        >
         <Animatable.View
           style={{
             alignItems: 'center',
@@ -303,6 +307,27 @@ playGameButtonLock() {
       </TouchableOpacity>
     </View>
   );
+}
+
+nextCity() {
+  fetch('http://velgardi-game.ir/api/nextCity', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + this.props.token
+    }
+  })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      console.log('responseJson in city screen in next city api:', responseJson);
+      // update tickets
+      this.props.updateTickets(responseJson);
+      Actions.cityChoose();
+    })
+    .catch((error) => {
+      console.error('error:', error);
+    });
 }
 
   render() {
@@ -607,4 +632,5 @@ export default connect(mapStateToProps, {
   userQuestionUpdate,
   updateFirstScore,
   updateSecondScore,
-  updateThirdScore })(City);
+  updateThirdScore,
+  updateTickets })(City);
