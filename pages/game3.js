@@ -176,6 +176,7 @@ class Game3 extends Component {
     }
     setDuration() {
       console.log('setDuration');
+      this.animate();
     }
     setTime() {
       console.log('setTime');
