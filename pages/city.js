@@ -126,7 +126,6 @@ populationView() {
 }
 
 travelButton() {
-
   return (
     <View
       style={{ flex: 3,
@@ -335,9 +334,7 @@ nextCity() {
     let cityArea = '';
     let cityDescription = '';
     let nextCityButton;
-    let playGameButton = false;
-
-
+    let playGameButton;
 
     console.log('city prop user3: ', this.props.user_status.city);
     console.log('city prop user city status: ', this.props.user_status.status);
@@ -363,21 +360,25 @@ nextCity() {
     if (userCityStatus === 'arrive') {
       // we have to lock travel button
       console.log('user arrived');
-      nextCityButton = this.travelButtonLock();
+      // nextCityButton = this.travelButtonLock();
     } else {
       // travel button is open
       console.log('user leave');
       // nextCityButton = this.travelButtonLock();
-      nextCityButton = this.travelButton();
+      // nextCityButton = this.travelButton();
     }
 
     if (this.props.scoreFirst + this.props.scoreSecond + this.props.scoreThird === 300) {
       console.log('playGameButton ::: on');
       playGameButton = this.playGameButtonLock();
+      nextCityButton = this.travelButton();
+
     } else {
       console.log('playGameButton ::: off');
       // nextCityButton = this.travelButton();
       playGameButton = this.playGameButton();
+      nextCityButton = this.travelButtonLock();
+
 
     }
 

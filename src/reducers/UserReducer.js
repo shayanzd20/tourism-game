@@ -4,7 +4,7 @@ import {
          UPDATE_FIRST_SCORE,
          UPDATE_SECOND_SCORE,
          UPDATE_THIRD_SCORE,
-         CITY_DONE_STATUS,
+         CITY_STATUS,
           } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -22,7 +22,7 @@ const INITIAL_STATE = {
   firstObj: null,
   secondObj: null,
   thirdObj: null,
-  city_done: false,
+  city_status: null,
  };
 
 export default (state = INITIAL_STATE, action) => {
@@ -56,8 +56,8 @@ export default (state = INITIAL_STATE, action) => {
         q_third: action.payload.q_third,
         dis_touch_third: action.payload.dis_touch_third
       };
-    case CITY_DONE_STATUS:
-      return { ...state, city_done: action.payload.scoreThird };
+    case CITY_STATUS:
+      return { ...state, city_status: action.payload };
     default:
       return state;
   }

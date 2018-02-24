@@ -11,6 +11,10 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import {
   userStatusChanged,
+  updateFirstScore,
+  updateSecondScore,
+  updateThirdScore,
+  cityStatus
 } from '../src/actions';
 
 
@@ -89,6 +93,11 @@ userStatus = () => {
       } else {
         this.props.userStatusChanged(responseJson.status);
         console.log('/----go to city in city choose----/');
+        console.log('/--reset scores befor going to city--/');
+        this.props.updateFirstScore({ scoreFirst: 0, q_first: false, dis_touch_first: false });
+        this.props.updateSecondScore({ scoreSecond: 0, q_second: false, dis_touch_second: false });
+        this.props.updateThirdScore({ scoreThird: 0, q_third: false, dis_touch_third: false });
+        this.props.cityStatus(false);
         Actions.city();
       }
     })
@@ -208,7 +217,7 @@ userStatus = () => {
                   }}>
 
               {/* ticket two touchable start */}
-              <TouchableOpacity
+              { this.props.tickets[1] ? <TouchableOpacity
                 onPress={() => this.sendTicket(this.props.tickets[1])}
                 onLongPress={() => this.sendTicket(this.props.tickets[1])}>
                 <Animatable.View
@@ -242,7 +251,8 @@ userStatus = () => {
                     </Text>
                   </ImageBackground>
                 </Animatable.View>
-              </TouchableOpacity>
+              </TouchableOpacity> : null }
+
               {/* ticket two touchable end */}
             </View>
             {/* ticket two component end */}
@@ -342,4 +352,10 @@ const mapStateToProps = ({ auth, source }) => {
   return { tickets, token };
   };
 
-export default connect(mapStateToProps, { userStatusChanged })(CityChoose);
+export default connect(mapStateToProps, {
+  userStatusChanged,
+updateFirstScore,
+updateSecondScore,
+updateThirdScore,
+cityStatus
+ })(CityChoose);

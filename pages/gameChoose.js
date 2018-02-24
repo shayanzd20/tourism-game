@@ -31,7 +31,7 @@ import {
   questionOneModalUpdate,
   questionTwoModalUpdate,
   questionThreeModalUpdate,
-  cityDoneStatus,
+  cityStatus,
 } from '../src/actions';
 import Animate from './components/Animate';
 import ModalCityDone from './components/ModalCityDone';
@@ -77,9 +77,11 @@ componentWillMount() {
    if (this.props.scoreFirst + this.props.scoreSecond + this.props.scoreThird === 300) {
      // cityDone = true;
      console.log('modal ::: on');
-     this.props.cityDoneStatus(true);
+      this.cityStatusTrue();
+     // this.props.cityDoneStatus(true);
    } else {
      console.log('modal ::: off');
+      this.cityStatusFalse();
    }
 }
 
@@ -89,7 +91,7 @@ componentDidMount() {
   if (this.props.scoreFirst + this.props.scoreSecond + this.props.scoreThird === 300) {
     // cityDone = true;
     console.log('modal ::: on');
-    this.props.cityDoneStatus(true);
+    // this.props.cityDoneStatus(true);
   } else {
     console.log('modal ::: off');
   }
@@ -335,6 +337,14 @@ completeCityUpdate() {
     });
 }
 
+cityStatusTrue = () => {
+  this.props.cityStatus(true);
+}
+
+cityStatusFalse = () => {
+  this.props.cityStatus(false);
+}
+
   render() {
    //console.log('this.state.q_first in render', this.state.q_first);
    //console.log('this.state.q_second in render', this.state.q_second);
@@ -360,6 +370,7 @@ completeCityUpdate() {
       console.log('modal ::: on');
       cityDone = true;
       this.completeCityUpdate();
+
     } else {
       console.log('modal ::: off');
       cityDone = false;
@@ -643,10 +654,10 @@ const styles = StyleSheet.create({
      dis_touch_first,
      dis_touch_second,
      dis_touch_third,
-     city_done,
+     city_status
+
     } = user;
     console.log('this is scoreFirst in gameChoose:', scoreFirst);
-    console.log('this is city_done in gameChoose:', city_done);
     // const { alts, answer, question, } = q_one;
 
    return { user_status,
@@ -663,7 +674,6 @@ const styles = StyleSheet.create({
      dis_touch_first,
      dis_touch_second,
      dis_touch_third,
-     city_done,
      // alts,
      // answer,
      // question,
@@ -688,5 +698,5 @@ export default connect(mapStateToProps, {
   questionOneModalUpdate,
   questionTwoModalUpdate,
   questionThreeModalUpdate,
-  cityDoneStatus
+  cityStatus
 })(GameChoose);

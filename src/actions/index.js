@@ -34,7 +34,7 @@ import { EMAIL_CHANGED,
   QUESTION_THREE_ALTS_UPDATE,
   QUESTION_THREE_MODAL_VISIBLE,
   QUESTION_THREE_STOP,
-  CITY_DONE_STATUS,
+  CITY_STATUS,
   SOURCE_CITY_UPDATE,
   UPDATE_CITIES,
   UPDATE_TICKETS,
@@ -346,10 +346,10 @@ export const questionThreeStop = (input) => {
 };
 ///////////////////////////////
 
-export const cityDoneStatus = (input) => {
+export const cityStatus = (input) => {
   return (dispatch) => {
     dispatch({
-      type: CITY_DONE_STATUS,
+      type: CITY_STATUS,
       payload: input
     });
   };
