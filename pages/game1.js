@@ -151,6 +151,7 @@ checkAnswer = (ans) => {
     LayoutAnimation.configureNext(CustomLayoutSpring);
     this.props.questionOneResultUpdate(true, 'آفرین 100 امتیاز گرفتی', 'correct');
     this.props.questionOneModalUpdate(true);
+    // clearInterval(interval);
   } else {
     // LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     this.sendAnswer(ans, 0);
@@ -159,6 +160,7 @@ checkAnswer = (ans) => {
     this.props.questionOneResultUpdate(false, 'اشتباه کردی 50 امتیاز بیشتر نگرفتی', 'incorrect');
     this.props.questionOneModalUpdate(true);
   }
+
   this.props.questionOneProgressUpdate(0);
   clearInterval(interval);
 
@@ -168,7 +170,7 @@ checkAnswer = (ans) => {
 
 
 
-  render() {
+render() {
     // console.log('state:::::', Date.now(), this.state)
     console.log('width:', widthPic);
     console.log('height:', heightPic);

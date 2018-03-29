@@ -73,6 +73,7 @@ componentWillMount() {
     this.userStatus();
   } else {
     // this.props.navigation.navigate('Login', responseJson)
+    Actions.pop();
     Actions.auth();
   }
 }
@@ -99,6 +100,7 @@ userStatus() {
         } else {
           this.props.userStatusChanged(responseJson.status);
           console.log('/----go to city----/');
+          Actions.pop();
           Actions.city();
         }
       })
@@ -129,6 +131,7 @@ sendSource = (city) => {
       console.log('responseJson in sourceScreen:', responseJson);
       // update tickets
       this.props.updateTickets(responseJson);
+      Actions.pop();
       Actions.cityChoose();
     })
     .catch((error) => {

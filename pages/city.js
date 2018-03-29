@@ -45,6 +45,7 @@ componentWillMount() {
 
 
 onGameChooseClick() {
+  Actions.pop();
   Actions.gameChoose();
 }
 
@@ -322,6 +323,7 @@ nextCity() {
       console.log('responseJson in city screen in next city api:', responseJson);
       // update tickets
       this.props.updateTickets(responseJson);
+      Actions.pop();
       Actions.cityChoose();
     })
     .catch((error) => {

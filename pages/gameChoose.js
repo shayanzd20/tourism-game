@@ -68,6 +68,7 @@ componentWillMount() {
       this.userQuestionStatus();
     } else {
       // this.props.navigation.navigate('Login', responseJson);
+      Actions.pop();
       Actions.auth();
     }
    });
@@ -99,7 +100,7 @@ componentDidMount() {
 
 // Functions
 onGameOneClick() {
-  // Actions.games();
+  // Actions.pop();
   Actions.game1();
   // we must update questions, answers, alts
   this.props.questionOneAnswerUpdate(this.props.firstObj.answer);
@@ -109,7 +110,7 @@ onGameOneClick() {
 
 onGameTwoClick() {
   console.log('this is obj two:', this.props.secondObj);
-  // Actions.games();
+  // Actions.pop();
   Actions.game2();
   // we must update questions, answers, alts
   this.props.questionTwoAnswerUpdate(this.props.secondObj.answer);
@@ -118,7 +119,7 @@ onGameTwoClick() {
 }
 
 onGameThreeClick() {
-  // Actions.games();
+  // Actions.pop();
   Actions.game3();
   // we must update questions, answers, alts
   this.props.questionThreeAnswerUpdate(this.props.thirdObj.answer);

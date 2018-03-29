@@ -98,6 +98,7 @@ userStatus = () => {
         this.props.updateSecondScore({ scoreSecond: 0, q_second: false, dis_touch_second: false });
         this.props.updateThirdScore({ scoreThird: 0, q_third: false, dis_touch_third: false });
         this.props.cityStatus(false);
+        Actions.pop();
         Actions.city();
       }
     })

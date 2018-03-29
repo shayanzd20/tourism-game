@@ -151,8 +151,9 @@ checkAnswer = (ans) => {
   }
 
   console.log('this is result:', this.props.result);
+  this.props.questionTwoProgressUpdate(0);
   clearInterval(interval);
-console.log('interval cleared');
+  console.log('interval cleared');
 };
 
   render() {

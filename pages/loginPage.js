@@ -149,6 +149,7 @@ userStatus() {
         } else {
           this.props.userStatusChanged(responseJson.status);
           console.log('/----go to city in login page----/');
+          Actions.pop();
           Actions.city();
         }
       })
@@ -171,6 +172,7 @@ getCities = () => {
     .then((responseJson) => {
       console.log('this is cities api in login page:', responseJson);
       this.props.updateCities(responseJson);
+      Actions.pop();
       Actions.sourceScreen();
 
       // const cities = responseJson;

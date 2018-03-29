@@ -9,10 +9,14 @@ import {
   // TouchableHighlight,
 } from 'react-native';
 import Modal from 'react-native-root-modal';
-// import { connect } from 'react-redux';
-// import { questionOneModalUpdate,
-//          questionTwoModalUpdate
-//  } from '../../src/actions';
+import { connect } from 'react-redux';
+import { questionOneModalUpdate,
+         questionTwoModalUpdate,
+         questionThreeModalUpdate,
+         questionOneProgressUpdate,
+         questionTwoProgressUpdate,
+         questionThreeProgressUpdate
+ } from '../../src/actions';
 
 
 const widthPic = Dimensions.get('window').width;
@@ -69,8 +73,14 @@ class ModalPrize extends Component {
 // }
 onPressModal() {
   console.log('presseddddddd');
-  // this.props.questionOneModalUpdate(false);
-  // this.props.questionTwoModalUpdate(false);
+  this.props.questionOneModalUpdate(false);
+  this.props.questionTwoModalUpdate(false);
+  this.props.questionThreeModalUpdate(false);
+  this.props.questionOneProgressUpdate(0);
+  this.props.questionTwoProgressUpdate(0);
+  this.props.questionThreeProgressUpdate(0);
+
+  Actions.pop();
   Actions.main();
 }
 
@@ -164,23 +174,30 @@ const styles = {
   }
 };
 
-// const mapStateToProps = ({ q_one }) => {
-//   console.log('this is question one state:', q_one);
-//
-//   const {
-//     result,
-//     modal_visible,
-//     text_modal,
-//     status
-//    } = q_one;
-//
-//   return {
-//     result,
-//     modal_visible,
-//     text_modal,
-//     status
-//    };
-//   };
+const mapStateToProps = ({ q_one }) => {
+  console.log('this is question one state:', q_one);
+
+  const {
+    result,
+    modal_visible,
+    text_modal,
+    status
+   } = q_one;
+
+  return {
+    result,
+    modal_visible,
+    text_modal,
+    status
+   };
+  };
 
 // export default connect(mapStateToProps, { questionOneModalUpdate, questionTwoModalUpdate })(ModalPrize);
-export default ModalPrize;
+export default connect(mapStateToProps, {
+  questionOneModalUpdate,
+  questionTwoModalUpdate,
+  questionThreeModalUpdate,
+  questionOneProgressUpdate,
+  questionTwoProgressUpdate,
+  questionThreeProgressUpdate
+ })(ModalPrize);

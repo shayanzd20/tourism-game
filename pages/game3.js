@@ -74,22 +74,6 @@ class Game3 extends Component {
         }
     }
 
-    animate() {
-      let progress = 0;
-      let interval = null;
-
-      this.props.questionThreeProgressUpdate(progress);
-        interval = setInterval(() => {
-          progress += 0.01;
-          if (progress > 1) {
-            // progress = 1;
-            clearInterval(interval);
-          }
-          console.log('progress current setInterval:', progress);
-
-          this.props.questionThreeProgressUpdate(progress);
-        }, 100);
-  }
 
     sendAnswer = (alt, status) => {
       fetch('http://velgardi-game.ir/api/sendAnswerQThree', {
@@ -159,8 +143,9 @@ class Game3 extends Component {
       }
 
       // console.log('this is result:', this.props.result);
+      this.props.questionThreeProgressUpdate(0);
       // clearInterval(interval);
-      // console.log('interval cleared');
+            // console.log('interval cleared');
     };
 
     stopVideo = (input) => {
@@ -176,7 +161,7 @@ class Game3 extends Component {
     }
     setDuration() {
       console.log('setDuration');
-      this.animate();
+      // this.animate();
     }
     setTime() {
       console.log('setTime');
@@ -188,11 +173,21 @@ class Game3 extends Component {
       console.log('videoError');
     }
 
-      // onLoadStart={this.loadStart}            // Callback when video starts to load
-      // onLoad={this.setDuration}               // Callback when video loads
-      // onProgress={this.setTime}               // Callback every ~250ms with currentTime
-      // onEnd={this.onEnd}                      // Callback when playback finishes
-      // onError={this.videoError}
+    animate() {
+      let progress = 0;
+
+      this.props.questionThreeProgressUpdate(progress);
+        interval = setInterval(() => {
+          progress += 0.01;
+          if (progress > 1) {
+            // progress = 1;
+            clearInterval(interval);
+          }
+          console.log('progress current setInterval:', progress);
+
+          this.props.questionThreeProgressUpdate(progress);
+        }, 100);
+    }
 
   render() {
     const videoGame = 'http://velgardi-game.ir/' + this.props.video;
