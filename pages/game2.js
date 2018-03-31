@@ -49,7 +49,7 @@ constructor() {
 
 componentWillMount() {
     this.animate();
-    console.log('this is question two props:',this.props);
+    // console.log('this is question two props:',this.props);
     // console.log(this.props);
     if (this.props.img) {
       this.props.questionTwoQuestionUpdate(this.props.img);
@@ -58,7 +58,7 @@ componentWillMount() {
       this.props.questionTwoAnswerUpdate(this.props.answer);
     }
     const altsObj = JSON.parse(this.props.alts);
-    console.log('alts two', altsObj);
+    // console.log('alts two', altsObj);
     if (altsObj) {
       this.props.questionTwoAltsUpdate({
         altOne: altsObj[0].txt,
@@ -78,8 +78,26 @@ animate() {
       if (progress > 1) {
         // progress = 1;
         clearInterval(interval);
+        // this.sendAnswer(ans, 0);
+        const CustomLayoutSpring = {
+            duration: 400,
+            create: {
+              type: LayoutAnimation.Types.spring,
+              property: LayoutAnimation.Properties.scaleXY,
+              springDamping: 0.7,
+            },
+            update: {
+              type: LayoutAnimation.Types.spring,
+              springDamping: 0.7,
+            },
+          };
+          
+        this.props.updateSecondScore({ scoreSecond: 50, q_second: true, dis_touch_second: false });
+        LayoutAnimation.configureNext(CustomLayoutSpring);
+        this.props.questionTwoResultUpdate(false, 'متاسفانه زمان از دست رفت و 50 امتیاز بیشتر بدست نیاوردی', 'incorrect');
+        this.props.questionTwoModalUpdate(true);
       }
-      console.log('progress current setInterval:', progress);
+      // console.log('progress current setInterval:', progress);
 
       this.props.questionTwoProgressUpdate(progress);
     }, 100);
@@ -100,8 +118,8 @@ sendAnswer = (alt, status) => {
   })
     .then((response) => response.json())
     .then((responseJson) => {
-      console.log('get user Status start api');
-      console.log('get user Status:', responseJson);
+      // console.log('get user Status start api');
+      // console.log('get user Status:', responseJson);
 
       // store token
       // if responseJson.status == 'arrive' => go to city page with city params
@@ -110,14 +128,14 @@ sendAnswer = (alt, status) => {
 
     })
     .catch((error) => {
-      console.error('error:', error);
+      // console.error('error:', error);
     });
 }
 
 checkAnswer = (ans) => {
-  console.log('this is option:', ans);
-  console.log('this is this.answer:', this.answer);
-  console.log('this is answer:', this.props.answer);
+  // console.log('this is option:', ans);
+  // console.log('this is this.answer:', this.answer);
+  // console.log('this is answer:', this.props.answer);
 
   const CustomLayoutSpring = {
       duration: 400,
@@ -150,17 +168,17 @@ checkAnswer = (ans) => {
     this.props.questionTwoModalUpdate(true);
   }
 
-  console.log('this is result:', this.props.result);
-  this.props.questionTwoProgressUpdate(0);
+  // console.log('this is result:', this.props.result);
+  // this.props.questionTwoProgressUpdate(0);
   clearInterval(interval);
-  console.log('interval cleared');
+  // console.log('interval cleared');
 };
 
   render() {
     // let params = this.props.navigation.state.params;
     // console.log('game 2 params:',params)
     const imageQuestion = this.props.img;
-    console.log('this is imageQuestion:', imageQuestion);
+    // console.log('this is imageQuestion:', imageQuestion);
     // let answer = params.answer
     // let altsObj = JSON.parse(params.alts)
     // console.log('alts',altsObj)
@@ -220,7 +238,9 @@ checkAnswer = (ans) => {
                 // originalWidth={100000}
                 style={styles.picture}
                 source={{ uri: 'http://velgardi-game.ir/api/get_image?path=' + imageQuestion }}
-                onLoadStart={() => { console.log('picture loading so loading must true')}}
+                onLoadStart={() => {
+                  // console.log('picture loading so loading must true')
+                }}
               />
             </CardView>
           </Animatable.View>
@@ -454,7 +474,7 @@ picture: {
 });
 
 const mapStateToProps = ({ auth, q_two }) => {
-  console.log('this is question two state:', q_two);
+  // console.log('this is question two state:', q_two);
   const { token } = auth;
 
   const {

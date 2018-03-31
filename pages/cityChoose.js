@@ -21,8 +21,8 @@ import {
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
 
-console.log('width:', deviceWidth);
-console.log('height:', deviceHeight);
+// console.log('width:', deviceWidth);
+// console.log('height:', deviceHeight);
 
 // consts
 const slideInCustom = {
@@ -58,7 +58,7 @@ sendTicket = (ticket) => {
   })
     .then((response) => response.json())
     .then((responseJson) => {
-      console.log('responseJson in city choose for choosing ticket:', responseJson);
+      // console.log('responseJson in city choose for choosing ticket:', responseJson);
       // update tickets
       // this.props.updateTickets(responseJson);
       // Actions.cityChoose();
@@ -66,7 +66,7 @@ sendTicket = (ticket) => {
       // Actions.city();
     })
     .catch((error) => {
-      console.error('error in city choose for choosing ticket:', error);
+      // console.error('error in city choose for choosing ticket:', error);
     });
 }
 
@@ -81,19 +81,19 @@ userStatus = () => {
   })
     .then((response) => response.json())
     .then((responseJson) => {
-      console.log('/ ----------- get user Status start api in city choose --------/');
+      // console.log('/ ----------- get user Status start api in city choose --------/');
       // console.log('get user Status in login page:', responseJson);
 
 
-      console.log('responseJson.status in city choose:', responseJson.status);
+      // console.log('responseJson.status in city choose:', responseJson.status);
       if (responseJson.status === '') {
-        console.log('/----go to sourceScreen in city choose----/');
+        // console.log('/----go to sourceScreen in city choose----/');
         this.getCities();
 
       } else {
         this.props.userStatusChanged(responseJson.status);
-        console.log('/----go to city in city choose----/');
-        console.log('/--reset scores befor going to city--/');
+        // console.log('/----go to city in city choose----/');
+        // console.log('/--reset scores befor going to city--/');
         this.props.updateFirstScore({ scoreFirst: 0, q_first: false, dis_touch_first: false });
         this.props.updateSecondScore({ scoreSecond: 0, q_second: false, dis_touch_second: false });
         this.props.updateThirdScore({ scoreThird: 0, q_third: false, dis_touch_third: false });
@@ -103,13 +103,13 @@ userStatus = () => {
       }
     })
     .catch((error) => {
-      console.error('error:', error);
+      // console.error('error:', error);
     });
 }
 
 
   render() {
-    console.log('/-------city choose render start------/');
+    // console.log('/-------city choose render start------/');
     return (
       <View>
         {/* background component start */}
@@ -345,7 +345,7 @@ userStatus = () => {
 }
 
 const mapStateToProps = ({ auth, source }) => {
-  console.log('this is source object in source city:', source);
+  // console.log('this is source object in source city:', source);
 
   const { token } = auth;
   const { tickets } = source;

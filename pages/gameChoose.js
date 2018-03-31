@@ -31,6 +31,9 @@ import {
   questionOneModalUpdate,
   questionTwoModalUpdate,
   questionThreeModalUpdate,
+  questionOneProgressUpdate,
+  questionTwoProgressUpdate,
+  questionThreeProgressUpdate,
   cityStatus,
 } from '../src/actions';
 import Animate from './components/Animate';
@@ -38,7 +41,6 @@ import ModalCityDone from './components/ModalCityDone';
 
 
 class GameChoose extends Component {
-
   static navigationOptions = {
    //title: <Text style={{
  //      color: 'rgba(0, 0, 0, .9)',
@@ -51,50 +53,58 @@ class GameChoose extends Component {
 
   };
 
+  constructor(props) {
+    super(props);
+    this.props.questionOneProgressUpdate(0);
+    this.props.questionTwoProgressUpdate(0);
+    this.props.questionThreeProgressUpdate(0);
+  }
+
 
 componentWillMount() {
-  console.log('componentWillMount:::');
+  // console.log('componentWillMount:::');
   this.props.questionOneModalUpdate(false);
   this.props.questionTwoModalUpdate(false);
   this.props.questionThreeModalUpdate(false);
 
 
 
+
   AsyncStorage.getItem('token', (err, result) => {
-    console.log('get token in game choose: ', result);
-    if (result) {
-      // this.state.token = result;
-      this.props.tokenChanged(result);
-      this.userQuestionStatus();
-    } else {
-      // this.props.navigation.navigate('Login', responseJson);
-      Actions.pop();
-      Actions.auth();
-    }
-   });
+      // console.log('get token in game choose: ', result);
+      if (result) {
+        // this.state.token = result;
+        this.props.tokenChanged(result);
+        this.userQuestionStatus();
+      } else {
+        // this.props.navigation.navigate('Login', responseJson);
+        Actions.pop();
+        Actions.auth();
+      }
+    });
 
    // check done cityDone
-   console.log('this.props in componentWillMount:::', this.props);
+   // console.log('this.props in componentWillMount:::', this.props);
    if (this.props.scoreFirst + this.props.scoreSecond + this.props.scoreThird === 300) {
      // cityDone = true;
-     console.log('modal ::: on');
+     // console.log('modal ::: on');
       this.cityStatusTrue();
      // this.props.cityDoneStatus(true);
    } else {
-     console.log('modal ::: off');
+     // console.log('modal ::: off');
       this.cityStatusFalse();
    }
 }
 
 componentDidMount() {
-  console.log('componentDidMount:::');
-  console.log('this.props in componentDidMount:::', this.props);
+  // console.log('componentDidMount:::');
+  // console.log('this.props in componentDidMount:::', this.props);
   if (this.props.scoreFirst + this.props.scoreSecond + this.props.scoreThird === 300) {
     // cityDone = true;
-    console.log('modal ::: on');
+    // console.log('modal ::: on');
     // this.props.cityDoneStatus(true);
   } else {
-    console.log('modal ::: off');
+    // console.log('modal ::: off');
   }
 }
 
@@ -109,7 +119,7 @@ onGameOneClick() {
 }
 
 onGameTwoClick() {
-  console.log('this is obj two:', this.props.secondObj);
+  // console.log('this is obj two:', this.props.secondObj);
   // Actions.pop();
   Actions.game2();
   // we must update questions, answers, alts
@@ -128,7 +138,7 @@ onGameThreeClick() {
 }
 
 userQuestionStatus() {
-  console.log('userQuestionStatus function in game choose: ');
+  // console.log('userQuestionStatus function in game choose: ');
   fetch('http://velgardi-game.ir/api/question', {
     method: 'POST',
     headers: {
@@ -139,13 +149,13 @@ userQuestionStatus() {
   })
     .then((response) => response.json())
     .then((responseJson) => {
-      console.log('/----------------get user Question Status start api in game choose-----------/');
+      // console.log('/----------------get user Question Status start api in game choose-----------/');
      //console.log('get user Question Status: ', responseJson);
-     console.log('responseJson.city_status:::', responseJson.city_status);
+     // console.log('responseJson.city_status:::', responseJson.city_status);
      if (!responseJson.city_status) {
-       console.log('question first: ', responseJson.question_first);
-       console.log('question second: ', responseJson.question_second);
-       console.log('question third: ', responseJson.question_third);
+       // console.log('question first: ', responseJson.question_first);
+       // console.log('question second: ', responseJson.question_second);
+       // console.log('question third: ', responseJson.question_third);
 
        const {
          question_first,
@@ -183,7 +193,7 @@ userQuestionStatus() {
 
     })
     .catch((error) => {
-      console.error('error: ', error);
+      // console.error('error: ', error);
      });
 }
 
@@ -328,13 +338,13 @@ completeCityUpdate() {
   })
   .then((response) => response.json())
   .then((responseJson) => {
-    console.log('/----------------update user city status start api in game choose-----------/');
+    // console.log('/----------------update user city status start api in game choose-----------/');
     //console.log('get user Question Status: ', responseJson);
 
     const { city_status } = responseJson;
     })
     .catch((error) => {
-      console.error('error: ', error);
+      // console.error('error: ', error);
     });
 }
 
@@ -368,15 +378,16 @@ cityStatusFalse = () => {
 
     if (this.props.scoreFirst + this.props.scoreSecond + this.props.scoreThird === 300) {
       // cityDone = true;
-      console.log('modal ::: on');
+      // console.log('modal ::: on');
       cityDone = true;
       this.completeCityUpdate();
 
     } else {
-      console.log('modal ::: off');
+      // console.log('modal ::: off');
       cityDone = false;
     }
 
+    console.log('this.props.dis_touch_first:', this.props.dis_touch_first);
 
     return (
 
@@ -639,7 +650,7 @@ const styles = StyleSheet.create({
  });
 
  const mapStateToProps = ({ auth, user }) => {
-   console.log('this is auth text in game choose:', user);
+   // console.log('this is auth text in game choose:', user);
    const { token } = auth;
 
    const { user_status,
@@ -658,7 +669,7 @@ const styles = StyleSheet.create({
      city_status
 
     } = user;
-    console.log('this is scoreFirst in gameChoose:', scoreFirst);
+    // console.log('this is scoreFirst in gameChoose:', scoreFirst);
     // const { alts, answer, question, } = q_one;
 
    return { user_status,
@@ -699,5 +710,8 @@ export default connect(mapStateToProps, {
   questionOneModalUpdate,
   questionTwoModalUpdate,
   questionThreeModalUpdate,
+  questionOneProgressUpdate,
+  questionTwoProgressUpdate,
+  questionThreeProgressUpdate,
   cityStatus
 })(GameChoose);

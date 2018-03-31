@@ -30,9 +30,9 @@ const RouterComponent = () => {
           <Scene key='sourceScreen'>
             <Scene key='sourceScreen' component={SourceScreen} />
           </Scene>
-          <Scene key='cityChoose'>
+          {/*<Scene key='cityChoose'>
             <Scene key='cityChoose' component={CityChoose} />
-          </Scene>
+          </Scene>*/}
           <Scene key='game1'>
             <Scene key='game1' component={Game1} />
             {/* <Scene key='game2' component={Game2} /> */}
@@ -50,6 +50,7 @@ const RouterComponent = () => {
           </Scene>
           <Scene key='city'>
             <Scene key='simple' component={City} />
+            <Scene key='cityChoose' component={CityChoose} />
           </Scene>
         </Scene>
       </Router>

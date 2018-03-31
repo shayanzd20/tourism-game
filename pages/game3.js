@@ -100,7 +100,7 @@ class Game3 extends Component {
 
         })
         .catch((error) => {
-          console.error('error:', error);
+          // console.error('error:', error);
         });
     }
 
@@ -143,34 +143,34 @@ class Game3 extends Component {
       }
 
       // console.log('this is result:', this.props.result);
-      this.props.questionThreeProgressUpdate(0);
-      // clearInterval(interval);
+      // this.props.questionThreeProgressUpdate(0);
+      clearInterval(interval);
             // console.log('interval cleared');
     };
 
     stopVideo = (input) => {
-      console.log('video stopped');
+      // console.log('video stopped');
       this.props.questionThreeStop(input);
     }
 
     onBuffer() {
-      console.log('buffering');
+      // console.log('buffering');
     }
     loadStart() {
-      console.log('loadStart');
+      // console.log('loadStart');
     }
     setDuration() {
       console.log('setDuration');
-      // this.animate();
+      this.animate();
     }
     setTime() {
-      console.log('setTime');
+      // console.log('setTime');
     }
     onEnd() {
-      console.log('onEnd');
+      // console.log('onEnd');
     }
     videoError() {
-      console.log('videoError');
+      // console.log('videoError');
     }
 
     animate() {
@@ -182,8 +182,10 @@ class Game3 extends Component {
           if (progress > 1) {
             // progress = 1;
             clearInterval(interval);
+            this.props.questionThreeResultUpdate(false, 'اشتباه کردی 50 امتیاز بیشتر نگرفتی', 'incorrect');
+
           }
-          console.log('progress current setInterval:', progress);
+          // console.log('progress current setInterval:', progress);
 
           this.props.questionThreeProgressUpdate(progress);
         }, 100);
@@ -498,7 +500,7 @@ picture: {
 });
 
 const mapStateToProps = ({ auth, q_three }) => {
-  console.log('this is question three state:', q_three);
+  // console.log('this is question three state:', q_three);
   const { token } = auth;
 
   const {

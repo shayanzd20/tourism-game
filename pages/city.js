@@ -26,8 +26,8 @@ import {
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
 
-console.log('deviceWidth:', deviceWidth);
-console.log('deviceHeight:', deviceHeight);
+// console.log('deviceWidth:', deviceWidth);
+// console.log('deviceHeight:', deviceHeight);
 
 class City extends Component {
 
@@ -45,12 +45,13 @@ componentWillMount() {
 
 
 onGameChooseClick() {
-  Actions.pop();
-  Actions.gameChoose();
+  // Actions.pop();
+  // Actions.gameChoose();
+  Actions.replace('gameChoose');
 }
 
 userQuestionStatus() {
-  console.log('userQuestionStatus function in city: ');
+  // console.log('userQuestionStatus function in city: ');
   fetch('http://velgardi-game.ir/api/question', {
     method: 'POST',
     headers: {
@@ -64,12 +65,12 @@ userQuestionStatus() {
   })
   .then((response) => response.json())
   .then((responseJson) => {
-    console.log('/----------------get user Question Status start api in game choose-----------/');
-    console.log('get user Question Status in city: ', responseJson);
+    // console.log('/----------------get user Question Status start api in game choose-----------/');
+    // console.log('get user Question Status in city: ', responseJson);
 
-    console.log('question first: ', responseJson.question_first);
-    console.log('question second: ', responseJson.question_second);
-    console.log('question third: ', responseJson.question_third);
+    // console.log('question first: ', responseJson.question_first);
+    // console.log('question second: ', responseJson.question_second);
+    // console.log('question third: ', responseJson.question_third);
 
     const {
       question_first,
@@ -107,7 +108,7 @@ userQuestionStatus() {
       }
     })
     .catch((error) => {
-      console.error('error: ', error);
+      // console.error('error: ', error);
     });
   }
 
@@ -320,14 +321,14 @@ nextCity() {
   })
     .then((response) => response.json())
     .then((responseJson) => {
-      console.log('responseJson in city screen in next city api:', responseJson);
+      // console.log('responseJson in city screen in next city api:', responseJson);
       // update tickets
       this.props.updateTickets(responseJson);
       Actions.pop();
       Actions.cityChoose();
     })
     .catch((error) => {
-      console.error('error:', error);
+      // console.error('error:', error);
     });
 }
 
@@ -338,45 +339,45 @@ nextCity() {
     let nextCityButton;
     let playGameButton;
 
-    console.log('city prop user3: ', this.props.user_status.city);
-    console.log('city prop user city status: ', this.props.user_status.status);
+    // console.log('city prop user3: ', this.props.user_status.city);
+    // console.log('city prop user city status: ', this.props.user_status.status);
     const userCityStatus = this.props.user_status.status;
     const cityName = this.props.user_status.city.name;
     if (this.props.user_status.city.population !== 0) {
-      console.log('population');
+      // console.log('population');
       cityPopulation = 'جمعیت: ' + this.props.user_status.city.population + ' نفر';
-      console.log(cityPopulation);
+      // console.log(cityPopulation);
     }
     if (this.props.user_status.city.area !== 0) {
-      console.log('area');
+      // console.log('area');
       cityArea = 'مساحت: ' + this.props.user_status.city.area + ' کیلومتر مربع';
-      console.log(cityArea);
+      // console.log(cityArea);
     }
 
     if (this.props.user_status.city.description !== '') {
-      console.log('description');
+      // console.log('description');
       cityDescription = this.props.user_status.city.description;
-      console.log(cityDescription);
+      // console.log(cityDescription);
     }
-    console.log('userCityStatus:::', userCityStatus);
+    // console.log('userCityStatus:::', userCityStatus);
     if (userCityStatus === 'arrive') {
       // we have to lock travel button
-      console.log('user arrived');
+      // console.log('user arrived');
       // nextCityButton = this.travelButtonLock();
     } else {
       // travel button is open
-      console.log('user leave');
+      // console.log('user leave');
       // nextCityButton = this.travelButtonLock();
       // nextCityButton = this.travelButton();
     }
 
     if (this.props.scoreFirst + this.props.scoreSecond + this.props.scoreThird === 300) {
-      console.log('playGameButton ::: on');
+      // console.log('playGameButton ::: on');
       playGameButton = this.playGameButtonLock();
       nextCityButton = this.travelButton();
 
     } else {
-      console.log('playGameButton ::: off');
+      // console.log('playGameButton ::: off');
       // nextCityButton = this.travelButton();
       playGameButton = this.playGameButton();
       nextCityButton = this.travelButtonLock();
@@ -608,8 +609,8 @@ const styles = StyleSheet.create({
   }
 });
 const mapStateToProps = ({ auth, user }) => {
-  console.log('this is user in city:', user);
-  console.log('this is auth in city:', auth);
+  // console.log('this is user in city:', user);
+  // console.log('this is auth in city:', auth);
   const { token } = auth;
 
   const {

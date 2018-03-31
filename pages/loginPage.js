@@ -30,8 +30,8 @@ import {
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
 
-console.log('width:', deviceWidth);
-console.log('height:', deviceHeight);
+// console.log('width:', deviceWidth);
+// console.log('height:', deviceHeight);
 
 // consts
 
@@ -69,26 +69,26 @@ login() {
       .then((responseJson) => {
           AsyncStorage.setItem('number', this.props.number, () => {
               AsyncStorage.getItem('number', (err, result) => {
-                console.log('get number:', result);
+                // console.log('get number:', result);
               });
           });
         if (responseJson.result === true) {
           this.props.visibleChanged(false);
           this.props.digitsChanged(true);
-          console.log('digitStateAfter:', this.props.digits);
+          // console.log('digitStateAfter:', this.props.digits);
           ToastAndroid.show('کد پیامک شده را وارد نمایید', ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
         }
         // return responseJson;
       })
       .catch((error) => {
-        console.error('error:', error);
+        // console.error('error:', error);
       });
   }
 
 verification() {
   AsyncStorage.getItem('number', (err, result) => {
     this.props.realNumberChanged(result);
-    console.log('verification api');
+    // console.log('verification api');
     this.props.visibleChanged(true);
       fetch('http://velgardi-game.ir/api/register', {
         method: 'POST',
@@ -103,13 +103,13 @@ verification() {
       })
         .then((response) => response.json())
         .then((responseJson) => {
-          console.log('//successfully get token//');
-          console.log('this is token:', responseJson.token);
+          // console.log('//successfully get token//');
+          // console.log('this is token:', responseJson.token);
 
            // store token
           AsyncStorage.setItem('token', responseJson.token, () => {
               AsyncStorage.getItem('token', (err, res) => {
-                console.log('get token:', res);
+                // console.log('get token:', res);
                 // if got token => send api to get status of user in order to route
                 // it to appropriate location
                 this.userStatus();
@@ -117,13 +117,13 @@ verification() {
           });
         })
         .catch((error) => {
-          console.error('error:', error);
+          // console.error('error:', error);
         });
   });
 }
 
 userStatus() {
-  console.log('/ ------- userStatus helper function ------- /');
+  // console.log('/ ------- userStatus helper function ------- /');
   // this.setState({ visible: true });
   this.props.visibleChanged(true);
   AsyncStorage.getItem('token', (err, result) => {
@@ -138,23 +138,27 @@ userStatus() {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log('/ ----------- get user Status start api in login page --------/');
+        // console.log('/ ----------- get user Status start api in login page --------/');
         // console.log('get user Status in login page:', responseJson);
 
 
-        console.log('responseJson.status in login page:', responseJson.status);
+        // console.log('responseJson.status in login page:', responseJson.status);
         if (responseJson.status === '') {
-          console.log('/----go to sourceScreen in login page----/');
+          // console.log('/----go to sourceScreen in login page----/');
           this.getCities();
         } else {
           this.props.userStatusChanged(responseJson.status);
-          console.log('/----go to city in login page----/');
-          Actions.pop();
+          // console.log('/----go to city in login page----/');
+          // Actions.pop();
           Actions.city();
+          // Actions.simple();
+          // Actions.city({ type: 'replace' });
+          // Actions.replace('city');
+          // Actions.replace('simple');
         }
       })
       .catch((error) => {
-        console.error('error:', error);
+        // console.error('error:', error);
       });
   });
 }
@@ -170,7 +174,7 @@ getCities = () => {
   })
     .then((response) => response.json())
     .then((responseJson) => {
-      console.log('this is cities api in login page:', responseJson);
+      // console.log('this is cities api in login page:', responseJson);
       this.props.updateCities(responseJson);
       Actions.pop();
       Actions.sourceScreen();
@@ -179,7 +183,7 @@ getCities = () => {
       // return responseJson;
     })
     .catch((error) => {
-      console.error('error in cities api  in login page::', error);
+      // console.error('error in cities api  in login page::', error);
     });
 }
 
@@ -250,8 +254,8 @@ numberInput() {
 
 loginButton() {
 
-  console.log('< ----------- loginButton ------------------>');
-  console.log('this.mapStateToProps.number:', this.props.number);
+  // console.log('< ----------- loginButton ------------------>');
+  // console.log('this.mapStateToProps.number:', this.props.number);
     return (
       <View
         style={{
@@ -416,7 +420,7 @@ button: {
 },
 });
 const mapStateToProps = ({ auth, user }) => {
-  console.log('this is auth text:', auth);
+  // console.log('this is auth text:', auth);
   const { number, digits, visible, realNumber, token, digitText } = auth;
   const { user_status } = user;
   // console.log('this is email text:', email);

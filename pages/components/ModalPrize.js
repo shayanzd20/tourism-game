@@ -72,13 +72,13 @@ class ModalPrize extends Component {
 //   // const { text, visible, status } = this.props;
 // }
 onPressModal() {
-  console.log('presseddddddd');
+  // console.log('presseddddddd');
   this.props.questionOneModalUpdate(false);
   this.props.questionTwoModalUpdate(false);
   this.props.questionThreeModalUpdate(false);
-  this.props.questionOneProgressUpdate(0);
-  this.props.questionTwoProgressUpdate(0);
-  this.props.questionThreeProgressUpdate(0);
+  // this.props.questionOneProgressUpdate(0);
+  // this.props.questionTwoProgressUpdate(0);
+  // this.props.questionThreeProgressUpdate(0);
 
   Actions.pop();
   Actions.main();
@@ -175,7 +175,7 @@ const styles = {
 };
 
 const mapStateToProps = ({ q_one }) => {
-  console.log('this is question one state:', q_one);
+  // console.log('this is question one state:', q_one);
 
   const {
     result,

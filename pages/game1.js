@@ -53,9 +53,9 @@ constructor() {
 
 componentWillMount() {
     this.animate();
-    console.log('game 1 params in construct:');
-    console.log('this is before error:');
-    console.log(this.props.question);
+    // console.log('game 1 params in construct:');
+    // console.log('this is before error:');
+    // console.log(this.props.question);
     if (this.props.question) {
       this.props.questionOneQuestionUpdate(this.props.question);
     }
@@ -63,7 +63,7 @@ componentWillMount() {
       this.props.questionOneAnswerUpdate(this.props.answer);
     }
     const altsObj = JSON.parse(this.props.alts);
-    console.log('alts', altsObj);
+    // console.log('alts', altsObj);
     if (altsObj) {
       this.props.questionOneAltsUpdate({
         altOne: altsObj[0].img,
@@ -86,9 +86,12 @@ animate() {
       progress += 0.01;
       if (progress > 1) {
         // progress = 1;
+
         clearInterval(interval);
+        this.props.questionOneResultUpdate(false, 'اشتباه کردی 50 امتیاز بیشتر نگرفتی', 'incorrect');
+
       }
-      console.log('progress current setInterval:', progress);
+      // console.log('progress current setInterval:', progress);
 
       // this.setState({ progress });
         this.props.questionOneProgressUpdate(progress);
@@ -112,8 +115,8 @@ sendAnswer = (alt, status) => {
   })
     .then((response) => response.json())
     .then((responseJson) => {
-      console.log('get user Status start api');
-      console.log('get user Status:', responseJson);
+      // console.log('get user Status start api');
+      // console.log('get user Status:', responseJson);
 
       // store token
       // if responseJson.status == 'arrive' => go to city page with city params
@@ -122,14 +125,14 @@ sendAnswer = (alt, status) => {
 
     })
     .catch((error) => {
-      console.error('error:', error);
+      // console.error('error:', error);
     });
 }
 
 checkAnswer = (ans) => {
-  console.log('this is option:', ans);
-  console.log('this is this.answer:', this.answer);
-  console.log('this is answer:', this.props.answer);
+  // console.log('this is option:', ans);
+  // console.log('this is this.answer:', this.answer);
+  // console.log('this is answer:', this.props.answer);
 
   const CustomLayoutSpring = {
       duration: 400,
@@ -155,16 +158,16 @@ checkAnswer = (ans) => {
   } else {
     // LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     this.sendAnswer(ans, 0);
-    this.props.updateFirstScore({ scoreFirst: 50, q_first: true, dis_touch_first: true });
+    this.props.updateFirstScore({ scoreFirst: 50, q_first: true, dis_touch_first: false });
     LayoutAnimation.configureNext(CustomLayoutSpring);
     this.props.questionOneResultUpdate(false, 'اشتباه کردی 50 امتیاز بیشتر نگرفتی', 'incorrect');
     this.props.questionOneModalUpdate(true);
   }
 
-  this.props.questionOneProgressUpdate(0);
+  // this.props.questionOneProgressUpdate(0);
   clearInterval(interval);
 
-  console.log('this is result:', this.props.result);
+  // console.log('this is result:', this.props.result);
 };
 
 
@@ -172,8 +175,8 @@ checkAnswer = (ans) => {
 
 render() {
     // console.log('state:::::', Date.now(), this.state)
-    console.log('width:', widthPic);
-    console.log('height:', heightPic);
+    // console.log('width:', widthPic);
+    // console.log('height:', heightPic);
 
     // const transform = this.animated.interpolate({
     //   inputRange: [0, 1],
@@ -391,7 +394,7 @@ const styles = StyleSheet.create({
   }
 });
 const mapStateToProps = ({ auth, q_one }) => {
-  console.log('this is question one state:', q_one);
+  // console.log('this is question one state:', q_one);
   const { token } = auth;
 
   const {

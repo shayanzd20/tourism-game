@@ -83,7 +83,7 @@ componentDidMount() {
 }
 
 userStatus() {
-  console.log('/ ------- userStatus function in sourceScreen------- /');
+  // console.log('/ ------- userStatus function in sourceScreen------- /');
     fetch('http://velgardi-game.ir/api/status', {
       method: 'POST',
       headers: {
@@ -93,19 +93,19 @@ userStatus() {
       }
     }).then((response) => response.json())
       .then((responseJson) => {
-        console.log('/ ----------- get user Status start api in source screen --------/');
-        console.log('responseJson.status in in source screen:', responseJson.status);
+        // console.log('/ ----------- get user Status start api in source screen --------/');
+        // console.log('responseJson.status in in source screen:', responseJson.status);
         if (responseJson.status === '') {
-          console.log('/----go to sourceScreen----/');
+          // console.log('/----go to sourceScreen----/');
         } else {
           this.props.userStatusChanged(responseJson.status);
-          console.log('/----go to city----/');
+          // console.log('/----go to city----/');
           Actions.pop();
           Actions.city();
         }
       })
       .catch((error) => {
-        console.error('error:', error);
+        // console.error('error:', error);
       });
 }
 
@@ -128,14 +128,14 @@ sendSource = (city) => {
   })
     .then((response) => response.json())
     .then((responseJson) => {
-      console.log('responseJson in sourceScreen:', responseJson);
+      // console.log('responseJson in sourceScreen:', responseJson);
       // update tickets
       this.props.updateTickets(responseJson);
       Actions.pop();
       Actions.cityChoose();
     })
     .catch((error) => {
-      console.error('error:', error);
+      // console.error('error:', error);
     });
 }
 
@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = ({ auth, source }) => {
-  console.log('this is source object in source city:', source);
+  // console.log('this is source object in source city:', source);
 
   const { token } = auth;
   const { city, cities } = source;

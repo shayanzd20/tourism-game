@@ -95,7 +95,7 @@ componentWillMount() {
 }
 
 onPressModal() {
-  console.log('ciry done modal click');
+  // console.log('ciry done modal click');
   // LayoutAnimation.configureNext(CustomLayoutSpring);
   this.setState({ visibility: false });
   Actions.city();
