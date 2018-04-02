@@ -78,8 +78,10 @@ componentWillMount() {
         this.userQuestionStatus();
       } else {
         // this.props.navigation.navigate('Login', responseJson);
-        Actions.pop();
-        Actions.auth();
+        // Actions.pop();
+        // Actions.auth();
+        Actions.replace('auth');
+
       }
     });
 
@@ -111,30 +113,37 @@ componentDidMount() {
 // Functions
 onGameOneClick() {
   // Actions.pop();
-  Actions.game1();
+  // Actions.game1();
+
   // we must update questions, answers, alts
   this.props.questionOneAnswerUpdate(this.props.firstObj.answer);
   this.props.questionOneQuestionUpdate(this.props.firstObj.question);
   this.props.questionOneAltsUpdate(this.props.firstObj.alts);
+
+  Actions.replace('game1');
 }
 
 onGameTwoClick() {
   // console.log('this is obj two:', this.props.secondObj);
   // Actions.pop();
-  Actions.game2();
+  // Actions.game2();
+
   // we must update questions, answers, alts
   this.props.questionTwoAnswerUpdate(this.props.secondObj.answer);
   this.props.questionTwoQuestionUpdate(this.props.secondObj.img);
   this.props.questionTwoAltsUpdate(this.props.secondObj.alts);
+  Actions.replace('game2');
 }
 
 onGameThreeClick() {
   // Actions.pop();
-  Actions.game3();
+  // Actions.game3();
+
   // we must update questions, answers, alts
   this.props.questionThreeAnswerUpdate(this.props.thirdObj.answer);
   this.props.questionThreeQuestionUpdate(this.props.thirdObj.video);
   this.props.questionThreeAltsUpdate(this.props.thirdObj.alts);
+  Actions.replace('game3');
 }
 
 userQuestionStatus() {

@@ -150,10 +150,10 @@ userStatus() {
           this.props.userStatusChanged(responseJson.status);
           // console.log('/----go to city in login page----/');
           // Actions.pop();
-          Actions.city();
+          // Actions.city();
           // Actions.simple();
           // Actions.city({ type: 'replace' });
-          // Actions.replace('city');
+          Actions.replace('city');
           // Actions.replace('simple');
         }
       })
@@ -176,8 +176,10 @@ getCities = () => {
     .then((responseJson) => {
       // console.log('this is cities api in login page:', responseJson);
       this.props.updateCities(responseJson);
-      Actions.pop();
-      Actions.sourceScreen();
+      // Actions.pop();
+      // Actions.sourceScreen();
+      Actions.replace('sourceScreen');
+
 
       // const cities = responseJson;
       // return responseJson;

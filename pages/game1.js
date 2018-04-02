@@ -49,6 +49,11 @@ constructor() {
       UIManager.setLayoutAnimationEnabledExperimental &&
       UIManager.setLayoutAnimationEnabledExperimental(true);
     }
+
+    this.state = {
+      progress: 0
+    };
+
 }
 
 componentWillMount() {
@@ -81,20 +86,35 @@ componentWillMount() {
 animate() {
   let progress = 0;
   // this.setState({  progress });
-  this.props.questionOneProgressUpdate(progress);
+  // this.props.questionOneProgressUpdate(progress);
     interval = setInterval(() => {
       progress += 0.01;
       if (progress > 1) {
         // progress = 1;
 
         clearInterval(interval);
-        this.props.questionOneResultUpdate(false, 'اشتباه کردی 50 امتیاز بیشتر نگرفتی', 'incorrect');
+        const CustomLayoutSpring = {
+            duration: 400,
+            create: {
+              type: LayoutAnimation.Types.spring,
+              property: LayoutAnimation.Properties.scaleXY,
+              springDamping: 0.7,
+            },
+            update: {
+              type: LayoutAnimation.Types.spring,
+              springDamping: 0.7,
+            },
+          };
 
+        this.props.updateOneScore({ scoreOne: 50, q_one: true, dis_touch_one: false });
+        LayoutAnimation.configureNext(CustomLayoutSpring);
+        this.props.questionOneResultUpdate(false, 'متاسفانه زمان از دست رفت و 50 امتیاز بیشتر بدست نیاوردی', 'incorrect');
+        this.props.questionOneModalUpdate(true);
       }
       // console.log('progress current setInterval:', progress);
 
-      // this.setState({ progress });
-        this.props.questionOneProgressUpdate(progress);
+      this.setState({ progress });
+        // this.props.questionOneProgressUpdate(progress);
     }, 100);
 }
 
@@ -197,7 +217,7 @@ render() {
           >
             {/* old progress bar */}
             <Progress.Bar
-            progress={this.props.progress}
+            progress={this.state.progress}
             indeterminate={false}
             width={widthPic * 0.88}
             height={15}

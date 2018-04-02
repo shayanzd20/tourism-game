@@ -80,8 +80,10 @@ onPressModal() {
   // this.props.questionTwoProgressUpdate(0);
   // this.props.questionThreeProgressUpdate(0);
 
-  Actions.pop();
-  Actions.main();
+  // Actions.pop();
+  // Actions.main();
+  Actions.replace('main');
+
 }
 
 render() {
@@ -110,6 +112,7 @@ render() {
           flex: 1,
           // width: ,
           // backgroundColor: 'red',
+          alignSelf: 'center',
           alignItems: 'center',
           justifyContent: 'center',
         }}>
@@ -169,7 +172,12 @@ const styles = {
   text: {
       color: '#fff',
       fontSize: 20,
-      fontFamily: 'BYekan'
+      fontFamily: 'BYekan',
+      alignSelf: 'center',
+      alignItems: 'center',
+      justifyContent: 'center',
+      textAlign: 'center'
+
 
   }
 };

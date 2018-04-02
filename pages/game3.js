@@ -129,7 +129,7 @@ class Game3 extends Component {
         this.sendAnswer(ans, 1);
         this.props.updateThirdScore({ scoreThird: 100, q_third: true, dis_touch_third: true });
         LayoutAnimation.configureNext(CustomLayoutSpring);
-        this.props.questionThreeResultUpdate(true, 'آفرین 100 امتیاز گرفتی', 'correct');
+        this.props.questionThreeResultUpdate(false, 'متاسفانه زمان از دست رفت و 50 امتیاز بیشتر بدست نیاوردی', 'incorrect');
         this.props.questionThreeModalUpdate(true);
       } else {
         // this.setState({result:false})

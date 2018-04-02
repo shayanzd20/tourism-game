@@ -324,8 +324,11 @@ nextCity() {
       // console.log('responseJson in city screen in next city api:', responseJson);
       // update tickets
       this.props.updateTickets(responseJson);
-      Actions.pop();
-      Actions.cityChoose();
+      // Actions.pop();
+      // Actions.cityChoose();
+
+      Actions.replace('cityChoose');
+
     })
     .catch((error) => {
       // console.error('error:', error);
