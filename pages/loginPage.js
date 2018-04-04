@@ -154,6 +154,7 @@ userStatus() {
           // Actions.simple();
           // Actions.city({ type: 'replace' });
           Actions.replace('city');
+          Actions.replace('city');
           // Actions.replace('simple');
         }
       })

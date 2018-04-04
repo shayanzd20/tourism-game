@@ -26,7 +26,9 @@ import ElevatedView from 'react-native-elevated-view'
 import {
   sourceCity,
   updateCities,
-  updateTickets
+  updateTickets,
+  tokenChanged,
+  userStatusChanged
 } from '../src/actions';
 
 
@@ -46,6 +48,7 @@ class Home extends Component {
     super(props);
     AsyncStorage.getItem('token', (err, res) => {
       if (res) {
+        this.props.tokenChanged(res);
         this.userStatus();
       } else {
         Actions.replace('auth');
@@ -88,7 +91,7 @@ componentDidMount() {
 }
 
 userStatus() {
-  // console.log('/ ------- userStatus function in Home------- /');
+  console.log('/ ------- userStatus function in Home------- /');
     fetch('http://velgardi-game.ir/api/status', {
       method: 'POST',
       headers: {
@@ -99,15 +102,16 @@ userStatus() {
     }).then((response) => response.json())
       .then((responseJson) => {
         // console.log('/ ----------- get user Status start api in source screen --------/');
-        // console.log('responseJson.status in in source screen:', responseJson.status);
+        console.log('responseJson.status in in source screen:', responseJson.status);
         if (responseJson.status === '') {
-          // console.log('/----go to Home----/');
+          console.log('/----status is empty in Home----/');
           this.setState = {
             buttonGame: true
           };
         } else {
-          this.props.userStatusChanged(responseJson.status);
           // console.log('/----go to city----/');
+          this.props.userStatusChanged(responseJson.status);
+          // console.log(' this.props.user_status in home', this.props.user_status);
           // Actions.pop();
           // Actions.city();
         }
@@ -119,34 +123,47 @@ userStatus() {
 
 continueButton = () => {
   return (
-    <TouchableOpacity
-      onPress={() => {
-        console.log('press continue');
-        Actions.replace('city');
-      }}
-    >
-      <View
-        elevation={24}
-        style={styles.stayElevated}
+    <Animatable.View
+        animation="bounceIn"
+        duration={1000}>
+      <TouchableOpacity
+        onPress={() => {
+          console.log('press continue');
+          Actions.replace('city');
+        }}
       >
-        <Text style={{ fontFamily: 'Mj_Classic' }}>ادامه بازی</Text>
-      </View>
-    </TouchableOpacity>
+        <View
+          elevation={24}
+          style={styles.stayElevated}
+        >
+          <Text style={{ fontFamily: 'Mj_Classic' }}>ادامه بازی</Text>
+        </View>
+      </TouchableOpacity>
+    </Animatable.View>
+
   );
 }
 
 newButton = () => {
   return (
-    <TouchableOpacity
-      onPress={() => { console.log('press continue'); }}
-    >
-      <View
-        elevation={24}
-        style={styles.stayElevated}
-      >
-        <Text style={{ fontFamily: 'Mj_Classic' }}>بازی جدید</Text>
-      </View>
-    </TouchableOpacity>
+    <Animatable.View
+        animation="bounceIn"
+        duration={1000}>
+
+      <TouchableOpacity
+        onPress={() => {
+          console.log('press new game');
+          Actions.replace('sourceScreen')
+              }}>
+        <View
+          elevation={24}
+          style={styles.stayElevated}
+        >
+          <Text style={{ fontFamily: 'Mj_Classic' }}>بازی جدید</Text>
+        </View>
+      </TouchableOpacity>
+    </Animatable.View>
+
   );
 }
 
@@ -253,7 +270,7 @@ render() {
                 marginTop: Dimensions.get('window').width * 0.25,
                 left: 0,
                 right: 0,
-                backgroundColor: 'red'
+                // backgroundColor: 'red'
               }}>
               {this.state.buttonGame ? this.newButton() : this.continueButton()}
             </View>
@@ -306,13 +323,21 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ auth, source }) => {
+const mapStateToProps = ({ auth, source, user }) => {
   // console.log('this is source object in source city:', source);
 
   const { token } = auth;
   const { city, cities } = source;
+  const {
+    user_status,
+   } = user;
 
-  return { city, cities, token };
+  return { city, cities, token, user_status };
   };
 
-export default connect(mapStateToProps, { sourceCity, updateCities, updateTickets })(Home);
+export default connect(mapStateToProps, {
+  sourceCity,
+  updateCities,
+  updateTickets,
+  tokenChanged,
+  userStatusChanged })(Home);

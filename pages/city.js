@@ -8,7 +8,10 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   TouchableNativeFeedback,
-  Dimensions
+  Dimensions,
+  Platform,
+  UIManager,
+  LayoutAnimation
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { connect } from 'react-redux';
@@ -35,6 +38,29 @@ class City extends Component {
     title: '',
     header: null
   };
+
+  constructor(props) {
+    super(props);
+    if (Platform.OS === 'android') {
+      UIManager.setLayoutAnimationEnabledExperimental &&
+      UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
+
+    this.state = {
+      CustomLayoutSpring: {
+          duration: 400,
+          create: {
+            type: LayoutAnimation.Types.spring,
+            property: LayoutAnimation.Properties.scaleXY,
+            springDamping: 0.7,
+          },
+          update: {
+            type: LayoutAnimation.Types.spring,
+            springDamping: 0.7,
+          },
+        }
+    };
+  }
 
 componentWillMount() {
   this.userQuestionStatus();
@@ -154,7 +180,7 @@ travelButton() {
             justifyContent: 'center',
             alignSelf: 'stretch',
             }}
-          animation="flipInY"
+          animation="bounceIn"
           duration={1000}
           delay={2500}>
           <Image
@@ -193,7 +219,7 @@ travelButtonLock() {
           // resizeMode: 'contain'
           alignSelf: 'stretch',
           }}
-            animation="flipInY"
+            animation="bounceIn"
             duration={1000}
             delay={2500}>
             <Image
@@ -201,7 +227,7 @@ travelButtonLock() {
               source={require('./../images/specificCity/nextCity.png')}
             />
               <Animatable.View
-                animation="flipInY"
+                animation="bounceIn"
                 duration={1000}
                 delay={2500}>
                 <Image
@@ -244,7 +270,7 @@ playGameButton() {
           alignSelf: 'stretch',
 
         }}
-          animation="flipInY"
+          animation="bounceIn"
           duration={1000}
           delay={2500}
         >
@@ -287,7 +313,7 @@ playGameButtonLock() {
           alignSelf: 'stretch',
 
         }}
-          animation="flipInY"
+          animation="bounceIn"
           duration={1000}
           delay={2500}
         >
@@ -297,7 +323,7 @@ playGameButtonLock() {
             source={require('./../images/specificCity/playGame.png')}
           />
           <Animatable.View
-            animation="flipInY"
+            animation="bounceIn"
             duration={1000}
             delay={2500}>
             <Image
@@ -342,6 +368,7 @@ nextCity() {
     let nextCityButton;
     let playGameButton;
 
+
     // console.log('city prop user3: ', this.props.user_status.city);
     // console.log('city prop user city status: ', this.props.user_status.status);
     const userCityStatus = this.props.user_status.status;
@@ -382,6 +409,7 @@ nextCity() {
     } else {
       // console.log('playGameButton ::: off');
       // nextCityButton = this.travelButton();
+
       playGameButton = this.playGameButton();
       nextCityButton = this.travelButtonLock();
 

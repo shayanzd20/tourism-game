@@ -6,6 +6,8 @@ import CityChoose from '../pages/cityChoose';
 import GameChoose from '../pages/gameChoose';
 import SourceScreen from '../pages/sourceScreen';
 import LoginPage from '../pages/loginPage';
+import Home from '../pages/home.js';
+
 
 // city
 import City from '../pages/city';
@@ -20,12 +22,13 @@ const RouterComponent = () => {
       <Router>
         <Scene key='root'>
           <Scene key='auth'>
-            <Scene key='login' component={LoginPage} title='Login Form' hideNavBar={true} initial />
+            <Scene key='login' component={LoginPage} />
           </Scene>
-          <Scene key='main'>
+          <Scene key='main' initial>
             {/* <Scene key='sourceScreen' component={SourceScreen} /> */}
             {/* <Scene key='cityChoose' component={CityChoose}  hideNavBar={true} initial /> */}
             <Scene key='gameChoose' component={GameChoose} />
+            <Scene key='home' component={Home} initial />
           </Scene>
           <Scene key='sourceScreen'>
             <Scene key='sourceScreen' component={SourceScreen} />
