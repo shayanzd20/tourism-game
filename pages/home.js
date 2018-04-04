@@ -44,6 +44,13 @@ class Home extends Component {
 
   constructor(props) {
     super(props);
+    AsyncStorage.getItem('token', (err, res) => {
+      if (res) {
+        this.userStatus();
+      } else {
+        Actions.replace('auth');
+      }
+    });
 
     this.state = {
         slide: new Animated.ValueXY({ x: 0, y: 0 }),
@@ -51,7 +58,6 @@ class Home extends Component {
         buttonGame: false
 
     }
-    this.userStatus();
 
     this.slideIn =  Animated.timing(
       this.state.slide,
@@ -212,7 +218,7 @@ render() {
                 }}
                 source={require('./../images/home/diamond.png')}
                 />
-                <Text>10000</Text>
+                <Text style={{ fontFamily: 'Mj_Classic' }}>10000</Text>
               </View>
                 <View
                 style={{
@@ -236,7 +242,7 @@ render() {
                   }}
                   source={require('./../images/home/coin.png')}
                 />
-                <Text>10000</Text>
+                <Text style={{ fontFamily: 'Mj_Classic' }}>10000</Text>
               </View>
               </View>
             <View
