@@ -53,19 +53,6 @@ class ModalCoinInsufficiant extends Component {
     }
   }
 onPressModal() {
-  const CustomLayoutSpring = {
-      duration: 400,
-      create: {
-        type: LayoutAnimation.Types.spring,
-        property: LayoutAnimation.Properties.scaleXY,
-        springDamping: 0.7,
-      },
-      update: {
-        type: LayoutAnimation.Types.spring,
-        springDamping: 0.7,
-      },
-    };
-  LayoutAnimation.configureNext(CustomLayoutSpring);
   this.props.insufficiantModalUpdate(false);
 }
 

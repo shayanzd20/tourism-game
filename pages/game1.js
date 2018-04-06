@@ -118,7 +118,6 @@ animate() {
     }, 100);
 }
 
-
 // helper Functions
 sendAnswer = (alt, status) => {
   fetch('http://velgardi-game.ir/api/sendAnswerQOne', {
@@ -189,9 +188,6 @@ checkAnswer = (ans) => {
 
   // console.log('this is result:', this.props.result);
 };
-
-
-
 
 render() {
     // console.log('state:::::', Date.now(), this.state)

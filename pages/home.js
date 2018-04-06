@@ -327,6 +327,7 @@ const mapStateToProps = ({ auth, source, user }) => {
    } = user;
 
 // console.log('user_status in home', { city, cities, token, user_status, coin, diamond });
+// console.log('user_status in home', { token });
 
   return { city,
             cities,
