@@ -396,7 +396,7 @@ cityStatusFalse = () => {
       cityDone = false;
     }
 
-    console.log('this.props.dis_touch_first:', this.props.dis_touch_first);
+    // console.log('this.props.dis_touch_first:', this.props.dis_touch_first);
 
     return (
 

@@ -22,8 +22,13 @@ import {
   updateFirstScore,
   updateSecondScore,
   updateThirdScore,
-  updateTickets
+  updateTickets,
+  coinUpdate,
+  diamondUpdate,
+  insufficiantModalUpdate
 } from '../src/actions';
+import ModalCoinInsufficiant from './components/ModalCoinInsufficiant';
+
 
 
 const deviceWidth = Dimensions.get('window').width;
@@ -41,6 +46,7 @@ class City extends Component {
 
   constructor(props) {
     super(props);
+    this.walletStatus();
     if (Platform.OS === 'android') {
       UIManager.setLayoutAnimationEnabledExperimental &&
       UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -58,7 +64,8 @@ class City extends Component {
             type: LayoutAnimation.Types.spring,
             springDamping: 0.7,
           },
-        }
+        },
+      modalCoinInsufficiant: false
     };
   }
 
@@ -256,7 +263,7 @@ playGameButton() {
          }}
         // onPress={() => navigate('ChooseGameStack')}>
         // onPress={Actions.main.gameChoose()}>
-        onPress={this.onGameChooseClick.bind(this)}
+        onPress={() => this.playGameFunction()}
           >
         <Animatable.View
           style={{
@@ -361,6 +368,50 @@ nextCity() {
     });
 }
 
+walletStatus() {
+  fetch('http://velgardi-game.ir/api/coinAndDiamondStatus', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + this.props.token
+    }
+  })
+    .then((response) => response.json())
+    .then((responseJson) => {
+
+      this.props.coinUpdate(responseJson.coin);
+      this.props.diamondUpdate(responseJson.diamond);
+
+    })
+    .catch((error) => {
+      // console.error('error:', error);
+    });
+}
+
+playGameFunction() {
+  if (this.props.coin > 500) {
+    console.log('sufficiant');
+    this.onGameChooseClick();
+  } else {
+    console.log('insufficiant');
+    const CustomLayoutSpring = {
+        duration: 400,
+        create: {
+          type: LayoutAnimation.Types.spring,
+          property: LayoutAnimation.Properties.scaleXY,
+          springDamping: 0.7,
+        },
+        update: {
+          type: LayoutAnimation.Types.spring,
+          springDamping: 0.7,
+        },
+      };
+    LayoutAnimation.configureNext(CustomLayoutSpring);
+    this.props.insufficiantModalUpdate(true);
+  }
+}
+
   render() {
     let cityPopulation = '';
     let cityArea = '';
@@ -375,12 +426,12 @@ nextCity() {
     const cityName = this.props.user_status.city.name;
     if (this.props.user_status.city.population !== 0) {
       // console.log('population');
-      cityPopulation = 'جمعیت: ' + this.props.user_status.city.population + ' نفر';
+      cityPopulation = `جمعیت: ${this.props.user_status.city.population} نفر`;
       // console.log(cityPopulation);
     }
     if (this.props.user_status.city.area !== 0) {
       // console.log('area');
-      cityArea = 'مساحت: ' + this.props.user_status.city.area + ' کیلومتر مربع';
+      cityArea = `مساحت: ${this.props.user_status.city.area} کیلومتر مربع`;
       // console.log(cityArea);
     }
 
@@ -405,25 +456,22 @@ nextCity() {
       // console.log('playGameButton ::: on');
       playGameButton = this.playGameButtonLock();
       nextCityButton = this.travelButton();
-
     } else {
       // console.log('playGameButton ::: off');
       // nextCityButton = this.travelButton();
 
       playGameButton = this.playGameButton();
       nextCityButton = this.travelButtonLock();
-
-
     }
 
 
     return (
       <View
-      style={{
-        flex: 1,
-        // backgroundColor: 'rgba(0,0,0,.9)',
-        // opacity:0.4
-      }}>
+        style={{
+          flex: 1,
+          // backgroundColor: 'rgba(0,0,0,.9)',
+          // opacity:0.4
+          }}>
 
       {/* start background*/}
       <ImageBackground
@@ -549,6 +597,14 @@ nextCity() {
       </ImageBackground>
       {/* end background*/}
 
+      {/* modal start */}
+      <View>
+        <ModalCoinInsufficiant
+          text="متاسفانه سکه کافی برای ادامه بازی نداری"
+          visible={this.props.insufficiant_visible}
+        />
+      </View>
+      {/* modal ends */}
       </View>
 
     );
@@ -649,7 +705,10 @@ const mapStateToProps = ({ auth, user }) => {
     city_done,
     scoreFirst,
     scoreSecond,
-    scoreThird
+    scoreThird,
+    coin,
+    diamond,
+    insufficiant_visible
    } = user;
 
   return {
@@ -658,9 +717,11 @@ const mapStateToProps = ({ auth, user }) => {
     scoreFirst,
     scoreSecond,
     scoreThird,
-    token
+    token,
+    coin,
+    diamond,
+    insufficiant_visible
    };
-
   };
 export default connect(mapStateToProps, {
   cityDoneStatus,
@@ -668,4 +729,7 @@ export default connect(mapStateToProps, {
   updateFirstScore,
   updateSecondScore,
   updateThirdScore,
-  updateTickets })(City);
+  updateTickets,
+  coinUpdate,
+  diamondUpdate,
+  insufficiantModalUpdate })(City);

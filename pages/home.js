@@ -28,7 +28,9 @@ import {
   updateCities,
   updateTickets,
   tokenChanged,
-  userStatusChanged
+  userStatusChanged,
+  coinUpdate,
+  diamondUpdate
 } from '../src/actions';
 
 
@@ -48,9 +50,12 @@ class Home extends Component {
     super(props);
     AsyncStorage.getItem('token', (err, res) => {
       if (res) {
+        // console.log('has token');
         this.props.tokenChanged(res);
         this.userStatus();
       } else {
+        // console.log('doesnt have token token');
+
         Actions.replace('auth');
       }
     });
@@ -74,24 +79,8 @@ class Home extends Component {
   }
 // functions
 
-  ///////////////
-componentWillMount() {
-  if (this.props.token) {
-    // this.userStatus();
-  } else {
-    // this.props.navigation.navigate('Login', responseJson)
-    // Actions.replace('auth');
-    // Actions.pop();
-    // Actions.auth();
-  }
-}
-
-componentDidMount() {
-  // this.slideIn.start();
-}
-
 userStatus() {
-  console.log('/ ------- userStatus function in Home------- /');
+  // console.log('/ ------- userStatus function in Home------- /');
     fetch('http://velgardi-game.ir/api/status', {
       method: 'POST',
       headers: {
@@ -102,15 +91,18 @@ userStatus() {
     }).then((response) => response.json())
       .then((responseJson) => {
         // console.log('/ ----------- get user Status start api in source screen --------/');
-        console.log('responseJson.status in in source screen:', responseJson.status);
+        // console.log('responseJson.status in in source screen:', responseJson.status);
         if (responseJson.status === '') {
-          console.log('/----status is empty in Home----/');
+          // console.log('/----status is empty in Home----/');
           this.setState = {
             buttonGame: true
           };
         } else {
           // console.log('/----go to city----/');
           this.props.userStatusChanged(responseJson.status);
+          this.props.coinUpdate(responseJson.status.user.coin);
+          this.props.diamondUpdate(responseJson.status.user.diamond);
+
           // console.log(' this.props.user_status in home', this.props.user_status);
           // Actions.pop();
           // Actions.city();
@@ -128,7 +120,7 @@ continueButton = () => {
         duration={1000}>
       <TouchableOpacity
         onPress={() => {
-          console.log('press continue');
+          // console.log('press continue');
           Actions.replace('city');
         }}
       >
@@ -152,7 +144,7 @@ newButton = () => {
 
       <TouchableOpacity
         onPress={() => {
-          console.log('press new game');
+          // console.log('press new game');
           Actions.replace('sourceScreen')
               }}>
         <View
@@ -235,7 +227,7 @@ render() {
                 }}
                 source={require('./../images/home/diamond.png')}
                 />
-                <Text style={{ fontFamily: 'Mj_Classic' }}>10000</Text>
+                <Text style={{ fontFamily: 'Mj_Classic' }}>{this.props.diamond}</Text>
               </View>
                 <View
                 style={{
@@ -259,7 +251,7 @@ render() {
                   }}
                   source={require('./../images/home/coin.png')}
                 />
-                <Text style={{ fontFamily: 'Mj_Classic' }}>10000</Text>
+                <Text style={{ fontFamily: 'Mj_Classic' }}>{this.props.coin}</Text>
               </View>
               </View>
             <View
@@ -330,9 +322,18 @@ const mapStateToProps = ({ auth, source, user }) => {
   const { city, cities } = source;
   const {
     user_status,
+    coin,
+    diamond
    } = user;
 
-  return { city, cities, token, user_status };
+// console.log('user_status in home', { city, cities, token, user_status, coin, diamond });
+
+  return { city,
+            cities,
+            token,
+            user_status,
+            coin,
+            diamond };
   };
 
 export default connect(mapStateToProps, {
@@ -340,4 +341,6 @@ export default connect(mapStateToProps, {
   updateCities,
   updateTickets,
   tokenChanged,
-  userStatusChanged })(Home);
+  userStatusChanged,
+  coinUpdate,
+  diamondUpdate })(Home);

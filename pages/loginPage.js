@@ -145,7 +145,9 @@ userStatus() {
         // console.log('responseJson.status in login page:', responseJson.status);
         if (responseJson.status === '') {
           // console.log('/----go to sourceScreen in login page----/');
-          this.getCities();
+          // this.getCities();
+          Actions.replace('home');
+
         } else {
           this.props.userStatusChanged(responseJson.status);
           // console.log('/----go to city in login page----/');
@@ -153,8 +155,8 @@ userStatus() {
           // Actions.city();
           // Actions.simple();
           // Actions.city({ type: 'replace' });
-          Actions.replace('city');
-          Actions.replace('city');
+          // Actions.replace('city');
+          Actions.replace('home');
           // Actions.replace('simple');
         }
       })

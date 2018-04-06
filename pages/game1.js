@@ -288,10 +288,9 @@ render() {
             height: widthPic * 0.55 * 1.2,
             alignItems: 'center',
             justifyContent: 'center',
-        // backgroundColor:'#FFAAE3',
+            // backgroundColor:'#FFAAE3',
             padding: widthPic * 0.01
-          }}
-            >
+            }}>
           <View style={{ flexDirection: 'row' }}>
           <TouchableHighlight
           delayPressIn={0}

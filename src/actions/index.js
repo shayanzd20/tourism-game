@@ -38,6 +38,9 @@ import { EMAIL_CHANGED,
   SOURCE_CITY_UPDATE,
   UPDATE_CITIES,
   UPDATE_TICKETS,
+  COIN_UPDATE,
+  DIAMOND_UPDATE,
+  INSUFFICIANT_MODAL_VISIBLE
 } from './types';
 
 export const numberChanged = (number) => {
@@ -336,6 +339,15 @@ export const questionThreeModalUpdate = (input) => {
   };
 };
 
+export const insufficiantModalUpdate = (input) => {
+  return (dispatch) => {
+    dispatch({
+      type: INSUFFICIANT_MODAL_VISIBLE,
+      payload: input
+    });
+  };
+};
+
 export const questionThreeStop = (input) => {
   return (dispatch) => {
     dispatch({
@@ -354,6 +366,25 @@ export const cityStatus = (input) => {
     });
   };
 };
+
+export const coinUpdate = (input) => {
+  return (dispatch) => {
+    dispatch({
+      type: COIN_UPDATE,
+      payload: input
+    });
+  };
+};
+
+export const diamondUpdate = (input) => {
+  return (dispatch) => {
+    dispatch({
+      type: DIAMOND_UPDATE,
+      payload: input
+    });
+  };
+};
+
 
 export const emailChanged = (text) => {
   return {
