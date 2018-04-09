@@ -47,6 +47,10 @@ class Game3 extends Component {
           UIManager.setLayoutAnimationEnabledExperimental &&
           UIManager.setLayoutAnimationEnabledExperimental(true);
         }
+
+        this.state = {
+          progress: 0
+        };
     }
 
 
@@ -102,6 +106,30 @@ class Game3 extends Component {
         .catch((error) => {
           // console.error('error:', error);
         });
+
+        let score = 0;
+        score = status === 1 ? 100 : 50;
+        // update diamond
+        fetch('http://velgardi-game.ir/api/diamondUpdate', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + this.props.token
+          },
+          body: JSON.stringify({
+            diamond: score,
+            status: 1, // show plus or nagative
+            game: 3 // number of game
+          })
+        })
+          .then((response) => response.json())
+          .then((responseJson) => {
+              console.log('responseJson in game 1 ', responseJson);
+          })
+          .catch((error) => {
+            // console.error('error:', error);
+          });
     }
 
     checkAnswer = (ans) => {
@@ -149,47 +177,67 @@ class Game3 extends Component {
     };
 
     stopVideo = (input) => {
-      // console.log('video stopped');
+      console.log('video stopped');
       this.props.questionThreeStop(input);
     }
 
     onBuffer() {
-      // console.log('buffering');
+      console.log('buffering');
     }
     loadStart() {
-      // console.log('loadStart');
+      console.log('loadStart');
     }
     setDuration() {
       console.log('setDuration');
       this.animate();
+
+
     }
     setTime() {
-      // console.log('setTime');
+      console.log('setTime');
     }
     onEnd() {
-      // console.log('onEnd');
+      console.log('onEnd');
     }
     videoError() {
-      // console.log('videoError');
+      console.log('videoError');
     }
 
     animate() {
       let progress = 0;
 
-      this.props.questionThreeProgressUpdate(progress);
+      // this.props.questionThreeProgressUpdate(progress);
+
         interval = setInterval(() => {
           progress += 0.01;
-          if (progress > 1) {
-            // progress = 1;
-            clearInterval(interval);
-            this.props.questionThreeResultUpdate(false, 'اشتباه کردی 50 امتیاز بیشتر نگرفتی', 'incorrect');
+            if (progress > 1) {
+              // progress = 1;
+              clearInterval(interval);
+              const CustomLayoutSpring = {
+                  duration: 400,
+                  create: {
+                    type: LayoutAnimation.Types.spring,
+                    property: LayoutAnimation.Properties.scaleXY,
+                    springDamping: 0.7,
+                  },
+                  update: {
+                    type: LayoutAnimation.Types.spring,
+                    springDamping: 0.7,
+                  },
+                };
 
+              this.props.updateThirdScore({ scoreThird: 50, q_third: true, dis_touch_third: false });
+              LayoutAnimation.configureNext(CustomLayoutSpring);
+              this.props.questionThreeResultUpdate(false, 'متاسفانه زمان از دست رفت و 50 امتیاز بیشتر بدست نیاوردی', 'incorrect');
+              this.props.questionThreeModalUpdate(true);
+              }
+
+              // this.props.questionThreeProgressUpdate(progress);
+              this.setState({ progress })
+            }, 100);
           }
           // console.log('progress current setInterval:', progress);
 
-          this.props.questionThreeProgressUpdate(progress);
-        }, 100);
-    }
 
   render() {
     const videoGame = 'http://velgardi-game.ir/' + this.props.video;
@@ -206,7 +254,7 @@ class Game3 extends Component {
           source={require('./../images/game2/progressBar.png')}
           >
             <Progress.Bar
-            progress={this.props.progress}
+            progress={this.state.progress}
             indeterminate={false}
             width={widthPic * 0.88}
             height={15}

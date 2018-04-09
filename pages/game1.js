@@ -134,18 +134,37 @@ sendAnswer = (alt, status) => {
   })
     .then((response) => response.json())
     .then((responseJson) => {
-      // console.log('get user Status start api');
-      // console.log('get user Status:', responseJson);
 
-      // store token
-      // if responseJson.status == 'arrive' => go to city page with city params
-      // this.props.navigation.navigate('City', { user: 'Shayan11' })
-      // this.props.navigation.navigate('City', responseJson);
 
     })
     .catch((error) => {
       // console.error('error:', error);
     });
+
+    let score = 0;
+    score = status === 1 ? 100 : 50;
+    // update diamond
+    fetch('http://velgardi-game.ir/api/diamondUpdate', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.props.token
+      },
+      body: JSON.stringify({
+        diamond: score,
+        status: 1, // show plus or nagative
+        game: 1 // number of game
+
+      })
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+          console.log('responseJson in game 1 ', responseJson);
+      })
+      .catch((error) => {
+        // console.error('error:', error);
+      });
 }
 
 checkAnswer = (ans) => {

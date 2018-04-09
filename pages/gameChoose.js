@@ -58,6 +58,7 @@ class GameChoose extends Component {
     this.props.questionOneProgressUpdate(0);
     this.props.questionTwoProgressUpdate(0);
     this.props.questionThreeProgressUpdate(0);
+    this.videoFetch();
   }
 
 
@@ -66,8 +67,6 @@ componentWillMount() {
   this.props.questionOneModalUpdate(false);
   this.props.questionTwoModalUpdate(false);
   this.props.questionThreeModalUpdate(false);
-
-
 
 
   AsyncStorage.getItem('token', (err, result) => {
@@ -144,6 +143,11 @@ onGameThreeClick() {
   this.props.questionThreeQuestionUpdate(this.props.thirdObj.video);
   this.props.questionThreeAltsUpdate(this.props.thirdObj.alts);
   Actions.replace('game3');
+}
+
+videoFetch() {
+  fetch('http://velgardi-game.ir/' + this.props.thirdObj.video)
+  .then((response) => AsyncStorage.setItem('video', response));
 }
 
 userQuestionStatus() {
