@@ -25,9 +25,12 @@ import {
   updateTickets,
   coinUpdate,
   diamondUpdate,
-  insufficiantModalUpdate
+  insufficiantModalUpdate,
+  updateVideoCity
 } from '../src/actions';
 import ModalCoinInsufficiant from './components/ModalCoinInsufficiant';
+import ModalCityVideo from './components/ModalCityVideo';
+import styles from './styles/city';
 
 
 
@@ -368,6 +371,23 @@ nextCity() {
     });
 }
 
+showVideo() {
+  const CustomLayoutSpring = {
+      duration: 400,
+      create: {
+        type: LayoutAnimation.Types.spring,
+        property: LayoutAnimation.Properties.scaleXY,
+        springDamping: 0.7,
+      },
+      update: {
+        type: LayoutAnimation.Types.spring,
+        springDamping: 0.7,
+      },
+    };
+  LayoutAnimation.configureNext(CustomLayoutSpring);
+  this.props.updateVideoCity(true);
+}
+
 walletStatus() {
   fetch('http://velgardi-game.ir/api/coinAndDiamondStatus', {
     method: 'POST',
@@ -569,14 +589,72 @@ playGameFunction() {
                 </View>
                 {/* play game button and text end */}
 
+                {/* start video of city button and text*/}
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'column',
+                    // backgroundColor: '#42b0f4'
+                    }}>
+                    <View
+                      style={{ flex: 3,
+                      // backgroundColor: 'blue',
+                      alignItems: 'center',
+                      // justifyContent: 'center',
+                      justifyContent: 'flex-end',
+                      // resizeMode: 'contain'
+                      }}>
+                      <TouchableOpacity
+                        style={{
+                          // backgroundColor: 'yellow',
+                          // alignItems: 'center',
+                          // justifyContent: 'center',
+                          // resizeMode: 'contain'
+                          overflow: 'hidden'
+
+                        }}
+                        onPress={this.showVideo.bind(this)}
+                        >
+                        <Animatable.View
+                          style={{
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            alignSelf: 'stretch',
+                            }}
+                          animation="bounceIn"
+                          duration={1000}
+                          delay={2500}>
+                          <Image
+                            // befor style
+                            // style={{
+                            //   width: 100,
+                            //   resizeMode: 'contain'
+                            // }}
+                            style={styles.buttonImageNextCity}
+                            source={require('./../images/specificCity/icons-video.png')}
+                            />
+                        </Animatable.View>
+                      </TouchableOpacity>
+                    </View>
+
+                    {/* start button caption component */}
+                    <View
+                      style={{ flex: 1,
+                      // backgroundColor: 'blue',
+                      alignItems: 'center' }}>
+                      <Text style={{ color: 'white', fontFamily: 'BYekan' }}>معرفی شهر</Text>
+                    </View>
+                    {/* end button caption component */}
+                </View>
+                {/* end video of city button and text*/}
+
                 {/* start next city button and text*/}
                 <View
                   style={{
                     flex: 1,
                     flexDirection: 'column',
-                // backgroundColor: '#42b0f4'
-                    }}
-                >
+                    // backgroundColor: '#42b0f4'
+                    }}>
                     {nextCityButton}
 
                     {/* start button caption component */}
@@ -605,96 +683,21 @@ playGameFunction() {
         />
       </View>
       {/* modal ends */}
+
+      {/* modal Video start */}
+      <View>
+        <ModalCityVideo
+          text="ویدیو"
+          visible={this.props.video_city_modal}
+        />
+      </View>
+      {/* modal video ends */}
       </View>
 
     );
   }
 }
 
-const styles = StyleSheet.create({
-
-  cityDescription: {
-    // backgroundColor: 'purple',
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-
-  },
-  cityPicture: {
-    position: 'absolute',
-    // backgroundColor: 'orange' ,
-    // flex:1,
-    // resizeMode: 'cover',
-    // backgroundColor: 'rgba(0,0,0,.9)',
-    width: deviceWidth,
-    height: deviceHeight,
-    // width: Dimensions.get('window').width,
-    // height: Dimensions.get('window').height*0.2,
-  },
-  buttonImage: {
-    position: 'absolute',
-    // backgroundColor: 'blue',
-    backgroundColor: 'transparent',
-    width: 100,
-    height: 100,
-    // alignSelf: 'stretch',
-    // alignSelf: 'auto',
-    top: 150,
-    // top: (deviceHeight / 3) - (deviceHeight / 9),
-    alignSelf: 'center',
-    // resizeMode: 'contain'
-    // resizeMode: 'cover',
-  },
-  buttonImageNextCity: {
-    // position: 'absolute',
-    // backgroundColor: 'blue',
-    // backgroundColor: 'transparent',
-    width: 100,
-    height: 100,
-    // alignSelf: 'stretch',
-    // alignSelf: 'auto',
-    // top: 150,
-    // top: (deviceHeight / 3) - (deviceHeight / 9),
-    alignSelf: 'center',
-    // resizeMode: 'contain'
-    // resizeMode: 'cover',
-  },
-  buttonImageGame: {
-    width: 100,
-    height: 100,
-    resizeMode: 'contain',
-    // backgroundColor: 'green',
-    // bottom: 0,
-  },
-  buttonImageGameLuck: {
-    width: 100,
-    height: 100,
-    resizeMode: 'contain',
-    // backgroundColor: 'green',
-    // bottom: -345,
-    bottom: -(deviceHeight / 1.86),
-    // top: 1000
-  },
-  buttonLockImage: {
-    // backgroundColor: 'blue',
-    width: 50,
-    // bottom: 40,
-    bottom: (deviceHeight / 16),
-
-    // left: 50,
-    left: (deviceWidth / 4),
-    resizeMode: 'contain'
-  },
-  playButtonLock: {
-    // backgroundColor: 'blue',
-    width: 50,
-    bottom: -50,
-    // bottom: (deviceHeight / 16),
-
-    left: 0,
-    // left: (deviceWidth / 4),
-    resizeMode: 'contain'
-  }
-});
 const mapStateToProps = ({ auth, user }) => {
   // console.log('this is user in city:', user);
   // console.log('this is auth in city:', auth);
@@ -708,8 +711,10 @@ const mapStateToProps = ({ auth, user }) => {
     scoreThird,
     coin,
     diamond,
-    insufficiant_visible
+    insufficiant_visible,
+    video_city_modal
    } = user;
+
 
   return {
     user_status,
@@ -720,7 +725,8 @@ const mapStateToProps = ({ auth, user }) => {
     token,
     coin,
     diamond,
-    insufficiant_visible
+    insufficiant_visible,
+    video_city_modal
    };
   };
 export default connect(mapStateToProps, {
@@ -732,4 +738,5 @@ export default connect(mapStateToProps, {
   updateTickets,
   coinUpdate,
   diamondUpdate,
-  insufficiantModalUpdate })(City);
+  insufficiantModalUpdate,
+  updateVideoCity })(City);

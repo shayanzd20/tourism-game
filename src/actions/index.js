@@ -40,7 +40,8 @@ import { EMAIL_CHANGED,
   UPDATE_TICKETS,
   COIN_UPDATE,
   DIAMOND_UPDATE,
-  INSUFFICIANT_MODAL_VISIBLE
+  INSUFFICIANT_MODAL_VISIBLE,
+  VIDEO_CITY_MODAL
 } from './types';
 
 export const numberChanged = (number) => {
@@ -164,6 +165,15 @@ export const updateThirdScore = (input) => {
   return (dispatch) => {
     dispatch({
       type: UPDATE_THIRD_SCORE,
+      payload: input
+    });
+  };
+};
+
+export const updateVideoCity = (input) => {
+  return (dispatch) => {
+    dispatch({
+      type: VIDEO_CITY_MODAL,
       payload: input
     });
   };

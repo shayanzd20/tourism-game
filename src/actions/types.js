@@ -40,3 +40,4 @@ export const UPDATE_TICKETS = 'update_tickets';
 export const DIAMOND_UPDATE = 'diamond_update';
 export const COIN_UPDATE = 'coin_update';
 export const INSUFFICIANT_MODAL_VISIBLE = 'insufficiant_modal_visible';
+export const VIDEO_CITY_MODAL = 'video_city_modal';

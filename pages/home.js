@@ -30,7 +30,8 @@ import {
   tokenChanged,
   userStatusChanged,
   coinUpdate,
-  diamondUpdate
+  diamondUpdate,
+  updateVideoCity
 } from '../src/actions';
 
 
@@ -99,6 +100,7 @@ userStatus() {
           };
         } else {
           // console.log('/----go to city----/');
+          // console.log(responseJson);
           this.props.userStatusChanged(responseJson.status);
           this.props.coinUpdate(responseJson.status.user.coin);
           this.props.diamondUpdate(responseJson.status.user.diamond);
@@ -344,4 +346,5 @@ export default connect(mapStateToProps, {
   tokenChanged,
   userStatusChanged,
   coinUpdate,
-  diamondUpdate })(Home);
+  diamondUpdate,
+  updateVideoCity })(Home);
