@@ -5,6 +5,10 @@ import {
          UPDATE_SECOND_SCORE,
          UPDATE_THIRD_SCORE,
          CITY_STATUS,
+         DIAMOND_UPDATE,
+         COIN_UPDATE,
+         INSUFFICIANT_MODAL_VISIBLE,
+         VIDEO_CITY_MODAL
           } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -23,6 +27,10 @@ const INITIAL_STATE = {
   secondObj: null,
   thirdObj: null,
   city_status: null,
+  coin: 0,
+  diamond: 0,
+  insufficiant_visible: false,
+  video_city_modal: false
  };
 
 export default (state = INITIAL_STATE, action) => {
@@ -58,6 +66,19 @@ export default (state = INITIAL_STATE, action) => {
       };
     case CITY_STATUS:
       return { ...state, city_status: action.payload };
+
+    case DIAMOND_UPDATE:
+    // console.log('status', { ...state, diamond: action.payload });
+      return { ...state, diamond: action.payload };
+    case COIN_UPDATE:
+    // console.log('status', { ...state, coin: action.payload });
+      return { ...state, coin: action.payload };
+    case INSUFFICIANT_MODAL_VISIBLE:
+    // console.log('status', { ...state, coin: action.payload });
+      return { ...state, insufficiant_visible: action.payload };
+    case VIDEO_CITY_MODAL:
+    // console.log('status', { ...state, coin: action.payload });
+      return { ...state, video_city_modal: action.payload };
     default:
       return state;
   }

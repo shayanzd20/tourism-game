@@ -58,6 +58,7 @@ class GameChoose extends Component {
     this.props.questionOneProgressUpdate(0);
     this.props.questionTwoProgressUpdate(0);
     this.props.questionThreeProgressUpdate(0);
+    // this.videoFetch();
   }
 
 
@@ -66,8 +67,6 @@ componentWillMount() {
   this.props.questionOneModalUpdate(false);
   this.props.questionTwoModalUpdate(false);
   this.props.questionThreeModalUpdate(false);
-
-
 
 
   AsyncStorage.getItem('token', (err, result) => {
@@ -96,18 +95,6 @@ componentWillMount() {
      // console.log('modal ::: off');
       this.cityStatusFalse();
    }
-}
-
-componentDidMount() {
-  // console.log('componentDidMount:::');
-  // console.log('this.props in componentDidMount:::', this.props);
-  if (this.props.scoreFirst + this.props.scoreSecond + this.props.scoreThird === 300) {
-    // cityDone = true;
-    // console.log('modal ::: on');
-    // this.props.cityDoneStatus(true);
-  } else {
-    // console.log('modal ::: off');
-  }
 }
 
 // Functions
@@ -144,6 +131,11 @@ onGameThreeClick() {
   this.props.questionThreeQuestionUpdate(this.props.thirdObj.video);
   this.props.questionThreeAltsUpdate(this.props.thirdObj.alts);
   Actions.replace('game3');
+}
+
+videoFetch() {
+  fetch('http://velgardi-game.ir/' + this.props.thirdObj.video)
+  .then((response) => console.log('video:::', response));
 }
 
 userQuestionStatus() {
@@ -396,7 +388,7 @@ cityStatusFalse = () => {
       cityDone = false;
     }
 
-    console.log('this.props.dis_touch_first:', this.props.dis_touch_first);
+    // console.log('this.props.dis_touch_first:', this.props.dis_touch_first);
 
     return (
 

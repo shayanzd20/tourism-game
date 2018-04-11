@@ -37,3 +37,7 @@ export const CITY_STATUS = 'city_status';
 export const SOURCE_CITY_UPDATE = 'source_city_update';
 export const UPDATE_CITIES = 'update_cities';
 export const UPDATE_TICKETS = 'update_tickets';
+export const DIAMOND_UPDATE = 'diamond_update';
+export const COIN_UPDATE = 'coin_update';
+export const INSUFFICIANT_MODAL_VISIBLE = 'insufficiant_modal_visible';
+export const VIDEO_CITY_MODAL = 'video_city_modal';

@@ -26,7 +26,12 @@ import ElevatedView from 'react-native-elevated-view'
 import {
   sourceCity,
   updateCities,
-  updateTickets
+  updateTickets,
+  tokenChanged,
+  userStatusChanged,
+  coinUpdate,
+  diamondUpdate,
+  updateVideoCity
 } from '../src/actions';
 
 
@@ -44,6 +49,17 @@ class Home extends Component {
 
   constructor(props) {
     super(props);
+    AsyncStorage.getItem('token', (err, res) => {
+      if (res) {
+        // console.log('has token');
+        this.props.tokenChanged(res);
+        this.userStatus();
+      } else {
+        // console.log('doesnt have token token');
+
+        Actions.replace('auth');
+      }
+    });
 
     this.state = {
         slide: new Animated.ValueXY({ x: 0, y: 0 }),
@@ -51,7 +67,6 @@ class Home extends Component {
         buttonGame: false
 
     }
-    this.userStatus();
 
     this.slideIn =  Animated.timing(
       this.state.slide,
@@ -64,22 +79,6 @@ class Home extends Component {
     )
   }
 // functions
-
-  ///////////////
-componentWillMount() {
-  if (this.props.token) {
-    // this.userStatus();
-  } else {
-    // this.props.navigation.navigate('Login', responseJson)
-    // Actions.replace('auth');
-    // Actions.pop();
-    // Actions.auth();
-  }
-}
-
-componentDidMount() {
-  // this.slideIn.start();
-}
 
 userStatus() {
   // console.log('/ ------- userStatus function in Home------- /');
@@ -95,13 +94,18 @@ userStatus() {
         // console.log('/ ----------- get user Status start api in source screen --------/');
         // console.log('responseJson.status in in source screen:', responseJson.status);
         if (responseJson.status === '') {
-          // console.log('/----go to Home----/');
+          // console.log('/----status is empty in Home----/');
           this.setState = {
             buttonGame: true
           };
         } else {
-          this.props.userStatusChanged(responseJson.status);
           // console.log('/----go to city----/');
+          // console.log(responseJson);
+          this.props.userStatusChanged(responseJson.status);
+          this.props.coinUpdate(responseJson.status.user.coin);
+          this.props.diamondUpdate(responseJson.status.user.diamond);
+
+          // console.log(' this.props.user_status in home', this.props.user_status);
           // Actions.pop();
           // Actions.city();
         }
@@ -113,34 +117,47 @@ userStatus() {
 
 continueButton = () => {
   return (
-    <TouchableOpacity
-      onPress={() => {
-        console.log('press continue');
-        Actions.replace('city');
-      }}
-    >
-      <View
-        elevation={24}
-        style={styles.stayElevated}
+    <Animatable.View
+        animation="bounceIn"
+        duration={1000}>
+      <TouchableOpacity
+        onPress={() => {
+          // console.log('press continue');
+          Actions.replace('city');
+        }}
       >
-        <Text style={{ fontFamily: 'Mj_Classic' }}>ادامه بازی</Text>
-      </View>
-    </TouchableOpacity>
+        <View
+          elevation={24}
+          style={styles.stayElevated}
+        >
+          <Text style={{ fontFamily: 'Mj_Classic' }}>ادامه بازی</Text>
+        </View>
+      </TouchableOpacity>
+    </Animatable.View>
+
   );
 }
 
 newButton = () => {
   return (
-    <TouchableOpacity
-      onPress={() => { console.log('press continue'); }}
-    >
-      <View
-        elevation={24}
-        style={styles.stayElevated}
-      >
-        <Text style={{ fontFamily: 'Mj_Classic' }}>بازی جدید</Text>
-      </View>
-    </TouchableOpacity>
+    <Animatable.View
+        animation="bounceIn"
+        duration={1000}>
+
+      <TouchableOpacity
+        onPress={() => {
+          // console.log('press new game');
+          Actions.replace('sourceScreen')
+              }}>
+        <View
+          elevation={24}
+          style={styles.stayElevated}
+        >
+          <Text style={{ fontFamily: 'Mj_Classic' }}>بازی جدید</Text>
+        </View>
+      </TouchableOpacity>
+    </Animatable.View>
+
   );
 }
 
@@ -212,7 +229,7 @@ render() {
                 }}
                 source={require('./../images/home/diamond.png')}
                 />
-                <Text>10000</Text>
+                <Text style={{ fontFamily: 'Mj_Classic' }}>{this.props.diamond}</Text>
               </View>
                 <View
                 style={{
@@ -236,7 +253,7 @@ render() {
                   }}
                   source={require('./../images/home/coin.png')}
                 />
-                <Text>10000</Text>
+                <Text style={{ fontFamily: 'Mj_Classic' }}>{this.props.coin}</Text>
               </View>
               </View>
             <View
@@ -247,7 +264,7 @@ render() {
                 marginTop: Dimensions.get('window').width * 0.25,
                 left: 0,
                 right: 0,
-                backgroundColor: 'red'
+                // backgroundColor: 'red'
               }}>
               {this.state.buttonGame ? this.newButton() : this.continueButton()}
             </View>
@@ -300,13 +317,34 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ auth, source }) => {
+const mapStateToProps = ({ auth, source, user }) => {
   // console.log('this is source object in source city:', source);
 
   const { token } = auth;
   const { city, cities } = source;
+  const {
+    user_status,
+    coin,
+    diamond
+   } = user;
 
-  return { city, cities, token };
+// console.log('user_status in home', { city, cities, token, user_status, coin, diamond });
+// console.log('user_status in home', { token });
+
+  return { city,
+            cities,
+            token,
+            user_status,
+            coin,
+            diamond };
   };
 
-export default connect(mapStateToProps, { sourceCity, updateCities, updateTickets })(Home);
+export default connect(mapStateToProps, {
+  sourceCity,
+  updateCities,
+  updateTickets,
+  tokenChanged,
+  userStatusChanged,
+  coinUpdate,
+  diamondUpdate,
+  updateVideoCity })(Home);

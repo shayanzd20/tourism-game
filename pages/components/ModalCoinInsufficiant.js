@@ -6,16 +6,14 @@ import {
   Image,
   Dimensions,
   TouchableWithoutFeedback,
+  Platform,
+  UIManager,
+  LayoutAnimation,
   // TouchableHighlight,
 } from 'react-native';
-import Modal from 'react-native-root-modal';
 import { connect } from 'react-redux';
-import { questionOneModalUpdate,
-         questionTwoModalUpdate,
-         questionThreeModalUpdate,
-         questionOneProgressUpdate,
-         questionTwoProgressUpdate,
-         questionThreeProgressUpdate
+import Modal from 'react-native-root-modal';
+import { insufficiantModalUpdate
  } from '../../src/actions';
 
 
@@ -23,26 +21,6 @@ const widthPic = Dimensions.get('window').width;
 const heightPic = Dimensions.get('window').height;
 
 // helper Functions
-const smile = () => {
-  return (
-    <View
-      style={{
-        flex: 2,
-        // backgroundColor: 'blue',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
-      <Image
-        source={require('./../../images/modal/smile.png')}
-        style={{
-          width: 100,
-          height: 100,
-        }}
-      />
-    </View>
-  );
-};
-
 const sad = () => {
   return (
     <View
@@ -53,7 +31,7 @@ const sad = () => {
         justifyContent: 'center',
       }}>
       <Image
-        source={require('./../../images/modal/sad.png')}
+        source={require('./../../images/specificCity/insufficiant.png')}
         style={{
           width: 100,
           height: 100,
@@ -65,36 +43,21 @@ const sad = () => {
 
 
 
-class ModalPrize extends Component {
+class ModalCoinInsufficiant extends Component {
 
-// constructor(props) {
-//   super(props);
-//   // const { text, visible, status } = this.props;
-// }
+  constructor(props) {
+    super(props);
+    if (Platform.OS === 'android') {
+      UIManager.setLayoutAnimationEnabledExperimental &&
+      UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
+  }
 onPressModal() {
-  // console.log('presseddddddd');
-  this.props.questionOneModalUpdate(false);
-  this.props.questionTwoModalUpdate(false);
-  this.props.questionThreeModalUpdate(false);
-  // this.props.questionOneProgressUpdate(0);
-  // this.props.questionTwoProgressUpdate(0);
-  // this.props.questionThreeProgressUpdate(0);
-
-  // Actions.pop();
-  // Actions.main();
-  Actions.replace('main');
-  Actions.replace('gameChoose');
+  this.props.insufficiantModalUpdate(false);
 }
 
 render() {
-  console.log('status in modal prize:', this.props.status);
-    let modalStatusEmoji;
-
-    if (this.props.status === 'correct') {
-      modalStatusEmoji = smile();
-    } else {
-      modalStatusEmoji = sad();
-    }
+    const modalStatusEmoji = sad();
 
   return (
     <View>
@@ -103,7 +66,7 @@ render() {
 
     <Modal
     style={styles.modal}
-    visible={this.props.visible}
+    visible={this.props.insufficiant_visible}
     >
       <View style={styles.modalContainer}>
         {modalStatusEmoji}
@@ -182,30 +145,15 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ q_one }) => {
-  // console.log('this is question one state:', q_one);
-
+const mapStateToProps = ({ user }) => {
   const {
-    result,
-    modal_visible,
-    text_modal,
-    status
-   } = q_one;
+    insufficiant_visible
+   } = user;
 
   return {
-    result,
-    modal_visible,
-    text_modal,
-    status
+    insufficiant_visible
    };
   };
 
-// export default connect(mapStateToProps, { questionOneModalUpdate, questionTwoModalUpdate })(ModalPrize);
 export default connect(mapStateToProps, {
-  questionOneModalUpdate,
-  questionTwoModalUpdate,
-  questionThreeModalUpdate,
-  questionOneProgressUpdate,
-  questionTwoProgressUpdate,
-  questionThreeProgressUpdate
- })(ModalPrize);
+insufficiantModalUpdate })(ModalCoinInsufficiant);
