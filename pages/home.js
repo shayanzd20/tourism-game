@@ -14,8 +14,6 @@ import {
   Image
 } from 'react-native';
 
-// import { Select, Option } from 'react-native-chooser';
-// import Picker from 'react-native-picker';
 import { Button } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import { connect } from 'react-redux';
@@ -51,7 +49,6 @@ class Home extends Component {
     super(props);
     AsyncStorage.getItem('token', (err, res) => {
       if (res) {
-        // console.log('has token');
         this.props.tokenChanged(res);
         this.userStatus();
       } else {
@@ -92,7 +89,6 @@ userStatus() {
     }).then((response) => response.json())
       .then((responseJson) => {
         // console.log('/ ----------- get user Status start api in source screen --------/');
-        // console.log('responseJson.status in in source screen:', responseJson.status);
         if (responseJson.status === '') {
           // console.log('/----status is empty in Home----/');
           this.setState = {
@@ -100,14 +96,9 @@ userStatus() {
           };
         } else {
           // console.log('/----go to city----/');
-          // console.log(responseJson);
           this.props.userStatusChanged(responseJson.status);
           this.props.coinUpdate(responseJson.status.user.coin);
           this.props.diamondUpdate(responseJson.status.user.diamond);
-
-          // console.log(' this.props.user_status in home', this.props.user_status);
-          // Actions.pop();
-          // Actions.city();
         }
       })
       .catch((error) => {
@@ -122,7 +113,6 @@ continueButton = () => {
         duration={1000}>
       <TouchableOpacity
         onPress={() => {
-          // console.log('press continue');
           Actions.replace('city');
         }}
       >
@@ -146,7 +136,6 @@ newButton = () => {
 
       <TouchableOpacity
         onPress={() => {
-          // console.log('press new game');
           Actions.replace('sourceScreen')
               }}>
         <View
@@ -191,41 +180,29 @@ render() {
                   top: 20,
                   width: 40,
                   height: 40,
-                  // backgroundColor: 'blue'
                 }}
                 source={require('./../images/home/music-on.png')}
               />
             <View
               style={{
                 position: 'absolute',
-                // alignItems: 'flex-start',
                 flexDirection: 'row',
-                // justifyContent: 'space-between',
-                // marginHorizontal: 10,
-                // marginVertical: 10,
                 paddingHorizontal: 20,
                 top: 10,
                 right: 10,
                 width: 150,
                 height: 75,
-                // backgroundColor: 'blue'
               }}>
               <View style={{ flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
-                // backgroundColor: 'orange',
                 paddingHorizontal: 5,
 
               }}>
                 <Image
                 style={{
-                  // position: 'absolute',
-                  // flex: 1,
-                  // left: 20,
-                  // top: 10,
                   width: 50,
                   height: 50,
-                  // backgroundColor: 'green'
                 }}
                 source={require('./../images/home/diamond.png')}
                 />
@@ -236,20 +213,13 @@ render() {
                   flexDirection: 'column',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  // backgroundColor: 'brown',
                   paddingHorizontal: 5,
 
                 }}>
                 <Image
                   style={{
-                    // position: 'absolute',
-                    // flex: 1,
-                    // left: 10,
-                    // top: 10,
-                    // right: 20,
                     width: 50,
                     height: 50,
-                    // backgroundColor: 'yellow'
                   }}
                   source={require('./../images/home/coin.png')}
                 />
@@ -264,7 +234,6 @@ render() {
                 marginTop: Dimensions.get('window').width * 0.25,
                 left: 0,
                 right: 0,
-                // backgroundColor: 'red'
               }}>
               {this.state.buttonGame ? this.newButton() : this.continueButton()}
             </View>
@@ -318,7 +287,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = ({ auth, source, user }) => {
-  // console.log('this is source object in source city:', source);
 
   const { token } = auth;
   const { city, cities } = source;
@@ -327,9 +295,6 @@ const mapStateToProps = ({ auth, source, user }) => {
     coin,
     diamond
    } = user;
-
-// console.log('user_status in home', { city, cities, token, user_status, coin, diamond });
-// console.log('user_status in home', { token });
 
   return { city,
             cities,

@@ -34,9 +34,6 @@ const INITIAL_STATE = {
  };
 
 export default (state = INITIAL_STATE, action) => {
-  // console.log('this is action in user reducer:', action);
-  // console.log(action);
-  // console.log('this is state in user reducer', state);
   switch (action.type) {
     case USER_STATUS:
       return { ...state, user_status: action.payload };
@@ -68,16 +65,12 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, city_status: action.payload };
 
     case DIAMOND_UPDATE:
-    // console.log('status', { ...state, diamond: action.payload });
       return { ...state, diamond: action.payload };
     case COIN_UPDATE:
-    // console.log('status', { ...state, coin: action.payload });
       return { ...state, coin: action.payload };
     case INSUFFICIANT_MODAL_VISIBLE:
-    // console.log('status', { ...state, coin: action.payload });
       return { ...state, insufficiant_visible: action.payload };
     case VIDEO_CITY_MODAL:
-    // console.log('status', { ...state, coin: action.payload });
       return { ...state, video_city_modal: action.payload };
     default:
       return state;

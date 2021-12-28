@@ -42,15 +42,7 @@ import ModalCityDone from './components/ModalCityDone';
 
 class GameChoose extends Component {
   static navigationOptions = {
-   //title: <Text style={{
- //      color: 'rgba(0, 0, 0, .9)',
- //      alignItems: 'center' ,
- //      position: 'absolute',
- //    }} > Filters</Text > ,
-   //headerTintColor: 'black',//color of header text
     header: null
-
-
   };
 
   constructor(props) {
@@ -58,50 +50,35 @@ class GameChoose extends Component {
     this.props.questionOneProgressUpdate(0);
     this.props.questionTwoProgressUpdate(0);
     this.props.questionThreeProgressUpdate(0);
-    // this.videoFetch();
   }
 
 
 componentWillMount() {
-  // console.log('componentWillMount:::');
   this.props.questionOneModalUpdate(false);
   this.props.questionTwoModalUpdate(false);
   this.props.questionThreeModalUpdate(false);
 
 
   AsyncStorage.getItem('token', (err, result) => {
-      // console.log('get token in game choose: ', result);
       if (result) {
-        // this.state.token = result;
         this.props.tokenChanged(result);
         this.userQuestionStatus();
       } else {
-        // this.props.navigation.navigate('Login', responseJson);
-        // Actions.pop();
-        // Actions.auth();
         Actions.replace('auth');
 
       }
     });
 
    // check done cityDone
-   // console.log('this.props in componentWillMount:::', this.props);
    if (this.props.scoreFirst + this.props.scoreSecond + this.props.scoreThird === 300) {
-     // cityDone = true;
-     // console.log('modal ::: on');
       this.cityStatusTrue();
-     // this.props.cityDoneStatus(true);
    } else {
-     // console.log('modal ::: off');
       this.cityStatusFalse();
    }
 }
 
 // Functions
 onGameOneClick() {
-  // Actions.pop();
-  // Actions.game1();
-
   // we must update questions, answers, alts
   this.props.questionOneAnswerUpdate(this.props.firstObj.answer);
   this.props.questionOneQuestionUpdate(this.props.firstObj.question);
@@ -111,10 +88,6 @@ onGameOneClick() {
 }
 
 onGameTwoClick() {
-  // console.log('this is obj two:', this.props.secondObj);
-  // Actions.pop();
-  // Actions.game2();
-
   // we must update questions, answers, alts
   this.props.questionTwoAnswerUpdate(this.props.secondObj.answer);
   this.props.questionTwoQuestionUpdate(this.props.secondObj.img);
@@ -123,8 +96,6 @@ onGameTwoClick() {
 }
 
 onGameThreeClick() {
-  // Actions.pop();
-  // Actions.game3();
 
   // we must update questions, answers, alts
   this.props.questionThreeAnswerUpdate(this.props.thirdObj.answer);
@@ -139,7 +110,6 @@ videoFetch() {
 }
 
 userQuestionStatus() {
-  // console.log('userQuestionStatus function in game choose: ');
   fetch('http://velgardi-game.ir/api/question', {
     method: 'POST',
     headers: {
@@ -151,13 +121,7 @@ userQuestionStatus() {
     .then((response) => response.json())
     .then((responseJson) => {
       // console.log('/----------------get user Question Status start api in game choose-----------/');
-     //console.log('get user Question Status: ', responseJson);
-     // console.log('responseJson.city_status:::', responseJson.city_status);
      if (!responseJson.city_status) {
-       // console.log('question first: ', responseJson.question_first);
-       // console.log('question second: ', responseJson.question_second);
-       // console.log('question third: ', responseJson.question_third);
-
        const {
          question_first,
          question_second,
@@ -206,8 +170,6 @@ questionOneScore() {
         animation="swing"
         iterationCount="infinite"
         useNativeDriver={true}
-
-        //duration={1000}
        > {this.props.scoreFirst} امتیاز</Animatable.Text>
        {this.props.scoreFirst === 50 ?
          <View
@@ -240,21 +202,16 @@ questionTwoScore() {
         fontSize: 50,
         color: '#f4a460',
         borderColor: 'black',
-       //borderWidth: 10,
-       //fontWeight: 10,
-       //margin: 30,
         textShadowColor: 'black',
         textShadowOffset: { width: 2, height: 2 },
         textShadowRadius: 1,
         top: Dimensions.get('window').height / 10,
         left: Dimensions.get('window').width / 10,
-        // zIndex: 10
        }}
       animation="bounce"
       iterationCount="infinite"
       useNativeDriver={true}
 
-     //duration={1000}
        > {this.props.scoreSecond} امتیاز</Animatable.Text>
        {this.props.scoreSecond === 50 ?
          <View
@@ -287,15 +244,10 @@ questionThreeScore() {
         fontSize: 50,
         color: '#ff6347',
         borderColor: 'black',
-       //borderWidth: 10,
-       //fontWeight: 10,
-        // marginLeft: 130,
-        // paddingLeft: 130,
         textShadowColor: 'black',
         textShadowOffset: { width: 2, height: 2 },
         textShadowRadius: 1,
         top: Dimensions.get('window').height / 10,
-        // left: Dimensions.get('window').width / 20,
         left: Dimensions.get('window').width / 2.25,
         zIndex: 10
        }}
@@ -303,7 +255,6 @@ questionThreeScore() {
       iterationCount="infinite"
       useNativeDriver={true}
 
-     //duration={1000}
        > {this.props.scoreThird} امتیاز</Animatable.Text>
        {this.props.scoreThird === 50 ?
          <View
@@ -311,8 +262,6 @@ questionThreeScore() {
              backgroundColor: 'rgba(60, 84, 15, 0.8)',
              top: Dimensions.get('window').height / 10,
              left: Dimensions.get('window').width / 2.25,
-             // width: Dimensions.get('window').width,
-             // zIndex: 10,
              borderRadius: 5,
              alignItems: 'center',
 
@@ -340,7 +289,6 @@ completeCityUpdate() {
   .then((response) => response.json())
   .then((responseJson) => {
     // console.log('/----------------update user city status start api in game choose-----------/');
-    //console.log('get user Question Status: ', responseJson);
 
     const { city_status } = responseJson;
     })
@@ -358,10 +306,6 @@ cityStatusFalse = () => {
 }
 
   render() {
-   //console.log('this.state.q_first in render', this.state.q_first);
-   //console.log('this.state.q_second in render', this.state.q_second);
-   //console.log('this.state.q_third in render', this.state.q_third);
-
     let scoreFirstShow;
     let scoreSecondShow;
     let scoreThirdShow;
@@ -378,17 +322,12 @@ cityStatusFalse = () => {
     }
 
     if (this.props.scoreFirst + this.props.scoreSecond + this.props.scoreThird === 300) {
-      // cityDone = true;
-      // console.log('modal ::: on');
       cityDone = true;
       this.completeCityUpdate();
 
     } else {
-      // console.log('modal ::: off');
       cityDone = false;
     }
-
-    // console.log('this.props.dis_touch_first:', this.props.dis_touch_first);
 
     return (
 
@@ -396,20 +335,14 @@ cityStatusFalse = () => {
         {/* modal start */}
         <View>
           <ModalCityDone
-            // text={this.props.text_modal}
             visible={cityDone}
-            // status={this.props.status}
           />
         </View>
       {/* modal ends */}
         <View style={styles.questionSection} >
           <TouchableHighlight
-            // onPress={() => navigate('GameOne', this.props.firstObj)}
-            // onLongPress={() => navigate('GameOne', this.props.firstObj)}
             onPress={this.onGameOneClick.bind(this)}
             onLongPress={this.onGameOneClick.bind(this)}
-            // onPress={Actions.games()}
-            // onLongPress={Actions.games()}
             disabled={this.props.dis_touch_first}>
             <ImageBackground
               source={require('./../images/gameChoose/gameBack1.png')}
@@ -424,11 +357,6 @@ cityStatusFalse = () => {
                 </View>
                 {/* game 1 item and score end */}
 
-                {/* <Animatable.Text
-                  style={styles.gameOneText}
-                            animation="fadeInRight"
-                            duration={1000}
-                             > عکس گزینه</Animatable.Text> */}
                 <Animate
                   style={styles.gameOneText}
                   animation="transRightToLeft" text={'عکس گزینه'}/>
@@ -453,10 +381,6 @@ cityStatusFalse = () => {
               </View>
               {/* game 2 item and score end */}
 
-              {/* <Animatable.Text style={styles.gameTwoText}
-                          animation="fadeInLeft"
-                          duration={1000}
-                           > عکسو حدس بزن</Animatable.Text> */}
               <Animate style={styles.gameTwoText} animation="transLeftToRight" text={'عکسو حدس بزن'}/>
 
             </ImageBackground>
@@ -482,9 +406,6 @@ cityStatusFalse = () => {
               </View>
               {/* game 3 item and score end */}
 
-              {/* <Animatable.Text style={styles.gameThreeText}
-                          animation="fadeInRight"
-                          duration={1000} > ویدیو ببین جواب بده</Animatable.Text> */}
               <Animate style={styles.gameThreeText} animation="transRightToLeft" text={'ویدیو ببین جواب بده'}/>
             </ImageBackground>
             {/* game 3 background end */}
@@ -511,7 +432,6 @@ const styles = StyleSheet.create({
   gameOneBack: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height / 3,
-    // resizeMode: 'cover'
    },
   gameOneItem: {
     position: 'absolute',
@@ -524,7 +444,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     paddingRight: 20,
     fontSize: 50,
-   //fontWeight: 'bold',
     fontFamily: 'BYekan',
     color: 'black',
     zIndex: 100,
@@ -536,9 +455,6 @@ const styles = StyleSheet.create({
     fontSize: 60,
     color: '#ffd700',
     borderColor: 'black',
-   //borderWidth: 10,
-   //fontWeight: 10,
-   //margin: 30,
     textShadowColor: 'black',
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 1,
@@ -553,20 +469,13 @@ const styles = StyleSheet.create({
     fontSize: 40,
     color: '#ffd700',
     borderColor: 'black',
-   //borderWidth: 10,
-   //fontWeight: 10,
-   //margin: 30,
     textShadowColor: 'black',
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 1,
-    // top: Dimensions.get('window').height / 9,
-    // left: Dimensions.get('window').width / 3,
-    // zIndex: 10
   },
   gameTwoBack: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height / 3,
-    // resizeMode: 'cover'
    },
   gameTwoItem: {
     position: 'absolute',
@@ -577,11 +486,8 @@ const styles = StyleSheet.create({
    },
   gameTwoText: {
     marginTop: 10,
-   //marginLeft: 100,
-   //paddingLeft: 100,
     paddingRight: 120,
     fontSize: 40,
-   //fontWeight: 'bold',
     fontFamily: 'BYekan',
     color: 'black'
    },
@@ -592,16 +498,9 @@ const styles = StyleSheet.create({
      fontSize: 40,
      color: '#f4a460',
      borderColor: 'black',
-    //borderWidth: 10,
-    //fontWeight: 10,
-    //margin: 30,
-     // marginLeft: 130,
      textShadowColor: 'black',
      textShadowOffset: { width: 2, height: 2 },
      textShadowRadius: 1,
-     // top: Dimensions.get('window').height / 9,
-     // left: Dimensions.get('window').width / 3,
-     // zIndex: 10
    },
    gameThreeScoreText: {
      fontFamily: 'BYekan',
@@ -610,21 +509,13 @@ const styles = StyleSheet.create({
      fontSize: 30,
      color: '#ff6347',
      borderColor: 'black',
-    //borderWidth: 10,
-    //fontWeight: 10,
-    //margin: 30,
-     // marginLeft: 130,
      textShadowColor: 'black',
      textShadowOffset: { width: 2, height: 2 },
      textShadowRadius: 1,
-     // top: Dimensions.get('window').height / 9,
-     // left: Dimensions.get('window').width / 3,
-     // zIndex: 10
    },
   gameThreeBack: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height / 3,
-    // resizeMode: 'cover'
    },
   gameThreeItem: {
     position: 'absolute',
@@ -633,14 +524,11 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginLeft: -100,
     top: 50,
-   //bottom: -150,
-   //bottom: -Dimensions.get('window').width-100,
    },
   gameThreeText: {
     marginTop: 10,
     paddingRight: 20,
     fontSize: 40,
-   //fontWeight: 'bold',
     fontFamily: 'BYekan',
     color: 'black'
    },
@@ -651,8 +539,8 @@ const styles = StyleSheet.create({
  });
 
  const mapStateToProps = ({ auth, user }) => {
-   // console.log('this is auth text in game choose:', user);
-   const { token } = auth;
+
+  const { token } = auth;
 
    const { user_status,
      q_first,
@@ -670,8 +558,6 @@ const styles = StyleSheet.create({
      city_status
 
     } = user;
-    // console.log('this is scoreFirst in gameChoose:', scoreFirst);
-    // const { alts, answer, question, } = q_one;
 
    return { user_status,
      q_first,
@@ -687,9 +573,6 @@ const styles = StyleSheet.create({
      dis_touch_first,
      dis_touch_second,
      dis_touch_third,
-     // alts,
-     // answer,
-     // question,
     };
    };
 

@@ -9,7 +9,6 @@ import {
    } from 'react-native';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
-// const UIManager = require('UIManager');
 
 class ListItem extends Component {
 
@@ -66,7 +65,6 @@ const styles = {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: 'yellow',
   },
   welcome: {
     fontSize: 20,

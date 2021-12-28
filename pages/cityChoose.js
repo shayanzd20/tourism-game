@@ -21,10 +21,6 @@ import {
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
 
-// console.log('width:', deviceWidth);
-// console.log('height:', deviceHeight);
-
-// consts
 const slideInCustom = {
   0: {
     translateX: 0,
@@ -58,12 +54,8 @@ sendTicket = (ticket) => {
   })
     .then((response) => response.json())
     .then((responseJson) => {
-      // console.log('responseJson in city choose for choosing ticket:', responseJson);
       // update tickets
-      // this.props.updateTickets(responseJson);
-      // Actions.cityChoose();
       this.userStatus();
-      // Actions.city();
     })
     .catch((error) => {
       // console.error('error in city choose for choosing ticket:', error);
@@ -82,10 +74,6 @@ userStatus = () => {
     .then((response) => response.json())
     .then((responseJson) => {
       // console.log('/ ----------- get user Status start api in city choose --------/');
-      // console.log('get user Status in login page:', responseJson);
-
-
-      // console.log('responseJson.status in city choose:', responseJson.status);
       if (responseJson.status === '') {
         // console.log('/----go to sourceScreen in city choose----/');
         this.getCities();
@@ -115,29 +103,9 @@ userStatus = () => {
         {/* background component start */}
         <ImageBackground
           style={{
-            // flex: 1,
             width: deviceWidth,
             height: deviceHeight,
-            // flexBasis:'auto',
-            // flexShrink:10,
-            // marginTop:0,
-            // marginBottom:100,
-            // marginLeft:0,
-            // aspectRatio:2000,
-            // top:0,
-            // bottom:0,
-            // display:'none',
-            // maxHeight:deviceHeight,
-            // paddingBottom:deviceHeight,
-            // marginBottom:deviceHeight,
-            // resizeMode: 'cover',
-            // transform: 10,
-            // backgroundColor:'transparent',
-
-            position: 'absolute',
-            // justifyContent:'center',
-            // flexWrap:'wrap'
-
+            position: 'absolute'
           }}
           source={require('./../images/chooseCity/background.png')}>
 
@@ -146,22 +114,14 @@ userStatus = () => {
             style={{
               flex: 1,
               flexDirection: 'column',
-              // backgroundColor: 'red'
             }}>
 
             {/* ticket one component start */}
             <View
               style={{
                 flex: 1,
-                // left:0,
-                // right:0,
-                // top:deviceHeight/8,
-                // bottom:0,
-                // position: 'absolute',
                 justifyContent: 'center',
-
                 zIndex: 10,
-                // backgroundColor: 'green'
               }}>
               {/* ticket one touchable start */}
               <TouchableOpacity
@@ -170,7 +130,6 @@ userStatus = () => {
                 >
                 <Animatable.View
                   animation="bounceIn"
-                  // iterationCount="infinite"
                   direction="normal"
                   duration={2000}>
                   <ImageBackground
@@ -207,14 +166,7 @@ userStatus = () => {
             <View
               style={{
                   flex: 1,
-                  // justifyContent:'center',
-                  // left:0,
-                  // right:0,
-                  // top:-deviceHeight/8,
-                  // bottom:0,
-                  // position: 'absolute',
                   zIndex: 10,
-                  // backgroundColor:'green',
                   }}>
 
               {/* ticket two touchable start */}
@@ -223,7 +175,6 @@ userStatus = () => {
                 onLongPress={() => this.sendTicket(this.props.tickets[1])}>
                 <Animatable.View
                   animation="bounceIn"
-                  // iterationCount="infinite"
                   direction="normal"
                   duration={2000}
                   delay={100}>
@@ -244,7 +195,6 @@ userStatus = () => {
                         fontSize: 20,
                         fontWeight: 'bold',
                         fontFamily: 'BYekan',
-                        // marginTop: 0,
                         marginBottom: 30,
                         marginRight: 20
                       }}>
@@ -270,7 +220,6 @@ userStatus = () => {
 
         <Animatable.Image
           animation={slideInCustom}
-          // iterationCount="infinite"
           direction="normal"
           duration={40000}
           iterationCount="infinite"
@@ -284,7 +233,6 @@ userStatus = () => {
         />
         <Animatable.Image
           animation={slideInCustom}
-          // iterationCount="infinite"
           direction="normal"
           duration={40000}
           iterationCount="infinite"
@@ -299,7 +247,6 @@ userStatus = () => {
         />
         <Animatable.Image
           animation="slideInLeft"
-          // iterationCount="infinite"
           direction="normal"
           duration={20000}
 
@@ -313,7 +260,6 @@ userStatus = () => {
         />
         <Animatable.Image
           animation="slideInLeft"
-          // iterationCount="infinite"
           direction="normal"
           duration={40000}
 
@@ -327,7 +273,6 @@ userStatus = () => {
         />
         <Animatable.Image
           animation="slideInLeft"
-          // iterationCount="infinite"
           direction="normal"
           duration={40000}
 

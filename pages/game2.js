@@ -49,8 +49,6 @@ constructor() {
 
 componentWillMount() {
     this.animate();
-    // console.log('this is question two props:',this.props);
-    // console.log(this.props);
     if (this.props.img) {
       this.props.questionTwoQuestionUpdate(this.props.img);
     }
@@ -58,7 +56,6 @@ componentWillMount() {
       this.props.questionTwoAnswerUpdate(this.props.answer);
     }
     const altsObj = JSON.parse(this.props.alts);
-    // console.log('alts two', altsObj);
     if (altsObj) {
       this.props.questionTwoAltsUpdate({
         altOne: altsObj[0].txt,
@@ -76,9 +73,7 @@ animate() {
     interval = setInterval(() => {
       progress += 0.01;
       if (progress > 1) {
-        // progress = 1;
         clearInterval(interval);
-        // this.sendAnswer(ans, 0);
         const CustomLayoutSpring = {
             duration: 400,
             create: {
@@ -97,7 +92,6 @@ animate() {
         this.props.questionTwoResultUpdate(false, 'متاسفانه زمان از دست رفت و 50 امتیاز بیشتر بدست نیاوردی', 'incorrect');
         this.props.questionTwoModalUpdate(true);
       }
-      // console.log('progress current setInterval:', progress);
 
       this.props.questionTwoProgressUpdate(progress);
     }, 100);
@@ -118,14 +112,6 @@ sendAnswer = (alt, status) => {
   })
     .then((response) => response.json())
     .then((responseJson) => {
-      // console.log('get user Status start api');
-      // console.log('get user Status:', responseJson);
-
-      // store token
-      // if responseJson.status == 'arrive' => go to city page with city params
-      // this.props.navigation.navigate('City', { user: 'Shayan11' })
-      // this.props.navigation.navigate('City', responseJson);
-
     })
     .catch((error) => {
       // console.error('error:', error);
@@ -157,10 +143,6 @@ sendAnswer = (alt, status) => {
 }
 
 checkAnswer = (ans) => {
-  // console.log('this is option:', ans);
-  // console.log('this is this.answer:', this.answer);
-  // console.log('this is answer:', this.props.answer);
-
   const CustomLayoutSpring = {
       duration: 400,
       create: {
@@ -175,16 +157,12 @@ checkAnswer = (ans) => {
     };
 
   if (ans === this.props.answer) {
-    // this.setState({result:true})
-    // LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     this.sendAnswer(ans, 1);
     this.props.updateSecondScore({ scoreSecond: 100, q_second: true, dis_touch_second: true });
     LayoutAnimation.configureNext(CustomLayoutSpring);
     this.props.questionTwoResultUpdate(true, 'آفرین 100 امتیاز گرفتی', 'correct');
     this.props.questionTwoModalUpdate(true);
   } else {
-    // this.setState({result:false})
-    // LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     this.sendAnswer(ans, 0);
     this.props.updateSecondScore({ scoreSecond: 50, q_second: true, dis_touch_second: false });
     LayoutAnimation.configureNext(CustomLayoutSpring);
@@ -192,30 +170,12 @@ checkAnswer = (ans) => {
     this.props.questionTwoModalUpdate(true);
   }
 
-  // console.log('this is result:', this.props.result);
-  // this.props.questionTwoProgressUpdate(0);
   clearInterval(interval);
-  // console.log('interval cleared');
 };
 
   render() {
-    // let params = this.props.navigation.state.params;
-    // console.log('game 2 params:',params)
     const imageQuestion = this.props.img;
-    // console.log('this is imageQuestion:', imageQuestion);
-    // let answer = params.answer
-    // let altsObj = JSON.parse(params.alts)
-    // console.log('alts',altsObj)
-
-    // let choiceOne=params.alts[0].text;
-    // let choiceTwo=params.img;
-    // let choiceThree=params.img;
-
-    // console.log('uri:','http://velgardi-game.ir/api/get_image?path='+imageQuestion)
-
-
     return (
-
       <View style={styles.main}>
 
         {/* progress bar component start */}
@@ -231,9 +191,7 @@ checkAnswer = (ans) => {
             width={widthPic * 0.88}
             height={15}
             zIndex={1000}
-            // borderColor='green'
             borderWidth={0}
-            // backgroundColor='yellow'
             color='#3bba25' />
           </ImageBackground>
         </View>
@@ -256,14 +214,10 @@ checkAnswer = (ans) => {
                 alignItems: 'center'
               }}>
               <Image
-                // resizeMode="contain"
                 resizeMode="cover"
-                // resizeMode="stretch"
-                // originalWidth={100000}
                 style={styles.picture}
                 source={{ uri: 'http://velgardi-game.ir/api/get_image?path=' + imageQuestion }}
                 onLoadStart={() => {
-                  // console.log('picture loading so loading must true')
                 }}
               />
             </CardView>
@@ -358,147 +312,63 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor:'yellow',
   },
   frameAndPicture: {
     flex: 7,
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor: '#037BC8',
     paddingLeft: 10,
     paddingRight: 10,
-    // padding:80,
-    // margin:10,
   },
   frameAndPictureContainer: {
     padding: 10,
     paddingLeft: 10,
     paddingRight: 10,
-    // margin: 100,
-    // backgroundColor: 'green',
-    // width: widthPic,
-
-    // backgroundColor:'#037BC8',
-    // resizeMode: 'cover',
-    // resizeMode: 'contain',
-    // resizeMode: 'stretch',
-
   },
   frame: {
     width: widthPic,
-    // height: widthPic,
-    // width: 350,
-    // height: 350,
-    // margin:10,
-    // marginLeft :10 ,
-    // marginRight :10 ,
-    // resizeMode: 'cover',
-    // resizeMode: 'contain',
-    // resizeMode: 'stretch',
-    // padding:40,
-    // paddingLeft:20,
-    // paddingTop:20,
-    // paddingRight:40,
     justifyContent: 'center',
     alignItems: 'center',
   },
   frameProgress: {
     width: widthPic,
-    // height: widthPic,
-    // width: 350,
     height: heightPic * 0.078,
-    // margin:10,
-    // marginLeft :10 ,
-    // marginRight :10 ,
-    // resizeMode: 'cover',
-    // resizeMode: 'contain',
-    // resizeMode: 'stretch',
-    // padding:40,
-    // paddingLeft:20,
-    // paddingTop:20,
-    // paddingRight:40,
     justifyContent: 'center',
     alignItems: 'center',
   },
 picture: {
-    // alignSelf : 'stretch',
-    // minHeight :30,
-    // width: widthPic,
-    // height: widthPic,
     width: widthPic * 0.9,
     height: widthPic * 0.9,
-    // borderRadius: 10,
-    // marginLeft:10,
-    // marginRight:10,
-    // paddingLeft :10,
-    // paddingRight :10,
-    // width:widthPic,
-    // padding:1,
-    // height:widthPic,
-    // margin:widthPic*0.04,
     resizeMode: 'contain',
-    // resizeMode:'center',
-    // resizeMode:'cover',
-    // flex : 1,
     overflow: 'hidden',
   },
   buttonsSection: {
     flex: 5,
     width: widthPic,
     height: widthPic * 0.55 * 1.2,
-    // width:widthPic,
-    // height:widthPic*0.55*1.2,
-    // alignItems: 'baseline',
-    // alignItems: 'flex-start',
     alignItems: 'center',
     justifyContent: 'space-around',
-    // backgroundColor:'#FFAAE3',
-    // padding:widthPic*0.01,
-    // paddingLeft :10,
-    // paddingRight :10,
     padding: widthPic * 0.01
 
   },
   buttonsFirstRow: {
-    // flex:1,
     flexDirection: 'row',
-    // justifyContent: 'center',
-    // justifyContent: 'space-around',
-    // justifyContent: 'space-between',
-    // alignItems:'center',
-    // marginLeft:30,
-    // margin:10,
-    // padding:10,
-    // backgroundColor:'yellow',
-    // overflow: 'hidden',
   },
   buttonsSecondRow: {
     flexDirection: 'row',
-    // justifyContent: 'center',
-    // justifyContent: 'space-between',
-    // justifyContent: 'space-between',
-    // alignItems:'center',
-    // padding: 10,
-    // marginLeft:30,
-    // paddingRight:20,
-    // paddingLeft:30,
-    // backgroundColor:'blue'
   },
   button: {
-    // width: 70,
-    // height: 70,
     width: widthPic * 0.43,
     height: widthPic * 0.3,
     borderRadius: 10,
     borderColor: '#303838',
-    // marginLeft:0,
     borderWidth: 1,
     overflow: 'hidden',
   }
 });
 
 const mapStateToProps = ({ auth, q_two }) => {
-  // console.log('this is question two state:', q_two);
+
   const { token } = auth;
 
   const {

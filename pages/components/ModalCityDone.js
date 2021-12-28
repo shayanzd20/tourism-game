@@ -9,14 +9,8 @@ import {
   Platform,
   UIManager,
   LayoutAnimation
-  // TouchableHighlight,
 } from 'react-native';
 import Modal from 'react-native-root-modal';
-// import { connect } from 'react-redux';
-// import { questionOneModalUpdate,
-//          questionTwoModalUpdate
-//  } from '../../src/actions';
-
 
 const widthPic = Dimensions.get('window').width;
 const heightPic = Dimensions.get('window').height;
@@ -27,7 +21,6 @@ const smile = () => {
     <View
       style={{
         flex: 2,
-        // backgroundColor: 'blue',
         alignItems: 'center',
         justifyContent: 'center',
       }}>
@@ -47,7 +40,6 @@ const sad = () => {
     <View
       style={{
         flex: 2,
-        // backgroundColor: 'blue',
         alignItems: 'center',
         justifyContent: 'center',
       }}>
@@ -68,7 +60,6 @@ class ModalCityDone extends Component {
 
 constructor(props) {
   super(props);
-  // const { text, visible, status } = this.props;
   this.state = { visibility: null };
   if (Platform.OS === 'android') {
     UIManager.setLayoutAnimationEnabledExperimental &&
@@ -77,26 +68,11 @@ constructor(props) {
 }
 
 componentWillMount() {
-  // const CustomLayoutSpring = {
-  //     duration: 400,
-  //     create: {
-  //       type: LayoutAnimation.Types.spring,
-  //       property: LayoutAnimation.Properties.scaleXY,
-  //       springDamping: 0.7,
-  //     },
-  //     update: {
-  //       type: LayoutAnimation.Types.spring,
-  //       springDamping: 0.7,
-  //     },
-  //   };
-  //
-  // LayoutAnimation.configureNext(CustomLayoutSpring);
   this.setState({ visibility: this.props.visible });
 }
 
 onPressModal() {
   // console.log('ciry done modal click');
-  // LayoutAnimation.configureNext(CustomLayoutSpring);
   this.setState({ visibility: false });
   Actions.city();
 }
@@ -116,7 +92,6 @@ render() {
         <View
           style={{
             flex: 2,
-            // backgroundColor: 'blue',
             alignItems: 'center',
             justifyContent: 'center',
           }}>
@@ -131,8 +106,6 @@ render() {
         <View
           style={{
           flex: 1,
-          // width: ,
-          // backgroundColor: 'red',
           alignItems: 'center',
           justifyContent: 'center',
         }}>
@@ -143,9 +116,6 @@ render() {
             flex: 1,
             // backgroundColor: 'blue',
           }}>
-          {/* answer text start */}
-          {/* <Text>salam</Text> */}
-          {/* answer text end */}
         </View>
       </View>
   </Modal>
@@ -161,15 +131,10 @@ render() {
 const styles = {
   modal: {
     position: 'absolute',
-    // top: 40,
-    // right: 40,
-    // bottom: 20,
-    // left: 40,
     width: widthPic,
     height: heightPic,
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: 'rgba(60, 84, 15, 0.8)',
     backgroundColor: 'transparent',
     borderRadius: 10,
     overflow: 'hidden'
@@ -177,15 +142,11 @@ const styles = {
   modalContainer: {
     position: 'absolute',
     top: 160,
-    // right: 40,
-    // bottom: 20,
-    // left: 40,
     height: 300,
     width: 300,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(58, 93, 15, 0.8)',
-    // backgroundColor: 'green',
     borderRadius: 20,
     overflow: 'hidden'
   },

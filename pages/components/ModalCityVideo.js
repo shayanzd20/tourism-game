@@ -9,7 +9,6 @@ import {
   Platform,
   UIManager,
   LayoutAnimation,
-  // TouchableHighlight,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Modal from 'react-native-root-modal';
@@ -34,21 +33,7 @@ class ModalCityVideo extends Component {
     }
   }
 onPressModal() {
-  // const CustomLayoutSpring = {
-  //     duration: 400,
-  //     create: {
-  //       type: LayoutAnimation.Types.spring,
-  //       property: LayoutAnimation.Properties.scaleXY,
-  //       springDamping: 0.7,
-  //     },
-  //     update: {
-  //       type: LayoutAnimation.Types.spring,
-  //       springDamping: 0.7,
-  //     },
-  //   };
-    // LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-    // LayoutAnimation.configureNext(CustomLayoutSpring);
   this.props.updateVideoCity(false);
 }
 
@@ -77,9 +62,7 @@ stopVideo = (input) => {
 }
 
 render() {
-  // console.log(this.props.user_status);
     const videoGame = 'http://velgardi-game.ir/' + this.props.user_status.city.video;
-    // console.log(videoGame);
 
   return (
     <View>
@@ -94,7 +77,6 @@ render() {
         <View
           style={{
             flex: 2,
-            // backgroundColor: 'blue',
             alignItems: 'center',
             justifyContent: 'center',
           }}>
@@ -113,10 +95,7 @@ render() {
                 style={{
                   position: 'absolute',
                   top: 0,
-                  // left: 50,
                   bottom: 0,
-                  // right: 0,
-                  // backgroundColor: 'blue',
                   width: widthPic * 0.9
                 }}
              />
@@ -135,15 +114,10 @@ render() {
 const styles = {
   modal: {
     position: 'absolute',
-    // top: 40,
-    // right: 40,
-    // bottom: 20,
-    // left: 40,
     width: widthPic,
     height: heightPic,
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: 'rgba(60, 84, 15, 0.8)',
     backgroundColor: 'transparent',
     borderRadius: 10,
     overflow: 'hidden'
@@ -151,15 +125,11 @@ const styles = {
   modalContainer: {
     position: 'absolute',
     top: 160,
-    // right: 40,
-    // bottom: 20,
-    // left: 40,
     height: 300,
     width: 300,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(255, 143, 15, 0.8)',
-    // backgroundColor: 'green',
     borderRadius: 20,
     overflow: 'hidden'
   },

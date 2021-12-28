@@ -19,14 +19,10 @@ const INITIAL_STATE = {
  };
 
  export default (state = INITIAL_STATE, action) => {
-   // console.log('this is action in question TWO reducer:');
-   // console.log(action);
-   // console.log('this is state in question TWO reducer', state);
    switch (action.type) {
      case QUESTION_TWO_PROGRESS_UPDATE:
        return { ...state, progress: action.payload };
      case QUESTION_TWO_RESULT_UPDATE:
-     // console.log({ ...state, result: action.payload.input, text_modal: action.payload.text, status: action.payload.status });
        return { ...state, result: action.payload.input, text_modal: action.payload.text, status: action.payload.status };
      case QUESTION_TWO_ANSWER_UPDATE:
        return { ...state, answer: action.payload };

@@ -30,14 +30,11 @@ import {
 } from '../src/actions';
 import ModalCoinInsufficiant from './components/ModalCoinInsufficiant';
 import ModalCityVideo from './components/ModalCityVideo';
-// import styles from './styles/city';
 
 
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
 
-// console.log('deviceWidth:', deviceWidth);
-// console.log('deviceHeight:', deviceHeight);
 
 class City extends Component {
 
@@ -80,13 +77,10 @@ componentWillMount() {
 
 
 onGameChooseClick() {
-  // Actions.pop();
-  // Actions.gameChoose();
   Actions.replace('gameChoose');
 }
 
 userQuestionStatus() {
-  // console.log('userQuestionStatus function in city: ');
   fetch('http://velgardi-game.ir/api/question', {
     method: 'POST',
     headers: {
@@ -101,11 +95,6 @@ userQuestionStatus() {
   .then((response) => response.json())
   .then((responseJson) => {
     // console.log('/----------------get user Question Status start api in game choose-----------/');
-    // console.log('get user Question Status in city: ', responseJson);
-
-    // console.log('question first: ', responseJson.question_first);
-    // console.log('question second: ', responseJson.question_second);
-    // console.log('question third: ', responseJson.question_third);
 
     const {
       question_first,
@@ -153,7 +142,6 @@ populationView() {
       style={{ paddingTop: 5,
               paddingRight: 20,
               fontSize: 20,
-              // fontWeight: 'bold',
               fontFamily: 'BYekan',
               color: 'white' }}
               animation="fadeInRight"
@@ -166,18 +154,11 @@ travelButton() {
   return (
     <View
       style={{ flex: 3,
-      // backgroundColor: 'blue',
       alignItems: 'center',
-      // justifyContent: 'center',
       justifyContent: 'flex-end',
-      // resizeMode: 'contain'
       }}>
       <TouchableOpacity
         style={{
-          // backgroundColor: 'yellow',
-          // alignItems: 'center',
-          // justifyContent: 'center',
-          // resizeMode: 'contain'
           overflow: 'hidden'
 
         }}
@@ -193,11 +174,6 @@ travelButton() {
           duration={1000}
           delay={2500}>
           <Image
-            // befor style
-            // style={{
-            //   width: 100,
-            //   resizeMode: 'contain'
-            // }}
             style={styles.buttonImageNextCity}
             source={require('./../images/specificCity/nextCity.png')}
             />
@@ -215,17 +191,11 @@ travelButtonLock() {
      }}>
       <TouchableOpacity
         style={{
-          // backgroundColor: 'yellow',
           alignItems: 'center',
           justifyContent: 'center',
         }}>
         <Animatable.View
           style={{
-          // flex: 1,
-          // position: 'absolute',
-          // backgroundColor: 'red',
-          // width: 100,
-          // resizeMode: 'contain'
           alignSelf: 'stretch',
           }}
             animation="bounceIn"
@@ -254,26 +224,15 @@ playGameButton() {
     <View
       style={{ flex: 3,
         alignItems: 'center',
-        // alignItems: 'flex-end',
-        // justifyContent: 'center',
         justifyContent: 'flex-end',
-        // backgroundColor: '#f87fff'
       }}>
       <TouchableOpacity
         style={{
-          // backgroundColor: '#ff68b6',
          }}
-        // onPress={() => navigate('ChooseGameStack')}>
-        // onPress={Actions.main.gameChoose()}>
         onPress={() => this.playGameFunction()}
           >
         <Animatable.View
           style={{
-          // flex: 1,
-          // position: 'absolute',
-          // backgroundColor: 'red',
-          // width: 100,
-          // resizeMode: 'contain'
           alignItems: 'center',
           justifyContent: 'center',
           alignSelf: 'stretch',
@@ -285,7 +244,6 @@ playGameButton() {
         >
           <Image
             style={styles.buttonImageGame}
-            // style={styles.buttonImage}
             source={require('./../images/specificCity/playGame.png')}
           />
        </Animatable.View>
@@ -299,26 +257,15 @@ playGameButtonLock() {
     <View
       style={{ flex: 3,
         alignItems: 'center',
-        // alignItems: 'flex-end',
-        // justifyContent: 'center',
         justifyContent: 'flex-end',
-        // backgroundColor: '#f87fff'
       }}>
       <TouchableOpacity
         style={{
-          // backgroundColor: '#ff68b6',
          }}>
         <Animatable.View
           style={{
-          // flex: 1,
-          // position: 'absolute',
-          // backgroundColor: 'red',
-          // width: 100,
-          // resizeMode: 'contain'
-          // alignItems: 'center',
           alignItems: 'flex-end',
           justifyContent: 'center',
-          // justifyContent: 'flex-end',
           alignSelf: 'stretch',
 
         }}
@@ -328,7 +275,6 @@ playGameButtonLock() {
         >
           <Image
             style={styles.buttonImageGameLuck}
-            // style={styles.buttonImage}
             source={require('./../images/specificCity/playGame.png')}
           />
           <Animatable.View
@@ -356,11 +302,9 @@ nextCity() {
   })
     .then((response) => response.json())
     .then((responseJson) => {
-      // console.log('responseJson in city screen in next city api:', responseJson);
+
       // update tickets
       this.props.updateTickets(responseJson);
-      // Actions.pop();
-      // Actions.cityChoose();
 
       Actions.replace('cityChoose');
 
@@ -439,46 +383,28 @@ playGameFunction() {
     let playGameButton;
 
 
-    // console.log('city prop user3: ', this.props.user_status.city);
-    // console.log('city prop user city status: ', this.props.user_status.status);
     const userCityStatus = this.props.user_status.status;
     const cityName = this.props.user_status.city.name;
     if (this.props.user_status.city.population !== 0) {
-      // console.log('population');
       cityPopulation = `جمعیت: ${this.props.user_status.city.population} نفر`;
-      // console.log(cityPopulation);
     }
     if (this.props.user_status.city.area !== 0) {
-      // console.log('area');
       cityArea = `مساحت: ${this.props.user_status.city.area} کیلومتر مربع`;
-      // console.log(cityArea);
     }
 
     if (this.props.user_status.city.description !== '') {
-      // console.log('description');
       cityDescription = this.props.user_status.city.description;
-      // console.log(cityDescription);
     }
-    // console.log('userCityStatus:::', userCityStatus);
     if (userCityStatus === 'arrive') {
       // we have to lock travel button
-      // console.log('user arrived');
-      // nextCityButton = this.travelButtonLock();
     } else {
       // travel button is open
-      // console.log('user leave');
-      // nextCityButton = this.travelButtonLock();
-      // nextCityButton = this.travelButton();
     }
 
     if (this.props.scoreFirst + this.props.scoreSecond + this.props.scoreThird === 300) {
-      // console.log('playGameButton ::: on');
       playGameButton = this.playGameButtonLock();
       nextCityButton = this.travelButton();
     } else {
-      // console.log('playGameButton ::: off');
-      // nextCityButton = this.travelButton();
-
       playGameButton = this.playGameButton();
       nextCityButton = this.travelButtonLock();
     }
@@ -488,8 +414,6 @@ playGameFunction() {
       <View
         style={{
           flex: 1,
-          // backgroundColor: 'rgba(0,0,0,.9)',
-          // opacity:0.4
           }}>
 
       {/* start background*/}
@@ -503,14 +427,12 @@ playGameFunction() {
             {/* start city name and area and population*/}
             <View
               style={{
-              // backgroundColor: 'brown',
               flex: 1,
               justifyContent: 'center' }}>
               <Animatable.Text
                 style={{ paddingTop: 20,
                           paddingRight: 20,
                           fontSize: 60,
-                          // fontWeight: 'bold',
                           fontFamily: 'BYekan',
                           color: 'white' }}
                           animation="fadeInRight"
@@ -520,7 +442,6 @@ playGameFunction() {
                       style={{ paddingTop: 5,
                             paddingRight: 20,
                             fontSize: 20,
-                            // fontWeight: 'bold',
                             fontFamily: 'BYekan',
                             color: 'white' }}
                             animation="fadeInRight"
@@ -530,7 +451,6 @@ playGameFunction() {
                 style={{ fontSize: 20,
                             paddingRight: 20,
                             paddingBottom: 20,
-                            // fontWeight: 'bold',
                             fontFamily: 'BYekan',
                             color: 'white' }}
                             animation="fadeInRight"
@@ -541,13 +461,11 @@ playGameFunction() {
             {/* start city description*/}
             <View
               style={{
-              // backgroundColor: '#ffb970',
               flex: 1,
               justifyContent: 'center' }}>
               <Animatable.Text
                 style={{ padding: 20,
                             fontSize: 20,
-                            // fontWeight: 'bold',
                             fontFamily: 'BYekan',
                             color: 'white',
                             lineHeight: 40 }}
@@ -562,7 +480,6 @@ playGameFunction() {
             {/* start buttons component */}
             <View
               style={{
-              // backgroundColor: 'brown',
               flex: 1,
               flexDirection: 'row',
               justifyContent: 'center',
@@ -572,13 +489,11 @@ playGameFunction() {
                 <View
                   style={{ flex: 1,
                            flexDirection: 'column',
-                           // backgroundColor: 'orange'
                   }}>
                   {playGameButton}
 
                   <View
                     style={{ flex: 1,
-                            // backgroundColor: 'blue',
                             alignItems: 'center' }}>
                     <Text
                       style={{ color: 'white',
@@ -593,22 +508,14 @@ playGameFunction() {
                   style={{
                     flex: 1,
                     flexDirection: 'column',
-                    // backgroundColor: '#42b0f4'
                     }}>
                     <View
                       style={{ flex: 3,
-                      // backgroundColor: 'blue',
                       alignItems: 'center',
-                      // justifyContent: 'center',
                       justifyContent: 'flex-end',
-                      // resizeMode: 'contain'
                       }}>
                       <TouchableOpacity
                         style={{
-                          // backgroundColor: 'yellow',
-                          // alignItems: 'center',
-                          // justifyContent: 'center',
-                          // resizeMode: 'contain'
                           overflow: 'hidden'
 
                         }}
@@ -624,11 +531,6 @@ playGameFunction() {
                           duration={1000}
                           delay={2500}>
                           <Image
-                            // befor style
-                            // style={{
-                            //   width: 100,
-                            //   resizeMode: 'contain'
-                            // }}
                             style={styles.buttonImageNextCity}
                             source={require('./../images/specificCity/icons-video.png')}
                             />
@@ -708,13 +610,8 @@ const styles = StyleSheet.create({
   cityPicture: {
     position: 'absolute',
     // backgroundColor: 'orange' ,
-    // flex:1,
-    // resizeMode: 'cover',
-    // backgroundColor: 'rgba(0,0,0,.9)',
     width: deviceWidth,
     height: deviceHeight,
-    // width: Dimensions.get('window').width,
-    // height: Dimensions.get('window').height*0.2,
   },
   buttonImage: {
     position: 'absolute',
@@ -722,70 +619,41 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     width: 100,
     height: 100,
-    // alignSelf: 'stretch',
-    // alignSelf: 'auto',
     top: 150,
-    // top: (deviceHeight / 3) - (deviceHeight / 9),
     alignSelf: 'center',
-    // resizeMode: 'contain'
-    // resizeMode: 'cover',
   },
   buttonImageNextCity: {
-    // position: 'absolute',
-    // backgroundColor: 'blue',
-    // backgroundColor: 'transparent',
     width: 100,
     height: 100,
-    // alignSelf: 'stretch',
-    // alignSelf: 'auto',
-    // top: 150,
-    // top: (deviceHeight / 3) - (deviceHeight / 9),
     alignSelf: 'center',
-    // resizeMode: 'contain'
-    // resizeMode: 'cover',
   },
   buttonImageGame: {
     width: 100,
     height: 100,
     resizeMode: 'contain',
-    // backgroundColor: 'green',
-    // bottom: 0,
   },
   buttonImageGameLuck: {
     width: 100,
     height: 100,
     resizeMode: 'contain',
-    // backgroundColor: 'green',
-    // bottom: -345,
     bottom: -(deviceHeight / 1.86),
-    // top: 1000
   },
   buttonLockImage: {
-    // backgroundColor: 'blue',
     width: 50,
-    // bottom: 40,
     bottom: (deviceHeight / 16),
-
-    // left: 50,
     left: (deviceWidth / 6),
     resizeMode: 'contain'
   },
   playButtonLock: {
-    // backgroundColor: 'blue',
     width: 50,
     bottom: -50,
-    // bottom: (deviceHeight / 16),
-
     left: 0,
-    // left: (deviceWidth / 4),
     resizeMode: 'contain'
   }
 });
 
 
 const mapStateToProps = ({ auth, user }) => {
-  // console.log('this is user in city:', user);
-  // console.log('this is auth in city:', auth);
   const { token } = auth;
 
   const {

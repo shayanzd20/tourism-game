@@ -76,22 +76,9 @@ const styles = {
   }
 };
 
-// old
- // const mapStateToProps = state => {
- //   return {
- //     email: state.auth.email,
- //     password: state.auth.password,
- //     error: state.auth.error,
- //   };
- // };
 
  const mapStateToProps = ({ auth }) => {
-   // console.log('this is auth text:', auth);
    const { email, password, error, loading } = auth;
-   // console.log('this is email text:', email);
-   // console.log('this is error text:', error);
-   // console.log('this is return :', { email, password, error });
-
    return { email, password, error, loading };
    };
 

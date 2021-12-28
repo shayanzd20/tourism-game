@@ -25,31 +25,20 @@ const RouterComponent = () => {
             <Scene key='login' component={LoginPage} />
           </Scene>
           <Scene key='main' initial>
-            {/* <Scene key='sourceScreen' component={SourceScreen} /> */}
-            {/* <Scene key='cityChoose' component={CityChoose}  hideNavBar={true} initial /> */}
             <Scene key='gameChoose' component={GameChoose} />
             <Scene key='home' component={Home} initial />
           </Scene>
           <Scene key='sourceScreen'>
             <Scene key='sourceScreen' component={SourceScreen} />
           </Scene>
-          {/*<Scene key='cityChoose'>
-            <Scene key='cityChoose' component={CityChoose} />
-          </Scene>*/}
           <Scene key='game1'>
             <Scene key='game1' component={Game1} />
-            {/* <Scene key='game2' component={Game2} /> */}
-            {/* <Scene key='game3' component={Game3} /> */}
           </Scene>
           <Scene key='game2'>
-            {/* <Scene key='game1' component={Game1} /> */}
             <Scene key='game2' component={Game2} />
-            {/* <Scene key='game3' component={Game3} /> */}
           </Scene>
           <Scene key='game3'>
-            {/* <Scene key='game1' component={Game1} /> */}
             <Scene key='game3' component={Game3} />
-            {/* <Scene key='game3' component={Game3} /> */}
           </Scene>
           <Scene key='city'>
             <Scene key='simple' component={City} />

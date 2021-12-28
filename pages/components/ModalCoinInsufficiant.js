@@ -9,7 +9,6 @@ import {
   Platform,
   UIManager,
   LayoutAnimation,
-  // TouchableHighlight,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Modal from 'react-native-root-modal';
@@ -73,8 +72,6 @@ render() {
         <View
           style={{
           flex: 1,
-          // width: ,
-          // backgroundColor: 'red',
           alignSelf: 'center',
           alignItems: 'center',
           justifyContent: 'center',
@@ -84,11 +81,7 @@ render() {
         <View
           style={{
             flex: 1,
-            // backgroundColor: 'blue',
           }}>
-          {/* answer text start */}
-          {/* <Text>salam</Text> */}
-          {/* answer text end */}
         </View>
       </View>
   </Modal>
@@ -104,15 +97,10 @@ render() {
 const styles = {
   modal: {
     position: 'absolute',
-    // top: 40,
-    // right: 40,
-    // bottom: 20,
-    // left: 40,
     width: widthPic,
     height: heightPic,
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: 'rgba(60, 84, 15, 0.8)',
     backgroundColor: 'transparent',
     borderRadius: 10,
     overflow: 'hidden'
@@ -120,15 +108,11 @@ const styles = {
   modalContainer: {
     position: 'absolute',
     top: 160,
-    // right: 40,
-    // bottom: 20,
-    // left: 40,
     height: 300,
     width: 300,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(58, 93, 15, 0.8)',
-    // backgroundColor: 'green',
     borderRadius: 20,
     overflow: 'hidden'
   },

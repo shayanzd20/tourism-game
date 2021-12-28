@@ -6,7 +6,6 @@ import {
   Image,
   Dimensions,
   TouchableWithoutFeedback,
-  // TouchableHighlight,
 } from 'react-native';
 import Modal from 'react-native-root-modal';
 import { connect } from 'react-redux';
@@ -28,7 +27,6 @@ const smile = () => {
     <View
       style={{
         flex: 2,
-        // backgroundColor: 'blue',
         alignItems: 'center',
         justifyContent: 'center',
       }}>
@@ -48,7 +46,6 @@ const sad = () => {
     <View
       style={{
         flex: 2,
-        // backgroundColor: 'blue',
         alignItems: 'center',
         justifyContent: 'center',
       }}>
@@ -67,21 +64,10 @@ const sad = () => {
 
 class ModalPrize extends Component {
 
-// constructor(props) {
-//   super(props);
-//   // const { text, visible, status } = this.props;
-// }
 onPressModal() {
-  // console.log('presseddddddd');
   this.props.questionOneModalUpdate(false);
   this.props.questionTwoModalUpdate(false);
   this.props.questionThreeModalUpdate(false);
-  // this.props.questionOneProgressUpdate(0);
-  // this.props.questionTwoProgressUpdate(0);
-  // this.props.questionThreeProgressUpdate(0);
-
-  // Actions.pop();
-  // Actions.main();
   Actions.replace('main');
   Actions.replace('gameChoose');
 }
@@ -110,8 +96,6 @@ render() {
         <View
           style={{
           flex: 1,
-          // width: ,
-          // backgroundColor: 'red',
           alignSelf: 'center',
           alignItems: 'center',
           justifyContent: 'center',
@@ -121,7 +105,6 @@ render() {
         <View
           style={{
             flex: 1,
-            // backgroundColor: 'blue',
           }}>
           {/* answer text start */}
           {/* <Text>salam</Text> */}
@@ -141,15 +124,10 @@ render() {
 const styles = {
   modal: {
     position: 'absolute',
-    // top: 40,
-    // right: 40,
-    // bottom: 20,
-    // left: 40,
     width: widthPic,
     height: heightPic,
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: 'rgba(60, 84, 15, 0.8)',
     backgroundColor: 'transparent',
     borderRadius: 10,
     overflow: 'hidden'
@@ -157,15 +135,11 @@ const styles = {
   modalContainer: {
     position: 'absolute',
     top: 160,
-    // right: 40,
-    // bottom: 20,
-    // left: 40,
     height: 300,
     width: 300,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(58, 93, 15, 0.8)',
-    // backgroundColor: 'green',
     borderRadius: 20,
     overflow: 'hidden'
   },
@@ -183,7 +157,6 @@ const styles = {
 };
 
 const mapStateToProps = ({ q_one }) => {
-  // console.log('this is question one state:', q_one);
 
   const {
     result,

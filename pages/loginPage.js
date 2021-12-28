@@ -30,9 +30,6 @@ import {
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
 
-// console.log('width:', deviceWidth);
-// console.log('height:', deviceHeight);
-
 // consts
 
 /* ----------- functions ------------- */
@@ -69,13 +66,11 @@ login() {
       .then((responseJson) => {
           AsyncStorage.setItem('number', this.props.number, () => {
               AsyncStorage.getItem('number', (err, result) => {
-                // console.log('get number:', result);
               });
           });
         if (responseJson.result === true) {
           this.props.visibleChanged(false);
           this.props.digitsChanged(true);
-          // console.log('digitStateAfter:', this.props.digits);
           ToastAndroid.show('کد پیامک شده را وارد نمایید', ToastAndroid.LONG, ToastAndroid.BOTTOM, 25, 50);
         }
         // return responseJson;
@@ -88,7 +83,6 @@ login() {
 verification() {
   AsyncStorage.getItem('number', (err, result) => {
     this.props.realNumberChanged(result);
-    // console.log('verification api');
     this.props.visibleChanged(true);
       fetch('http://velgardi-game.ir/api/register', {
         method: 'POST',
@@ -103,13 +97,11 @@ verification() {
       })
         .then((response) => response.json())
         .then((responseJson) => {
-          // console.log('//successfully get token//');
-          // console.log('this is token:', responseJson.token);
 
            // store token
           AsyncStorage.setItem('token', responseJson.token, () => {
               AsyncStorage.getItem('token', (err, res) => {
-                // console.log('get token:', res);
+
                 // if got token => send api to get status of user in order to route
                 // it to appropriate location
                 this.userStatus();
@@ -124,7 +116,6 @@ verification() {
 
 userStatus() {
   // console.log('/ ------- userStatus helper function ------- /');
-  // this.setState({ visible: true });
   this.props.visibleChanged(true);
   AsyncStorage.getItem('token', (err, result) => {
     this.props.tokenChanged(result);
@@ -139,25 +130,14 @@ userStatus() {
       .then((response) => response.json())
       .then((responseJson) => {
         // console.log('/ ----------- get user Status start api in login page --------/');
-        // console.log('get user Status in login page:', responseJson);
-
-
-        // console.log('responseJson.status in login page:', responseJson.status);
         if (responseJson.status === '') {
           // console.log('/----go to sourceScreen in login page----/');
-          // this.getCities();
           Actions.replace('home');
 
         } else {
           this.props.userStatusChanged(responseJson.status);
           // console.log('/----go to city in login page----/');
-          // Actions.pop();
-          // Actions.city();
-          // Actions.simple();
-          // Actions.city({ type: 'replace' });
-          // Actions.replace('city');
           Actions.replace('home');
-          // Actions.replace('simple');
         }
       })
       .catch((error) => {
@@ -179,13 +159,7 @@ getCities = () => {
     .then((responseJson) => {
       // console.log('this is cities api in login page:', responseJson);
       this.props.updateCities(responseJson);
-      // Actions.pop();
-      // Actions.sourceScreen();
       Actions.replace('sourceScreen');
-
-
-      // const cities = responseJson;
-      // return responseJson;
     })
     .catch((error) => {
       // console.error('error in cities api  in login page::', error);
@@ -219,7 +193,6 @@ digitInput() {
           labelStyle={{ color: '#91627b' }}
           inputStyle={{ color: '#91627b' }}
           keyboardType="numeric"
-          // onChangeText={(digitText) => this.setState({ digitText })}
           onChangeText={this.onDigitInputChange.bind(this)}
           value={this.props.digitText}
         />
@@ -260,7 +233,6 @@ numberInput() {
 loginButton() {
 
   // console.log('< ----------- loginButton ------------------>');
-  // console.log('this.mapStateToProps.number:', this.props.number);
     return (
       <View
         style={{
@@ -293,7 +265,6 @@ verificationButton(){
         backgroundColor='#FFA129'
         buttonStyle={styles.button}
         fontFamily='BYekan'
-        // onPress={() => this.verification(this.state.digitText)}
         onPress={this.verification.bind(this)}
         title="تایید"
         accessibilityLabel="This sounds great!" />
@@ -319,14 +290,11 @@ verificationButton(){
 
     return (
       <View>
-        {/* <Spinner visible={this.state.visible} textContent={"Loading..."} textStyle={{color: '#FFF'}} /> */}
-
         {/* background image start*/}
         <ImageBackground
         style={{
             width: deviceWidth,
             height: deviceHeight,
-            // resizeMode: 'cover',
             position: 'absolute',
           }}
         source={require('./../images/loginPage/background1.png')}>
@@ -339,7 +307,6 @@ verificationButton(){
                 style={{ flex: 1,
                       justifyContent: 'center',
                       zIndex: 10,
-                      // backgroundColor:'red'
                       }}>
 
                 {/* logo image */}
@@ -368,7 +335,6 @@ verificationButton(){
             {/* section sculptures start */}
             <View
               style={{ flex: 1,
-              // backgroundColor:'blue'
             }}>
               <Image
                 style={{
@@ -414,23 +380,14 @@ button: {
   borderRadius: 10,
   borderColor: '#303838',
   borderWidth: 1,
-  // padding: 10,
-  // marginBottom: 20,
   shadowColor: '#303838',
-  // shadowOffset: {width: 50,height: 10},
   shadowRadius: 10,
   shadowOpacity: 0.9,
-  // justifyContent: 'center',
-  // alignItems: 'center',
 },
 });
 const mapStateToProps = ({ auth, user }) => {
-  // console.log('this is auth text:', auth);
   const { number, digits, visible, realNumber, token, digitText } = auth;
   const { user_status } = user;
-  // console.log('this is email text:', email);
-  // console.log('this is error text:', error);
-  // console.log('this is return :', { email, password, error });
 
   return { number, digits, visible, realNumber, token, digitText, user_status };
   };
